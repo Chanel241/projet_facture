@@ -1,0 +1,99 @@
+/* style.css */
+/* Styles globaux */
+body, body.default-body {
+    margin: 0;
+    padding: 0;
+    font: 400 .875rem 'Open Sans', sans-serif;
+    color: #bcd0f7;
+    background: #1A233A !important;
+}
+
+/* Ajustement de la disposition des boutons principaux */
+.page-invoice .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+/* Ajustement des colonnes pour les boutons principaux */
+.page-invoice .col-md-4 {
+    max-width: 350px;
+}
+
+/* Ajustement de la barre de recherche */
+.form-group .form-control {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #ffffff;
+    color: #333;
+    border: 1px solid #2e3d5f;
+}
+
+.form-group .form-control::placeholder {
+    color: #8a99b5;
+}
+
+/* Ajustement du tableau */
+.custom-table {
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid #2b3958;
+}
+
+.custom-table thead th {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+}
+
+.custom-table tbody td {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+    vertical-align: middle; /* Centrer verticalement le contenu */
+}
+
+/* Styles pour les icônes d'action */
+.action-icon {
+    display: inline-block;
+    margin-right: 5px;
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px; /* Ajout d'un padding pour un meilleur espacement */
+}
+
+.view-icon {
+    color: #28a745; /* Vert pour "Voir" */
+    font-size: 1rem;
+}
+
+.delete-icon {
+    color: #dc3545; /* Rouge pour "Supprimer" */
+    font-size: 1rem;
+}
+
+.modify-icon {
+    color: #ffc107; /* Jaune pour "Modifier" */
+    font-size: 1rem;
+}
+
+/* Ajustement de la pagination */
+.btn-group {
+    display: flex;
+    justify-content: center;
+}
+
+/* Styles pour les modals */
+.modal-content {
+    background: #272E48;
+    color: #bcd0f7;
+}
+
+.modal-header, .modal-footer {
+    border-color: #2e3d5f;
+}
+
+.modal-title, .modal-body label {
+    color: #bcd0f7 !important;
+}

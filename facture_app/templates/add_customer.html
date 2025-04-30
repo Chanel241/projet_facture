@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block body_class %}add-customer-body{% endblock %}
+
+{% block content %}
+<div class="page-add-customer">
+    <form method="post" action="{% url 'add_customer' %}" class="w-100">
+        {% csrf_token %}
+        <div class="form-group col-md-8 mx-auto mb-2">
+            <label for="name">Name</label>
+            <input name="name" required type="text" class="form-control" id="name" placeholder="Customer first and last name">
+        </div>
+        <div class="form-group col-md-8 mx-auto mb-2">
+            <label for="email">Email</label>
+            <input name="email" required type="email" class="form-control" id="email" placeholder="Customer email">
+        </div>
+        <div class="form-group col-md-8 mx-auto mb-2">
+            <label for="phone">Phone</label>
+            <input name="phone" required type="number" class="form-control" id="phone" placeholder="Customer phone number">
+        </div>
+        <div class="form-group col-md-8 mx-auto">
+            <label for="sex">Sex</label>
+            <select name="sex" required id="sex" class="form-control">
+                <option value="">Choose the gender...</option>
+                <option value="M"> Male </option>
+                <option value="F"> Female </option>
+            </select>
+        </div>
+        <div class="form-group col-md-8 mx-auto">
+            <label for="address">Address</label>
+            <input name="address" required type="text" class="form-control" id="address" placeholder="Street address">
+        </div>
+        <div class="form-group col-md-8 mx-auto">
+            <label for="city">City</label>
+            <input name="city" required type="text" class="form-control" id="city" placeholder="Customer city">
+        </div>
+        <button type="submit" class="btn btn-primary w-25 mx-auto d-block mb-1">Register Customer</button>
+    </form>
+</div>
+{% endblock content %}
