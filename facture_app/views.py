@@ -1,88 +1,170 @@
-# views.py
-from django.views import View
 from django.shortcuts import render, redirect
-from facture_app.models import Invoice, Customer
-from datetime import datetime
+from django.views import View
+from django.contrib import messages
+from django.http import HttpResponse, Http404
+from django.db import transaction
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.utils.translation import gettext_lazy as _
+from django.template.loader import get_template
+from .models import Customer, Invoice, Article, PharmacyProduct
+from .utils import pagination, get_invoice
+from .forms import CustomerForm, InvoiceForm, PharmacyProductForm
+from celery import shared_task
+import pdfkit
+import datetime
+from django.utils import timezone
 
-class Home(View):
-    """ Main view """
-    template_name = "home.html"
+class SuperuserRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_active and self.request.user.is_superuser
 
-    def get_context(self):
-        return {'invoices': Invoice.objects.select_related('customer', 'save_by').all()}
+class HomeView(SuperuserRequiredMixin, View):
+    template_name = 'home.html'
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, self.get_context())
+        invoices = Invoice.objects.select_related('customer', 'save_by').order_by('-invoice_date_time')
+        items = pagination(request, invoices)
+        context = {'invoices': items}
+        return render(request, self.template_name, context)
 
-    def post(self, request, *args, **kwargs):
-        return render(request, self.template_name, self.get_context())
-
-class addCustomerView(View):
-    """ Add new customer """
-    template_name = "add_customer.html"
+class AddCustomerView(SuperuserRequiredMixin, View):
+    template_name = 'add_customer.html'
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        form = CustomerForm()
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        sex = request.POST.get('sex')
-        address = request.POST.get('address')
-        city = request.POST.get('city')
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            customer = form.save(commit=False)
+            customer.save_by = request.user
+            customer.save()
+            messages.success(request, _("Client enregistré avec succès."))
+            return redirect('invoicing:invoices-list')
+        messages.error(request, _("Données invalides fournies."))
+        return render(request, self.template_name, {'form': form})
 
-        if name and email and phone:
-            Customer.objects.create(name=name, email=email, phone=phone, sex=sex, address=address, city=city)
-            return redirect('home')
+class AddInvoiceView(SuperuserRequiredMixin, View):
+    template_name = 'add_invoice.html'
 
-        return render(request, self.template_name)
+    def get(self, request, *args, **kwargs):
+        form = InvoiceForm()
+        products = PharmacyProduct.objects.all()
+        customers = Customer.objects.all()
+        return render(request, self.template_name, {'form': form, 'products': products, 'customers': customers})
 
-class AddInvoiceView(View):
-    """ Add new invoice """
+    @transaction.atomic
     def post(self, request, *args, **kwargs):
-        customer_name = request.POST.get('customer_name')
-        invoice_date = request.POST.get('invoice_date')
-        total = request.POST.get('total')
-        paid = request.POST.get('paid') == 'True'
-        invoice_type = request.POST.get('invoice_type')
+        form = InvoiceForm(request.POST)
+        products = request.POST.getlist('product')
+        quantities = request.POST.getlist('qty')
+        if form.is_valid():
+            # Vérifier le stock pour chaque produit
+            for i in range(len(products)):
+                try:
+                    product = PharmacyProduct.objects.get(id=products[i])
+                    qty = float(quantities[i])
+                    if qty > product.stock_quantity:
+                        messages.error(request, _("Quantité demandée (%s) dépasse le stock disponible (%s) pour %s.") % (qty, product.stock_quantity, product.name))
+                        return render(request, self.template_name, {'form': form, 'products': PharmacyProduct.objects.all(), 'customers': Customer.objects.all()})
+                except PharmacyProduct.DoesNotExist:
+                    messages.error(request, _("Produit non trouvé."))
+                    return render(request, self.template_name, {'form': form, 'products': PharmacyProduct.objects.all(), 'customers': Customer.objects.all()})
 
-        # Recherche ou création du client
-        customer, created = Customer.objects.get_or_create(name=customer_name, defaults={
-            'email': '', 'phone': '', 'sex': '', 'address': '', 'city': ''
-        })
+            if len(products) == len(quantities):
+                invoice = form.save(commit=False)
+                invoice.save_by = request.user
+                invoice.save()
+                for i in range(len(products)):
+                    article = Article(
+                        invoice=invoice,
+                        product_id=products[i],
+                        quantity=float(quantities[i])
+                    )
+                    article.full_clean()
+                    article.save()
+                messages.success(request, _("Facture créée avec succès."))
+                return redirect('invoicing:invoices-list')
+            messages.error(request, _("Données de produit incohérentes."))
+        else:
+            messages.error(request, _("Données invalides fournies."))
+        return render(request, self.template_name, {'form': form, 'products': PharmacyProduct.objects.all(), 'customers': Customer.objects.all()})
 
-        # Conversion de la date
-        invoice_date = datetime.strptime(invoice_date, '%Y-%m-%dT%H:%M')
+class AddPharmacyProductView(SuperuserRequiredMixin, View):
+    template_name = 'add_product.html'
 
-        # Création de la facture
-        Invoice.objects.create(
-            customer=customer,
-            invoice_date_time=invoice_date,
-            total=total,
-            paid=paid,
-            invoice_type=invoice_type,
-            save_by=request.user if request.user.is_authenticated else None
-        )
+    def get(self, request, *args, **kwargs):
+        form = PharmacyProductForm()
+        return render(request, self.template_name, {'form': form})
 
-        return redirect('home')
-
-class ModifyInvoiceView(View):
-    """ Modify invoice """
     def post(self, request, *args, **kwargs):
-        invoice_id = request.POST.get('id_modified')
-        paid = request.POST.get('modified') == 'True'
+        form = PharmacyProductForm(request.POST)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.created_by = request.user
+            product.save()
+            messages.success(request, _("Produit enregistré avec succès."))
+            return redirect('invoicing:invoices-list')
+        messages.error(request, _("Données invalides fournies."))
+        return render(request, self.template_name, {'form': form})
 
-        invoice = Invoice.objects.get(pk=invoice_id)
-        invoice.paid = paid
-        invoice.save()
+class InvoiceVisualizationView(SuperuserRequiredMixin, View):
+    template_name = 'invoice.html'
 
-        return redirect('home')
+    def get(self, request, *args, **kwargs):
+        context = get_invoice(kwargs.get('pk'))
+        if not context:
+            messages.error(request, _("Facture non trouvée."))
+            return redirect('invoicing:invoices-list')
+        return render(request, self.template_name, context)
 
-class DeleteInvoiceView(View):
-    """ Delete invoice """
+class ModifyInvoiceView(SuperuserRequiredMixin, View):
     def post(self, request, *args, **kwargs):
-        invoice_id = request.POST.get('id_supprimer')
-        Invoice.objects.filter(pk=invoice_id).delete()
+        try:
+            invoice = Invoice.objects.get(id=request.POST.get('id_modified'))
+            invoice.paid = request.POST.get('modified') == 'True'
+            invoice.last_updated_date = timezone.now()
+            invoice.save()
+            messages.success(request, _("Facture mise à jour avec succès."))
+        except Invoice.DoesNotExist:
+            messages.error(request, _("Facture non trouvée."))
+        return redirect('invoicing:invoices-list')
 
-        return redirect('home')
+class DeleteInvoiceView(SuperuserRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        try:
+            invoice = Invoice.objects.get(pk=request.POST.get('id_supprimer'))
+            invoice.delete()
+            messages.success(request, _("Facture supprimée avec succès."))
+        except Invoice.DoesNotExist:
+            messages.error(request, _("Facture non trouvée."))
+        return redirect('invoicing:invoices-list')
+
+@shared_task
+def generate_invoice_pdf_task(pk):
+    """Tâche Celery pour générer un PDF de facture de manière asynchrone."""
+    context = get_invoice(pk)
+    if not context:
+        return None
+    context['date'] = datetime.datetime.today()
+    template = get_template('invoice.html')
+    html = template.render(context)
+    options = {
+        'page-size': 'Letter',
+        'encoding': 'UTF-8',
+        'enable-local-file-access': ''
+    }
+    pdf = pdfkit.from_string(html, False, options)
+    return pdf
+
+def get_invoice_pdf(request, *args, **kwargs):
+    """Déclenche la génération asynchrone de PDF et retourne le résultat."""
+    pk = kwargs.get('pk')
+    result = generate_invoice_pdf_task.delay(pk)
+    pdf = result.get(timeout=30)  # Attendre jusqu'à 30 secondes
+    if not pdf:
+        raise Http404(_("Facture non trouvée ou génération de PDF échouée"))
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="facture_{pk}.pdf"'
+    return response

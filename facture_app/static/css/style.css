@@ -1,99 +1,153 @@
-/* style.css */
-/* Styles globaux */
-body, body.default-body {
+/* === Base Styles === */
+:root {
+    --primary-bg: #1A233A;
+    --card-bg: #272E48;
+    --table-bg: #1a243a;
+    --text-color: #bcd0f7;
+    --text-secondary: #8a99b5;
+    --table-border: #2b3958;
+    --thead-bg: #2f71c1;
+    --success-color: #c0d64a;
+    --font-size-sm: 0.8rem;
+    --font-size-xs: 0.75rem;
+}
+
+body {
     margin: 0;
     padding: 0;
-    font: 400 .875rem 'Open Sans', sans-serif;
-    color: #bcd0f7;
-    background: #1A233A !important;
+    font: 400 0.875rem 'Open Sans', sans-serif;
+    color: var(--text-color);
+    background: var(--primary-bg);
+    position: relative;
+    height: 100%;
 }
 
-/* Ajustement de la disposition des boutons principaux */
-.page-invoice .btn {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    white-space: nowrap;
+/* === Invoice Container === */
+.invoice-container {
+    padding: 1rem;
 }
 
-/* Ajustement des colonnes pour les boutons principaux */
-.page-invoice .col-md-4 {
-    max-width: 350px;
+.invoice-header .invoice-logo {
+    margin-bottom: 0.8rem;
+    display: inline-block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-color);
 }
 
-/* Ajustement de la barre de recherche */
-.form-group .form-control {
-    max-width: 500px;
-    margin: 0 auto;
-    background: #ffffff;
-    color: #333;
-    border: 1px solid #2e3d5f;
+.invoice-header address {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin: 0;
 }
 
-.form-group .form-control::placeholder {
-    color: #8a99b5;
+.invoice-details {
+    margin-top: 1rem;
+    padding: 1rem;
+    line-height: 1.8;
+    background: var(--table-bg);
 }
 
-/* Ajustement du tableau */
+.invoice-details .invoice-num {
+    text-align: right;
+    font-size: var(--font-size-sm);
+}
+
+.invoice-body {
+    padding-top: 1rem;
+}
+
+.invoice-footer {
+    text-align: center;
+    font-size: var(--font-size-sm);
+    margin-top: 5px;
+}
+
+/* === Cards === */
+.card {
+    background: var(--card-bg);
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 1rem;
+}
+
+/* === Tables === */
 .custom-table {
-    max-width: 1000px;
-    margin: 0 auto;
-    border: 1px solid #2b3958;
+    border: 1px solid var(--table-border);
+}
+
+.custom-table thead {
+    background: var(--thead-bg);
 }
 
 .custom-table thead th {
-    font-size: 0.85rem;
-    padding: 0.5rem;
+    border: 0;
+    color: #ffffff;
+}
+
+.custom-table tbody tr:hover {
+    background: #172033;
+}
+
+.custom-table tbody tr:nth-of-type(even) {
+    background: var(--table-bg);
 }
 
 .custom-table tbody td {
-    font-size: 0.85rem;
-    padding: 0.5rem;
-    vertical-align: middle; /* Centrer verticalement le contenu */
+    border: 1px solid #2e3d5f;
 }
 
-/* Styles pour les icônes d'action */
-.action-icon {
-    display: inline-block;
-    margin-right: 5px;
-    text-decoration: none;
-    border: none;
-    background: none;
-    cursor: pointer;
-    padding: 5px; /* Ajout d'un padding pour un meilleur espacement */
+.table {
+    background: var(--table-bg);
+    color: var(--text-color);
+    font-size: var(--font-size-xs);
 }
 
-.view-icon {
-    color: #28a745; /* Vert pour "Voir" */
-    font-size: 1rem;
+.text-success {
+    color: var(--success-color) !important;
 }
 
-.delete-icon {
-    color: #dc3545; /* Rouge pour "Supprimer" */
-    font-size: 1rem;
-}
-
-.modify-icon {
-    color: #ffc107; /* Jaune pour "Modifier" */
-    font-size: 1rem;
-}
-
-/* Ajustement de la pagination */
-.btn-group {
+/* === Action Buttons === */
+.custom-actions-btns {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    margin: auto;
 }
 
-/* Styles pour les modals */
-.modal-content {
-    background: #272E48;
-    color: #bcd0f7;
+.custom-actions-btns .btn {
+    margin: 0.3rem;
 }
 
-.modal-header, .modal-footer {
-    border-color: #2e3d5f;
+/* === Print/PDF Styles === */
+@media print {
+    body {
+        background: #ffffff;
+        color: #000000;
+    }
+    .invoice-container, .card, .table, .invoice-details {
+        background: #ffffff;
+        color: #000000;
+    }
+    .custom-table thead {
+        background: #e0e0e0;
+    }
+    .custom-table thead th {
+        color: #000000;
+    }
+    .custom-table tbody td {
+        border: 1px solid #000000;
+    }
+    .text-success {
+        color: #000000 !important;
+    }
+    .custom-actions-btns {
+        display: none;
+    }
 }
 
-.modal-title, .modal-body label {
-    color: #bcd0f7 !important;
+/* === Responsive Design === */
+@media (max-width: 767px) {
+    .invoice-container {
+        padding: 1rem;
+    }
 }

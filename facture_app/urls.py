@@ -1,11 +1,23 @@
-# urls.py
 from django.urls import path
-from .views import Home, addCustomerView, AddInvoiceView, ModifyInvoiceView, DeleteInvoiceView
+from . import views
+
+app_name = 'invoicing'
 
 urlpatterns = [
-    path('', Home.as_view(), name='home'),
-    path('add-customer/', addCustomerView.as_view(), name='add_customer'),
-    path('add-invoice/', AddInvoiceView.as_view(), name='add_invoice'),
-    path('modify-invoice/', ModifyInvoiceView.as_view(), name='modify_invoice'),
-    path('delete-invoice/', DeleteInvoiceView.as_view(), name='delete_invoice'),
+    # Tableau de bord et liste des factures
+    path('', views.HomeView.as_view(), name='invoices-list'),
+    # Créer un client
+    path('add-customer/', views.AddCustomerView.as_view(), name='create-customer'),
+    # Créer une facture
+    path('add-invoice/', views.AddInvoiceView.as_view(), name='create-invoice'),
+    # Créer un produit
+    path('add-product/', views.AddPharmacyProductView.as_view(), name='create-product'),
+    # Visualiser une facture
+    path('view-invoice/<int:pk>/', views.InvoiceVisualizationView.as_view(), name='view-invoice'),
+    # Générer un PDF pour une facture
+    path('invoice-pdf/<int:pk>/', views.get_invoice_pdf, name='generate-invoice-pdf'),
+    # Modifier une facture
+    path('modify-invoice/', views.ModifyInvoiceView.as_view(), name='modify-invoice'),
+    # Supprimer une facture
+    path('delete-invoice/', views.DeleteInvoiceView.as_view(), name='delete-invoice'),
 ]
