@@ -1,0 +1,5 @@
+django==5.2
+pdfkit==1.0.0
+celery==5.4.0
+redis==5.0.8
+python-decouple==3.8

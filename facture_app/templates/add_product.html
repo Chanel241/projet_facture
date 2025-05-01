@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-capitalize text-center bg-dark text-white py-3">{% trans "Enregistrer un nouveau produit" %}</h1>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="{{ form.name.id_for_label }}">{% trans "Nom du produit" %}</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.name.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="{{ form.price.id_for_label }}">{% trans "Prix" %}</label>
+                {{ form.price }}
+                {% if form.price.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.price.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="{{ form.stock_quantity.id_for_label }}">{% trans "Quantité en stock" %}</label>
+                {{ form.stock_quantity }}
+                {% if form.stock_quantity.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.stock_quantity.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="{{ form.description.id_for_label }}">{% trans "Description" %}</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.description.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">{% trans "Enregistrer" %}</button>
+    </form>
+</div>
+{% endblock content %}
