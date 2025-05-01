@@ -1,0 +1,504 @@
+# Hooyia Invoicing System French Translations
+# Copyright (C) 2025 Hooyia
+# This file is distributed under the same license as the Hooyia Invoicing System package.
+# Chanel <chanel@example.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Hooyia Invoicing System\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-01 20:34+0100\n"
+"PO-Revision-Date: 2025-05-01 21:00+0100\n"
+"Last-Translator: Chanel <chanel@example.com>\n"
+"Language-Team: French <fr@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: facture_app/admin.py:15
+msgid "Informations personnelles"
+msgstr "Informations personnelles"
+
+#: facture_app/admin.py:16 facture_app/admin.py:31 facture_app/admin.py:64
+msgid "Métadonnées"
+msgstr "Métadonnées"
+
+#: facture_app/admin.py:37
+msgid "Factures sélectionnées marquées comme payées."
+msgstr "Factures sélectionnées marquées comme payées."
+
+#: facture_app/admin.py:38
+msgid "Marquer les factures sélectionnées comme payées"
+msgstr "Marquer les factures sélectionnées comme payées"
+
+#: facture_app/admin.py:75 facture_app/admin.py:76
+msgid "Administration du système de facturation Hooyia"
+msgstr "Administration du système de facturation Hooyia"
+
+#: facture_app/admin.py:77
+msgid "Tableau de bord du système de facturation Hooyia"
+msgstr "Tableau de bord du système de facturation Hooyia"
+
+#: facture_app/forms.py:10 facture_app/forms.py:39 facture_app/models.py:17
+#: facture_app/models.py:123 facture_app/templates/add_customer.html:11
+msgid "Nom"
+msgstr "Nom"
+
+#: facture_app/forms.py:11 facture_app/models.py:18
+#: facture_app/templates/add_customer.html:20
+msgid "Email"
+msgstr "Email"
+
+#: facture_app/forms.py:12 facture_app/models.py:22
+#: facture_app/templates/add_customer.html:29
+msgid "Téléphone"
+msgstr "Téléphone"
+
+#: facture_app/forms.py:13 facture_app/models.py:24
+#: facture_app/templates/add_customer.html:60
+msgid "Adresse"
+msgstr "Adresse"
+
+#: facture_app/forms.py:14 facture_app/models.py:25
+#: facture_app/templates/add_customer.html:40
+msgid "Sexe"
+msgstr "Sexe"
+
+#: facture_app/forms.py:15 facture_app/models.py:26
+#: facture_app/templates/add_customer.html:49
+msgid "Ville"
+msgstr "Ville"
+
+#: facture_app/forms.py:21
+msgid "Cet email est déjà utilisé."
+msgstr "Cet email est déjà utilisé."
+
+#: facture_app/forms.py:29 facture_app/models.py:31 facture_app/models.py:53
+#: facture_app/templates/add_invoice.html:11
+#: facture_app/templates/home.html:139 facture_app/templates/home.html:146
+msgid "Client"
+msgstr "Client"
+
+#: facture_app/forms.py:30 facture_app/models.py:58
+#: facture_app/templates/add_invoice.html:22 facture_app/templates/home.html:28
+msgid "Type de facture"
+msgstr "Type de facture"
+
+#: facture_app/forms.py:31 facture_app/models.py:60
+#: facture_app/templates/add_invoice.html:60
+msgid "Commentaires"
+msgstr "Commentaires"
+
+#: facture_app/forms.py:40 facture_app/models.py:124
+#: facture_app/templates/add_product.html:40
+msgid "Description"
+msgstr "Description"
+
+#: facture_app/forms.py:41 facture_app/models.py:125
+#: facture_app/templates/add_product.html:20
+msgid "Prix"
+msgstr "Prix"
+
+#: facture_app/forms.py:42 facture_app/models.py:126
+#: facture_app/templates/add_product.html:31
+msgid "Quantité en stock"
+msgstr "Quantité en stock"
+
+#: facture_app/forms.py:48
+msgid "Le prix ne peut pas être négatif."
+msgstr "Le prix ne peut pas être négatif."
+
+#: facture_app/forms.py:54
+msgid "La quantité en stock ne peut pas être négative."
+msgstr "La quantité en stock ne peut pas être négative."
+
+#: facture_app/models.py:14
+msgid "Homme"
+msgstr "Homme"
+
+#: facture_app/models.py:15
+msgid "Femme"
+msgstr "Femme"
+
+#: facture_app/models.py:21
+msgid ""
+"Le numéro de téléphone doit être au format international (ex. : +1234567890)."
+msgstr ""
+"Le numéro de téléphone doit être au format international (ex. : +1234567890)."
+
+#: facture_app/models.py:27
+msgid "Date de création"
+msgstr "Date de création"
+
+#: facture_app/models.py:28 facture_app/models.py:54
+msgid "Enregistré par"
+msgstr "Enregistré par"
+
+#: facture_app/models.py:32
+msgid "Clients"
+msgstr "Clients"
+
+#: facture_app/models.py:49
+msgid "Reçu"
+msgstr "Reçu"
+
+#: facture_app/models.py:50
+msgid "Facture proforma"
+msgstr "Facture proforma"
+
+#: facture_app/models.py:51 facture_app/models.py:63 facture_app/models.py:81
+#: facture_app/templates/invoice.html:13
+msgid "Facture"
+msgstr "Facture"
+
+#: facture_app/models.py:55
+msgid "Date de la facture"
+msgstr "Date de la facture"
+
+#: facture_app/models.py:56
+msgid "Dernière mise à jour"
+msgstr "Dernière mise à jour"
+
+#: facture_app/models.py:57 facture_app/templates/home.html:27
+msgid "Payé"
+msgstr "Payé"
+
+#: facture_app/models.py:59 facture_app/templates/add_invoice.html:47
+#: facture_app/templates/add_invoice.html:54
+#: facture_app/templates/add_invoice.html:100
+#: facture_app/templates/home.html:26 facture_app/templates/invoice.html:109
+msgid "Total"
+msgstr "Total"
+
+#: facture_app/models.py:64
+msgid "Factures"
+msgstr "Factures"
+
+#: facture_app/models.py:82 facture_app/templates/add_invoice.html:87
+#: facture_app/templates/invoice.html:80
+msgid "Produit"
+msgstr "Produit"
+
+#: facture_app/models.py:85
+msgid "La quantité doit être positive."
+msgstr "La quantité doit être positive."
+
+#: facture_app/models.py:86 facture_app/templates/add_invoice.html:43
+#: facture_app/templates/add_invoice.html:96
+#: facture_app/templates/invoice.html:82
+msgid "Quantité"
+msgstr "Quantité"
+
+#: facture_app/models.py:90
+msgid "Article"
+msgstr "Article"
+
+#: facture_app/models.py:91
+msgid "Articles"
+msgstr "Articles"
+
+#: facture_app/models.py:111
+#, python-format
+msgid "Stock insuffisant pour le produit : %s"
+msgstr "Stock insuffisant pour le produit : %s"
+
+#: facture_app/models.py:127
+msgid "Créé le"
+msgstr "Créé le"
+
+#: facture_app/models.py:128
+msgid "Mis à jour le"
+msgstr "Mis à jour le"
+
+#: facture_app/models.py:129
+msgid "Créé par"
+msgstr "Créé par"
+
+#: facture_app/models.py:132
+msgid "Produit pharmaceutique"
+msgstr "Produit pharmaceutique"
+
+#: facture_app/models.py:133
+msgid "Produits pharmaceutiques"
+msgstr "Produits pharmaceutiques"
+
+#: facture_app/templates/add_customer.html:6 facture_app/templates/home.html:11
+msgid "Enregistrer un nouveau client"
+msgstr "Enregistrer un nouveau client"
+
+#: facture_app/templates/add_customer.html:69
+#: facture_app/templates/add_invoice.html:69
+#: facture_app/templates/add_product.html:49
+#: facture_app/templates/home.html:102
+msgid "Enregistrer"
+msgstr "Enregistrer"
+
+#: facture_app/templates/add_invoice.html:6 facture_app/templates/home.html:8
+msgid "Enregistrer une nouvelle facture"
+msgstr "Enregistrer une nouvelle facture"
+
+#: facture_app/templates/add_invoice.html:34
+msgid "#1 Produit"
+msgstr "#1 Produit"
+
+#: facture_app/templates/add_invoice.html:36
+#: facture_app/templates/add_invoice.html:89
+msgid "Choisir un produit"
+msgstr "Choisir un produit"
+
+#: facture_app/templates/add_invoice.html:72
+msgid "Ajouter une nouvelle ligne d'article"
+msgstr "Ajouter une nouvelle ligne d'article"
+
+#: facture_app/templates/add_invoice.html:73
+msgid "Supprimer la dernière ligne d'article"
+msgstr "Supprimer la dernière ligne d'article"
+
+#: facture_app/templates/add_invoice.html:76
+msgid ""
+"Vérifiez que la quantité demandée ne dépasse pas le stock disponible pour "
+"chaque produit."
+msgstr ""
+"Vérifiez que la quantité demandée ne dépasse pas le stock disponible pour "
+"chaque produit."
+
+#: facture_app/templates/add_invoice.html:122
+msgid "La quantité demandée dépasse le stock disponible pour ce produit."
+msgstr "La quantité demandée dépasse le stock disponible pour ce produit."
+
+#: facture_app/templates/add_product.html:6 facture_app/templates/home.html:14
+msgid "Enregistrer un nouveau produit"
+msgstr "Enregistrer un nouveau produit"
+
+#: facture_app/templates/add_product.html:11
+msgid "Nom du produit"
+msgstr "Nom du produit"
+
+#: facture_app/templates/base.html:8
+msgid ""
+"Système de facturation Hooyia pour la gestion des clients, factures et "
+"produits."
+msgstr ""
+"Système de facturation Hooyia pour la gestion des clients, factures et "
+"produits."
+
+#: facture_app/templates/base.html:12 facture_app/templates/base.html:19
+#: facture_app/templates/base.html:70
+msgid "Système de facturation"
+msgstr "Système de facturation"
+
+#: facture_app/templates/base.html:27
+msgid "Langues"
+msgstr "Langues"
+
+#: facture_app/templates/base.html:44
+msgid "Plus d'options"
+msgstr "Plus d'options"
+
+#: facture_app/templates/base.html:47
+msgid "Ajouter un client"
+msgstr "Ajouter un client"
+
+#: facture_app/templates/base.html:48
+msgid "Ajouter un produit"
+msgstr "Ajouter un produit"
+
+#: facture_app/templates/base.html:70
+msgid "Droits d'auteur"
+msgstr "Droits d'auteur"
+
+#: facture_app/templates/home.html:18
+msgid "Rechercher..."
+msgstr "Rechercher..."
+
+#: facture_app/templates/home.html:18
+msgid "Rechercher des factures"
+msgstr "Rechercher des factures"
+
+#: facture_app/templates/home.html:24
+msgid "Nom du client"
+msgstr "Nom du client"
+
+#: facture_app/templates/home.html:25
+msgid "Date"
+msgstr "Date"
+
+#: facture_app/templates/home.html:29
+msgid "Action"
+msgstr "Action"
+
+#: facture_app/templates/home.html:42
+msgid "Facture payée"
+msgstr "Facture payée"
+
+#: facture_app/templates/home.html:44
+msgid "Facture non payée"
+msgstr "Facture non payée"
+
+#: facture_app/templates/home.html:49
+msgid "Voir"
+msgstr "Voir"
+
+#: facture_app/templates/home.html:50
+msgid "Modifier"
+msgstr "Modifier"
+
+#: facture_app/templates/home.html:51 facture_app/templates/home.html:125
+msgid "Supprimer"
+msgstr "Supprimer"
+
+#: facture_app/templates/home.html:56
+msgid "Pagination des éléments"
+msgstr "Pagination des éléments"
+
+#: facture_app/templates/home.html:76
+msgid "Aucune facture trouvée."
+msgstr "Aucune facture trouvée."
+
+#: facture_app/templates/home.html:86
+msgid "Modifier la facture"
+msgstr "Modifier la facture"
+
+#: facture_app/templates/home.html:94
+msgid "Cette facture a-t-elle été payée ?"
+msgstr "Cette facture a-t-elle été payée ?"
+
+#: facture_app/templates/home.html:96
+msgid "Oui"
+msgstr "Oui"
+
+#: facture_app/templates/home.html:98
+msgid "Non"
+msgstr "Non"
+
+#: facture_app/templates/home.html:101 facture_app/templates/home.html:124
+msgid "Fermer"
+msgstr "Fermer"
+
+#: facture_app/templates/home.html:113
+msgid "Supprimer la facture"
+msgstr "Supprimer la facture"
+
+#: facture_app/templates/home.html:121
+msgid "Êtes-vous sûr de vouloir supprimer cette facture ?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette facture ?"
+
+#: facture_app/templates/invoice.html:31
+msgid "Télécharger"
+msgstr "Télécharger"
+
+#: facture_app/templates/invoice.html:34
+msgid "Imprimer"
+msgstr "Imprimer"
+
+#: facture_app/templates/invoice.html:43
+msgid "Donald Programmer"
+msgstr "Donald Programmer"
+
+#: facture_app/templates/invoice.html:48
+msgid "Donald Programmer Inc, 45 NorthWest"
+msgstr "Donald Programmer Inc, 45 NorthWest"
+
+#: facture_app/templates/invoice.html:49
+msgid "Cameroun, Douala"
+msgstr "Cameroun, Douala"
+
+#: facture_app/templates/invoice.html:59
+msgid "Cameroun"
+msgstr "Cameroun"
+
+#: facture_app/templates/invoice.html:77
+msgid "Articles de la facture"
+msgstr "Articles de la facture"
+
+#: facture_app/templates/invoice.html:81
+msgid "ID Produit"
+msgstr "ID Produit"
+
+#: facture_app/templates/invoice.html:83
+msgid "Prix unitaire"
+msgstr "Prix unitaire"
+
+#: facture_app/templates/invoice.html:84 facture_app/templates/invoice.html:105
+msgid "Sous-total"
+msgstr "Sous-total"
+
+#: facture_app/templates/invoice.html:98
+msgid "Aucun article trouvé."
+msgstr "Aucun article trouvé."
+
+#: facture_app/templates/invoice.html:102
+msgid "Commentaire"
+msgstr "Commentaire"
+
+#: facture_app/templates/invoice.html:106
+msgid "Frais d'expédition"
+msgstr "Frais d'expédition"
+
+#: facture_app/templates/invoice.html:107
+msgid "Taxe"
+msgstr "Taxe"
+
+#: facture_app/templates/invoice.html:120
+msgid "PAYÉ"
+msgstr "PAYÉ"
+
+#: facture_app/templates/invoice.html:122
+msgid "OUI"
+msgstr "OUI"
+
+#: facture_app/templates/invoice.html:124
+msgid "NON"
+msgstr "NON"
+
+#: facture_app/templates/invoice.html:135
+msgid "Merci pour votre achat le"
+msgstr "Merci pour votre achat le"
+
+#: facture_app/templates/invoice.html:144 facture_app/views.py:118
+#: facture_app/views.py:131 facture_app/views.py:141
+msgid "Facture non trouvée."
+msgstr "Facture non trouvée."
+
+#: facture_app/views.py:43
+msgid "Client enregistré avec succès."
+msgstr "Client enregistré avec succès."
+
+#: facture_app/views.py:45 facture_app/views.py:91 facture_app/views.py:109
+msgid "Données invalides fournies."
+msgstr "Données invalides fournies."
+
+#: facture_app/views.py:69
+#, python-format
+msgid "Quantité demandée (%s) dépasse le stock disponible (%s) pour %s."
+msgstr "Quantité demandée (%s) dépasse le stock disponible (%s) pour %s."
+
+#: facture_app/views.py:72
+msgid "Produit non trouvé."
+msgstr "Produit non trouvé."
+
+#: facture_app/views.py:87
+msgid "Facture créée avec succès."
+msgstr "Facture créée avec succès."
+
+#: facture_app/views.py:89
+msgid "Données de produit incohérentes."
+msgstr "Données de produit incohérentes."
+
+#: facture_app/views.py:107
+msgid "Produit enregistré avec succès."
+msgstr "Produit enregistré avec succès."
+
+#: facture_app/views.py:129
+msgid "Facture mise à jour avec succès."
+msgstr "Facture mise à jour avec succès."
+
+#: facture_app/views.py:139
+msgid "Facture supprimée avec succès."
+msgstr "Facture supprimée avec succès."
+
+#: facture_app/views.py:167
+msgid "Facture non trouvée ou génération de PDF échouée"
+msgstr "Facture non trouvée ou génération de PDF échouée"
