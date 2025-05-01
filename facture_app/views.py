@@ -168,3 +168,9 @@ def get_invoice_pdf(request, *args, **kwargs):
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="facture_{pk}.pdf"'
     return response
+
+def custom_404(request, exception):
+    return render(request, 'facture_app/404.html', status=404)
+
+def custom_500(request):
+    return render(request, 'facture_app/500.html', status=500)
