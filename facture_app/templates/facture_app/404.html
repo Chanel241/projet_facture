@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans "Page non trouvée" %}</h1>
+<p>{% trans "La page que vous cherchez n'existe pas." %}</p>
+<a href="{% url 'invoicing:invoices-list' %}">{% trans "Retour à l'accueil" %}</a>
+{% endblock %}

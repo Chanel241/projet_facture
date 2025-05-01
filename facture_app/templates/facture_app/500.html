@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans "Erreur serveur" %}</h1>
+<p>{% trans "Une erreur est survenue. Veuillez réessayer plus tard." %}</p>
+<a href="{% url 'invoicing:invoices-list' %}">{% trans "Retour à l'accueil" %}</a>
+{% endblock %}
