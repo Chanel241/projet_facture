@@ -12,6 +12,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 # Configuration des traductions
 LOCALE_PATHS = [
     BASE_DIR / 'facture_app' / 'locale',
+    BASE_DIR / 'facture' / 'locale',
 ]
 
 # Security settings
