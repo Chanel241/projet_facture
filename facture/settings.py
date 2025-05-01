@@ -9,6 +9,11 @@ MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+# Configuration des traductions
+LOCALE_PATHS = [
+    BASE_DIR / 'facture_app' / 'locale',
+]
+
 # Security settings
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -76,7 +81,6 @@ LANGUAGES = [
     ('fr', 'Français'),
     ('en', 'Anglais'),
 ]
-LOCALE_PATHS = [BASE_DIR / 'locale']
 
 # Templates
 TEMPLATES = [
