@@ -1,3 +1,4 @@
+```python
 from pathlib import Path
 from decouple import config
 
@@ -12,7 +13,6 @@ STATICFILES_DIRS = [BASE_DIR / 'facture_app' / 'static']
 # Configuration des traductions
 LOCALE_PATHS = [
     BASE_DIR / 'facture_app' / 'locale',
-    BASE_DIR / 'facture' / 'locale',
 ]
 
 # Security settings
@@ -53,7 +53,7 @@ ROOT_URLCONF = 'django_invoice.urls'
 WSGI_APPLICATION = 'django_invoice.wsgi.application'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Database (default configuration, overridden in local.py or production.py)
+# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -143,9 +143,9 @@ LOGGING = {
 LOGIN_URL = 'admin:login'
 
 # Security settings
-SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=True, cast=bool)
-CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
-SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=True, cast=bool)
+SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=not DEBUG, cast=bool)
+CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=not DEBUG, cast=bool)
+SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=not DEBUG, cast=bool)
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
