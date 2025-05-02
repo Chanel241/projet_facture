@@ -125,3 +125,6 @@ dmypy.json
 .pyre/
 
 echo "test.pdf"
+echo ".env" >> .gitignore
+echo "static/" >> .gitignore
+echo "staticfiles/" >> .gitignore
