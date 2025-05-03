@@ -51,7 +51,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'django_invoice.urls'
 WSGI_APPLICATION = 'django_invoice.wsgi.application'
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Database
 DATABASES = {
