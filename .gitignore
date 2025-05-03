@@ -124,7 +124,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-echo "test.pdf"
+echo "test.pdf" >> .gitignore
 echo ".env" >> .gitignore
 echo "static/" >> .gitignore
 echo "staticfiles/" >> .gitignore
