@@ -39,9 +39,9 @@
                 <td>{{ facture.total }} FCFA</td>
                 <td>
                     {% if facture.paid %}
-                    <img src="{% static 'images/custom-icon-yes.svg' %}" alt="{% trans 'Facture payée' %}" width="20">
+                    <img src="{% static 'facture_app/images/custom-icon-yes.svg' %}" alt="{% trans 'Facture payée' %}" width="20">
                     {% else %}
-                    <img src="{% static 'images/custom-icon-no.svg' %}" alt="{% trans 'Facture non payée' %}" width="20">
+                    <img src="{% static 'facture_app/images/custom-icon-no.svg' %}" alt="{% trans 'Facture non payée' %}" width="20">
                     {% endif %}
                 </td>
                 <td>{{ facture.get_invoice_type_display }}</td>
