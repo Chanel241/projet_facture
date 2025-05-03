@@ -7,7 +7,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'facture_app' / 'static']
+STATICFILES_DIRS = []
 
 # Configuration des traductions
 LOCALE_PATHS = [
