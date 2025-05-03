@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static i18n %}
-<html lang="{% get_current_language %}">
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

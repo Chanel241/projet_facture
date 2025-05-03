@@ -4,7 +4,8 @@
 {% block content %}
 {% if is_pdf %}
 <!DOCTYPE html>
-<html lang="{% get_current_language %}">
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,12 +41,12 @@
                             <div class="row gutters">
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                     <a href="https://donaldprogrammeur.com" class="invoice-logo">
-                                        {% trans "Donald Programmer" %}
+                                        {% trans "Ma Société" %}
                                     </a>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <address class="text-right">
-                                        {% trans "Donald Programmer Inc, 45 NorthWest" %}<br>
+                                        {% trans "Ma Société, 45 NorthWest" %}<br>
                                         {% trans "Cameroun, Douala" %}<br>
                                         00000 00000
                                     </address>
