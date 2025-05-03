@@ -48,7 +48,7 @@ MIDDLEWARE = [
 ]
 
 # URL and WSGI configuration
-ROOT_URLCONF = 'django_invoice.urls'
+ROOT_URLCONF = 'facture.urls'
 WSGI_APPLICATION = 'django_invoice.wsgi.application'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
