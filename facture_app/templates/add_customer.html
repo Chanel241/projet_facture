@@ -2,71 +2,75 @@
 {% load static i18n %}
 
 {% block content %}
-<div class="container my-5">
-    <h1 class="text-capitalize text-center bg-dark text-white py-3">{% trans "Enregistrer un nouveau client" %}</h1>
-    <form method="post" class="mt-4">
-        {% csrf_token %}
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="{{ form.name.id_for_label }}">{% trans "Nom" %}</label>
-                {{ form.name }}
-                {% if form.name.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.name.errors|join:", " }}
-                    </div>
-                {% endif %}
-            </div>
-            <div class="form-group col-md-4">
-                <label for="{{ form.email.id_for_label }}">{% trans "Email" %}</label>
-                {{ form.email }}
-                {% if form.email.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.email.errors|join:", " }}
-                    </div>
-                {% endif %}
-            </div>
-            <div class="form-group col-md-2">
-                <label for="{{ form.phone.id_for_label }}">{% trans "Téléphone" %}</label>
-                {{ form.phone }}
-                {% if form.phone.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.phone.errors|join:", " }}
-                    </div>
-                {% endif %}
-            </div>
+<div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h1 class="h4 mb-0">{% trans "Enregistrer un nouveau client" %}</h1>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="{{ form.sex.id_for_label }}">{% trans "Sexe" %}</label>
-                {{ form.sex }}
-                {% if form.sex.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.sex.errors|join:", " }}
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">{% trans "Nom" %}</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.name.errors|join:", " }}
+                        </div>
+                        {% endif %}
                     </div>
-                {% endif %}
-            </div>
-            <div class="form-group col-md-6">
-                <label for="{{ form.city.id_for_label }}">{% trans "Ville" %}</label>
-                {{ form.city }}
-                {% if form.city.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.city.errors|join:", " }}
+                    <div class="col-md-4">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">{% trans "Email" %}</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.email.errors|join:", " }}
+                        </div>
+                        {% endif %}
                     </div>
-                {% endif %}
-            </div>
+                    <div class="col-md-2">
+                        <label for="{{ form.phone.id_for_label }}" class="form-label">{% trans "Téléphone" %}</label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.phone.errors|join:", " }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="{{ form.sex.id_for_label }}" class="form-label">{% trans "Sexe" %}</label>
+                        {{ form.sex }}
+                        {% if form.sex.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.sex.errors|join:", " }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="{{ form.city.id_for_label }}" class="form-label">{% trans "Ville" %}</label>
+                        {{ form.city }}
+                        {% if form.city.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.city.errors|join:", " }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-12">
+                        <label for="{{ form.address.id_for_label }}" class="form-label">{% trans "Adresse" %}</label>
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.address.errors|join:", " }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary">{% trans "Enregistrer" %}</button>
+                </div>
+            </form>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-12">
-                <label for="{{ form.address.id_for_label }}">{% trans "Adresse" %}</label>
-                {{ form.address }}
-                {% if form.address.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.address.errors|join:", " }}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">{% trans "Enregistrer" %}</button>
-    </form>
+    </div>
 </div>
 {% endblock content %}

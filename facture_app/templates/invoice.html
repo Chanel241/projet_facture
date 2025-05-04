@@ -2,152 +2,67 @@
 {% load static i18n %}
 
 {% block content %}
-{% if is_pdf %}
-<!DOCTYPE html>
-{% get_current_language as LANGUAGE_CODE %}
-<html lang="{{ LANGUAGE_CODE }}">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'facture_app/css/custom-style.css' %}">
-    <title>{% trans "Facture" %} #00{{ obj.id }}</title>
-</head>
-<body>
-{% else %}
-<div class="container my-5">
-{% endif %}
-    {% if obj %}
-    <div class="row gutters">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="card">
-                <div class="card-body p-0">
-                    <div class="invoice-container">
-                        <div class="invoice-header">
-                            {% if not is_pdf %}
-                            <div class="row gutters">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                    <div class="custom-actions-btns mb-5">
-                                        <a href="{% url 'invoicing:generate-invoice-pdf' pk=obj.pk %}" class="btn btn-primary">
-                                            <i class="bi bi-download"></i> {% trans "Télécharger" %}
-                                        </a>
-                                        <a href="#" class="btn btn-secondary" onclick="window.print()">
-                                            <i class="bi bi-printer"></i> {% trans "Imprimer" %}
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
-                            <div class="row gutters">
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                    <a href="https://donaldprogrammeur.com" class="invoice-logo">
-                                        {% trans "Ma Société" %}
-                                    </a>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <address class="text-right">
-                                        {% trans "Ma Société, 45 NorthWest" %}<br>
-                                        {% trans "Cameroun, Douala" %}<br>
-                                        00000 00000
-                                    </address>
-                                </div>
-                            </div>
-                            <div class="row gutters">
-                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-                                    <div class="invoice-details">
-                                        <address>
-                                            {{ obj.customer.name }}<br>
-                                            {{ obj.customer.address }}, {{ obj.customer.city }}, {% trans "Cameroun" %}
-                                        </address>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-                                    <div class="invoice-details">
-                                        <div class="invoice-num">
-                                            <div>{{ obj.get_invoice_type_display }} - #00{{ obj.id }}</div>
-                                            <div>{{ obj.invoice_date_time }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="invoice-body">
-                            <div class="row gutters">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="table-responsive">
-                                        <table class="table custom-table m-0" aria-label="{% trans 'Articles de la facture' %}">
-                                            <thead>
-                                                <tr>
-                                                    <th>{% trans "Produit" %}</th>
-                                                    <th>{% trans "ID Produit" %}</th>
-                                                    <th>{% trans "Quantité" %}</th>
-                                                    <th>{% trans "Prix unitaire" %}</th>
-                                                    <th>{% trans "Sous-total" %}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for article in articles %}
-                                                <tr>
-                                                    <td>{{ article.product.name }}</td>
-                                                    <td>{{ article.product.id }}</td>
-                                                    <td>{{ article.quantity }}</td>
-                                                    <td>{{ article.product.price }} FCFA</td>
-                                                    <td>{{ article.get_total }} FCFA</td>
-                                                </tr>
-                                                {% empty %}
-                                                <tr>
-                                                    <td colspan="5">{% trans "Aucun article trouvé." %}</td>
-                                                </tr>
-                                                {% endfor %}
-                                                <tr>
-                                                    <td>{% trans "Commentaire" %}: {{ obj.comments|default:"" }}</td>
-                                                    <td colspan="2">
-                                                        <p>
-                                                            {% trans "Sous-total" %}<br>
-                                                            {% trans "Frais d'expédition" %}<br>
-                                                            {% trans "Taxe" %}<br>
-                                                        </p>
-                                                        <h5 class="text-success"><strong>{% trans "Total" %}</strong></h5>
-                                                    </td>
-                                                    <td>
-                                                        <p>
-                                                            {{ obj.total }} FCFA<br>
-                                                            0.00 FCFA<br>
-                                                            0.00 FCFA<br>
-                                                        </p>
-                                                        <h5 class="text-success"><strong>{{ obj.total }} FCFA</strong></h5>
-                                                    </td>
-                                                    <td>
-                                                        {% trans "PAYÉ" %}:
-                                                        {% if obj.paid %}
-                                                        <strong style="color: green;">{% trans "OUI" %}</strong>
-                                                        {% else %}
-                                                        <strong style="color: red;">{% trans "NON" %}</strong>
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="invoice-footer">
-                            {% trans "Merci pour votre achat le" %} {{ obj.invoice_date_time }}.
-                        </div>
-                    </div>
+<div class="container my-4">
+    <div class="card shadow-sm invoice-container">
+        <div class="card-header">
+            <h3 class="invoice-logo">NovaFac</h3>
+            <p class="invoice-num">Facture #{{ invoice.id }}</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>{% trans "Facturé à" %}</h5>
+                    <p>{{ invoice.customer.name }}</p>
+                    <p>{{ invoice.customer.address }}</p>
+                    <p>{{ invoice.customer.email }}</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h5>{% trans "Informations de l'entreprise" %}</h5>
+                    <p>Ma Société</p>
+                    <p>Gabon, Libreville</p>
+                    <p>contact@novafac.com</p>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Description" %}</th>
+                                <th>{% trans "Quantité" %}</th>
+                                <th>{% trans "Prix unitaire" %}</th>
+                                <th>{% trans "Total" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in invoice.items.all %}
+                            <tr>
+                                <td>{{ item.description }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.unit_price|floatformat:2 }} €</td>
+                                <td>{{ item.total|floatformat:2 }} €</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4">{% trans "Aucun article trouvé." %}</td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>{% trans "Total général" %}</strong></td>
+                                <td><strong>{{ invoice.total|floatformat:2 }} €</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-end">
+                    <a href="{% url 'invoicing:generate-invoice-pdf' invoice.id %}" class="btn btn-primary">{% trans "Télécharger PDF" %}</a>
+                    <a href="{% url 'invoicing:modify-invoice' %}" class="btn btn-secondary">{% trans "Modifier" %}</a>
+                    <a href="{% url 'invoicing:delete-invoice' %}" class="btn btn-danger">{% trans "Supprimer" %}</a>
                 </div>
             </div>
         </div>
     </div>
-    {% else %}
-    <div class="alert alert-danger">
-        {% trans "Facture non trouvée." %}
-    </div>
-    {% endif %}
-{% if is_pdf %}
-</body>
-</html>
-{% else %}
 </div>
 {% endblock content %}

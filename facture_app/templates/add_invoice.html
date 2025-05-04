@@ -2,78 +2,88 @@
 {% load static i18n %}
 
 {% block content %}
-<div class="container my-5">
-    <h1 class="text-capitalize text-center bg-dark text-white py-3">{% trans "Enregistrer une nouvelle facture" %}</h1>
-    <form method="post" class="mt-4">
-        {% csrf_token %}
-        <div class="form-row">
-            <div class="form-group col-md-12">
-                <label for="{{ form.customer.id_for_label }}">{% trans "Client" %}</label>
-                {{ form.customer }}
-                {% if form.customer.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.customer.errors|join:", " }}
+<div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h1 class="h4 mb-0">{% trans "Enregistrer une nouvelle facture" %}</h1>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label for="{{ form.customer.id_for_label }}" class="form-label">{% trans "Client" %}</label>
+                        {{ form.customer }}
+                        {% if form.customer.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.customer.errors|join:", " }}
+                        </div>
+                        {% endif %}
                     </div>
-                {% endif %}
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-12">
-                <label for="{{ form.invoice_type.id_for_label }}">{% trans "Type de facture" %}</label>
-                {{ form.invoice_type }}
-                {% if form.invoice_type.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.invoice_type.errors|join:", " }}
+                    <div class="col-12">
+                        <label for="{{ form.invoice_type.id_for_label }}" class="form-label">{% trans "Type de facture" %}</label>
+                        {{ form.invoice_type }}
+                        {% if form.invoice_type.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.invoice_type.errors|join:", " }}
+                        </div>
+                        {% endif %}
                     </div>
-                {% endif %}
-            </div>
-        </div>
-        <div id="wrapper">
-            <div class="form-row" data-item="1">
-                <div class="form-group col-md-6">
-                    <label for="product-1">{% trans "#1 Produit" %}</label>
-                    <select name="product" class="form-control product-input" id="product-1" required aria-required="true">
-                        <option value="" disabled selected>{% trans "Choisir un produit" %}</option>
-                        {% for product in products %}
-                        <option value="{{ product.id }}" data-price="{{ product.price }}" data-stock="{{ product.stock_quantity }}">{{ product.name }} ({{ product.price }} FCFA, Stock: {{ product.stock_quantity }})</option>
-                        {% endfor %}
-                    </select>
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="qty-1">{% trans "Quantité" %}</label>
-                    <input required name="qty" type="number" min="0.1" step="0.1" class="form-control qty-input" id="qty-1" aria-required="true" onchange="updateTotals()">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="total-a-1">{% trans "Total" %}</label>
-                    <input name="total-a" type="number" step="0.1" readonly class="form-control total-a-input" id="total-a-1">
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-12">
-                <label for="total">{% trans "Total" %}</label>
-                <input value="0" type="number" step="0.1" readonly class="form-control" id="total">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-12">
-                <label for="{{ form.comments.id_for_label }}">{% trans "Commentaires" %}</label>
-                {{ form.comments }}
-                {% if form.comments.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.comments.errors|join:", " }}
+                <div id="wrapper" class="mt-4">
+                    <div class="form-row" data-item="1">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="product-1" class="form-label">{% trans "#1 Produit" %}</label>
+                                <select name="product" class="form-control product-input" id="product-1" required aria-required="true">
+                                    <option value="" disabled selected>{% trans "Choisir un produit" %}</option>
+                                    {% for product in products %}
+                                    <option value="{{ product.id }}" data-price="{{ product.price }}" data-stock="{{ product.stock_quantity }}">{{ product.name }} ({{ product.price }} FCFA, Stock: {{ product.stock_quantity }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="qty-1" class="form-label">{% trans "Quantité" %}</label>
+                                <input required name="qty" type="number" min="0.1" step="0.1" class="form-control qty-input" id="qty-1" aria-required="true" onchange="updateTotals()">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="total-a-1" class="form-label">{% trans "Total" %}</label>
+                                <input name="total-a" type="number" step="0.1" readonly class="form-control total-a-input" id="total-a-1">
+                            </div>
+                        </div>
                     </div>
-                {% endif %}
+                </div>
+                <div class="row g-3 mt-3">
+                    <div class="col-12">
+                        <label for="total" class="form-label">{% trans "Total" %}</label>
+                        <input value="0" type="number" step="0.1" readonly class="form-control" id="total">
+                    </div>
+                    <div class="col-12">
+                        <label for="{{ form.comments.id_for_label }}" class="form-label">{% trans "Commentaires" %}</label>
+                        {{ form.comments }}
+                        {% if form.comments.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.comments.errors|join:", " }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary">{% trans "Enregistrer" %}</button>
+                </div>
+            </form>
+            <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                    <button id="btn-add" class="btn btn-outline-danger w-100">{% trans "Ajouter une nouvelle ligne d'article" %}</button>
+                </div>
+                <div class="col-md-6">
+                    <button id="btn-remove" class="btn btn-outline-warning w-100">{% trans "Supprimer la dernière ligne d'article" %}</button>
+                </div>
+            </div>
+            <div class="alert alert-info mt-3">
+                {% trans "Vérifiez que la quantité demandée ne dépasse pas le stock disponible pour chaque produit." %}
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">{% trans "Enregistrer" %}</button>
-    </form>
-    <div class="row mt-3">
-        <button id="btn-add" class="btn btn-outline-danger w-50 col-md-6">{% trans "Ajouter une nouvelle ligne d'article" %}</button>
-        <button id="btn-remove" class="btn btn-outline-warning w-50 col-md-6">{% trans "Supprimer la dernière ligne d'article" %}</button>
-    </div>
-    <div class="alert alert-info mt-3">
-        {% trans "Vérifiez que la quantité demandée ne dépasse pas le stock disponible pour chaque produit." %}
     </div>
 </div>
 
@@ -83,22 +93,24 @@
             const number = $('#wrapper').children().length + 1;
             const formAdd = `
                 <div class="form-row" data-item="${number}">
-                    <div class="form-group col-md-6">
-                        <label for="product-${number}">${number} {% trans "Produit" %}</label>
-                        <select name="product" class="form-control product-input" id="product-${number}" required aria-required="true">
-                            <option value="" disabled selected>{% trans "Choisir un produit" %}</option>
-                            {% for product in products %}
-                            <option value="{{ product.id }}" data-price="{{ product.price }}" data-stock="{{ product.stock_quantity }}">{{ product.name }} ({{ product.price }} FCFA, Stock: {{ product.stock_quantity }})</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="qty-${number}">{% trans "Quantité" %}</label>
-                        <input required name="qty" type="number" min="0.1" step="0.1" class="form-control qty-input" id="qty-${number}" aria-required="true" onchange="updateTotals()">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="total-a-${number}">{% trans "Total" %}</label>
-                        <input name="total-a" type="number" step="0.1" readonly class="form-control total-a-input" id="total-a-${number}">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="product-${number}" class="form-label">${number} {% trans "Produit" %}</label>
+                            <select name="product" class="form-control product-input" id="product-${number}" required aria-required="true">
+                                <option value="" disabled selected>{% trans "Choisir un produit" %}</option>
+                                {% for product in products %}
+                                <option value="{{ product.id }}" data-price="{{ product.price }}" data-stock="{{ product.stock_quantity }}">{{ product.name }} ({{ product.price }} FCFA, Stock: {{ product.stock_quantity }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="qty-${number}" class="form-label">{% trans "Quantité" %}</label>
+                            <input required name="qty" type="number" min="0.1" step="0.1" class="form-control qty-input" id="qty-${number}" aria-required="true" onchange="updateTotals()">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="total-a-${number}" class="form-label">{% trans "Total" %}</label>
+                            <input name="total-a" type="number" step="0.1" readonly class="form-control total-a-input" id="total-a-${number}">
+                        </div>
                     </div>
                 </div>`;
             $("#wrapper").append(formAdd);

@@ -30,14 +30,14 @@ DEBUG = False
 
 # Trusted origins for CSRF
 CSRF_TRUSTED_ORIGINS = [
-    'https://donaldtest.blog',
-    'http://donaldtest.blog',
+    'https://chaneltest.blog',
+    'http://chaneltest.blog',
     'http://127.0.0.1',
     'http://localhost',
 ]
 
 # Uncomment if using subdomains
-# CSRF_COOKIE_DOMAIN = '.donaldtest.blog'
+# CSRF_COOKIE_DOMAIN = '.chaneltest.blog'
 
 # Additional security settings
 SECURE_HSTS_SECONDS = 31536000  # Enable HSTS for 1 year

@@ -2,156 +2,57 @@
 {% load static i18n %}
 
 {% block content %}
-<div class="container my-5">
-    <div class="row">
-        <a href="{% url 'invoicing:create-invoice' %}" class="btn col-md-4 btn-primary">
-            {% trans "Enregistrer une nouvelle facture" %}
-        </a>
-        <a href="{% url 'invoicing:create-customer' %}" class="btn col-md-4 btn-primary">
-            {% trans "Enregistrer un nouveau client" %}
-        </a>
-        <a href="{% url 'invoicing:create-product' %}" class="btn col-md-4 btn-primary ms-auto">
-            {% trans "Enregistrer un nouveau produit" %}
-        </a>
-    </div>
-    <div class="form-group mt-4">
-        <input id="search" class="form-control" type="text" placeholder="{% trans 'Rechercher...' %}" aria-label="{% trans 'Rechercher des factures' %}">
-    </div>
-    <table class="table table-striped-columns mt-3">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">{% trans "Nom du client" %}</th>
-                <th scope="col">{% trans "Date" %}</th>
-                <th scope="col">{% trans "Total" %}</th>
-                <th scope="col">{% trans "Payé" %}</th>
-                <th scope="col">{% trans "Type de facture" %}</th>
-                <th scope="col">{% trans "Action" %}</th>
-            </tr>
-        </thead>
-        <tbody id="myTable">
-            {% if invoices %}
-            {% for facture in invoices %}
-            <tr>
-                <th scope="row">{{ facture.pk }}</th>
-                <td>{{ facture.customer.name }}</td>
-                <td>{{ facture.invoice_date_time }}</td>
-                <td>{{ facture.total }} FCFA</td>
-                <td>
-                    {% if facture.paid %}
-                    <img src="{% static 'facture_app/images/custom-icon-yes.svg' %}" alt="{% trans 'Facture payée' %}" width="20">
-                    {% else %}
-                    <img src="{% static 'facture_app/images/custom-icon-no.svg' %}" alt="{% trans 'Facture non payée' %}" width="20">
-                    {% endif %}
-                </td>
-                <td>{{ facture.get_invoice_type_display }}</td>
-                <td>
-                    <a href="{% url 'invoicing:view-invoice' pk=facture.pk %}" title="{% trans 'Voir' %}" class="badge text-white bg-success">{% trans "Voir" %}</a>
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#modifier" class="badge text-dark bg-warning btn-invoice-mod" title="{% trans 'Modifier' %}" data-id="{{ facture.pk }}" data-customer="{{ facture.customer.name }}">{% trans "Modifier" %}</button>
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#supprimer" class="badge text-white bg-danger btn-invoice-sup" title="{% trans 'Supprimer' %}" data-id="{{ facture.pk }}" data-customer="{{ facture.customer.name }}">{% trans "Supprimer" %}</button>
-                </td>
-            </tr>
-            {% endfor %}
-            {% if invoices.has_other_pages %}
-            <div class="btn-group mt-3" role="group" aria-label="{% trans 'Pagination des éléments' %}">
-                {% if invoices.has_previous %}
-                <a href="?page={{ invoices.previous_page_number }}" class="btn btn-outline-primary">«</a>
-                {% endif %}
-                {% for page_number in invoices.paginator.page_range %}
-                {% if invoices.number == page_number %}
-                <button class="btn btn-outline-primary active" aria-current="page">
-                    {{ page_number }}
-                </button>
-                {% else %}
-                <a href="?page={{ page_number }}" class="btn btn-outline-primary">{{ page_number }}</a>
-                {% endif %}
-                {% endfor %}
-                {% if invoices.has_next %}
-                <a href="?page={{ invoices.next_page_number }}" class="btn btn-outline-primary">»</a>
-                {% endif %}
-            </div>
-            {% endif %}
-            {% else %}
-            <tr>
-                <td colspan="7" class="text-center">{% trans "Aucune facture trouvée." %}</td>
-            </tr>
-            {% endif %}
-        </tbody>
-    </table>
-    <!-- Modal modifier -->
-    <div class="modal fade" id="modifier" tabindex="-1" aria-labelledby="modifierLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modifierLabel">{% trans "Modifier la facture" %}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form method="post" action="{% url 'invoicing:modify-invoice' %}">
-                    {% csrf_token %}
-                    <div class="modal-body">
-                        <input name="id_modified" type="hidden" id="id_modified">
-                        <p id="modal-customer" class="text-dark"></p>
-                        <label class="text-dark">{% trans "Cette facture a-t-elle été payée ?" %}</label><br>
-                        <input type="radio" id="paid_yes" name="modified" value="True">
-                        <label for="paid_yes" class="text-white bg-primary px-2">{% trans "Oui" %}</label>
-                        <input type="radio" id="paid_no" name="modified" value="False">
-                        <label for="paid_no" class="text-white bg-danger px-2">{% trans "Non" %}</label>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Fermer" %}</button>
-                        <button type="submit" class="btn btn-primary">{% trans "Enregistrer" %}</button>
-                    </div>
-                </form>
+<div class="container my-4">
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="btn-group" role="group">
+                <a href="{% url 'invoicing:create-invoice' %}" class="btn btn-primary">{% trans "Enregistrer une nouvelle facture" %}</a>
+                <a href="{% url 'invoicing:create-customer' %}" class="btn btn-primary">{% trans "Enregistrer un nouveau client" %}</a>
+                <a href="{% url 'invoicing:create-product' %}" class="btn btn-primary">{% trans "Enregistrer un nouveau produit" %}</a>
             </div>
         </div>
     </div>
-    <!-- Modal suppression -->
-    <div class="modal fade" id="supprimer" tabindex="-1" aria-labelledby="supprimerLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="supprimerLabel">{% trans "Supprimer la facture" %}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form method="post" action="{% url 'invoicing:delete-invoice' %}">
-                    {% csrf_token %}
-                    <div class="modal-body">
-                        <input name="id_supprimer" type="hidden" id="id_supprimer">
-                        <p id="modal-customer-delete" class="text-dark"></p>
-                        <p>{% trans "Êtes-vous sûr de vouloir supprimer cette facture ?" %}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Fermer" %}</button>
-                        <button type="submit" class="btn btn-danger">{% trans "Supprimer" %}</button>
-                    </div>
-                </form>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="{% trans 'Rechercher...' %}">
+                <button class="btn btn-outline-secondary" type="button">{% trans "Rechercher" %}</button>
             </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{% trans "Nom du client" %}</th>
+                        <th>{% trans "Date" %}</th>
+                        <th>{% trans "Total" %}</th>
+                        <th>{% trans "Payé" %}</th>
+                        <th>{% trans "Type de facture" %}</th>
+                        <th>{% trans "Action" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if invoices %}
+                    {% for invoice in invoices %}
+                    <tr>
+                        <td>{{ invoice.id }}</td>
+                        <td>{{ invoice.customer.name }}</td>
+                        <td>{{ invoice.date|date:"Y-m-d" }}</td>
+                        <td>{{ invoice.total|floatformat:2 }} €</td>
+                        <td>{{ invoice.paid|yesno:"Oui,Non" }}</td>
+                        <td>{{ invoice.type }}</td>
+                        <td>
+                            <a href="{% url 'invoicing:view-invoice' invoice.id %}" class="btn btn-sm btn-primary">{% trans "Voir" %}</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="7">{% trans "Aucune facture trouvée." %}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        $('.btn-invoice-mod').on('click', function () {
-            const invoice_id = $(this).data('id');
-            const customer = $(this).data('customer');
-            $('#id_modified').val(invoice_id);
-            $('#modal-customer').text('{% trans "Client" %}: ' + customer);
-        });
-
-        $('.btn-invoice-sup').on('click', function () {
-            const invoice_id = $(this).data('id');
-            const customer = $(this).data('customer');
-            $('#id_supprimer').val(invoice_id);
-            $('#modal-customer-delete').text('{% trans "Client" %}: ' + customer);
-        });
-
-        $("#search").on("keyup", function () {
-            const value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-            });
-        });
-    });
-</script>
-{% endblock %}
+{% endblock content %}
