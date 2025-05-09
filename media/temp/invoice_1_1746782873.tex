@@ -1,0 +1,117 @@
+% Defining the document class and basic setup
+\documentclass[a4paper,12pt]{article}
+
+% Importing necessary packages for layout and formatting
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+
+% Setting page geometry for consistent margins
+\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
+
+% Defining colors for the invoice
+\definecolor{background}{HTML}{df4e86} % Fond rose de la page entière
+\definecolor{containerbg}{HTML}{e9ecef} % Fond gris clair du conteneur principal
+\definecolor{headerbg}{HTML}{eb89af} % Bandeau rose de l'en-tête
+\definecolor{tableheader}{HTML}{f8f9fa} % Fond gris clair de l'en-tête du tableau
+\definecolor{totalrow}{HTML}{d4edda} % Fond vert pâle pour la ligne Total
+\definecolor{tablebg}{HTML}{ffffff} % Fond blanc pour les données du tableau
+\definecolor{bordercolor}{HTML}{000000} % Bordures noires
+
+% Setting the background color for the entire page
+\pagecolor{background}
+
+% Customizing table column types for better alignment
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% Adjust table border thickness
+\setlength{\arrayrulewidth}{0.5pt}
+
+% Starting the document
+\begin{document}
+
+% Removing default page numbering
+\pagestyle{empty}
+
+% Creating the main container with a border
+\begin{center}
+\fbox{%
+    \begin{minipage}{0.9\textwidth}
+    \color{black}
+    \pagecolor[HTML]{e9ecef} % Fond gris clair pour le conteneur principal
+
+    % Creating the header section with a border
+    \begin{center}
+    \fbox{%
+        \colorbox{headerbg}{%
+            \begin{minipage}{\dimexpr\textwidth-2\fboxsep\relax}
+            \centering
+            \vspace{5pt}
+            \textbf{\Large NovaFac} \\
+            \vspace{3pt}
+            \normalsize Facture \mbox{\#1} \\
+            \vspace{5pt}
+            \end{minipage}
+        }%
+    }
+    \end{center}
+
+    % Adding vertical space after the header
+    \vspace{15pt}
+
+    % Creating the billing and company info section
+    \begin{minipage}{0.48\textwidth}
+        % Billing info aligned to the left
+        \raggedright
+        \textbf{\normalsize Facturé à} \\
+        \vspace{2pt}
+        buchot \\
+        Bessieux \\
+        cbuchot@gmail.com \\
+    \end{minipage}%
+    \hfill% Ajout d'un espacement flexible
+    \begin{minipage}{0.48\textwidth}
+        % Company info aligned to the right
+        \raggedleft
+        \textbf{\normalsize Informations de l'entreprise} \\
+        \vspace{2pt}
+        Ma Société \\
+        Gabon, Libreville \\
+        contact@novafac.com \\
+    \end{minipage}
+
+    % Adding vertical space before the table
+    \vspace{15pt}
+
+    % Creating the table for invoice items with adjusted column widths
+    \begin{tabular}{|C{4.2cm}|C{2.2cm}|C{3.2cm}|C{3.2cm}|}
+        \hline
+        \rowcolor{tableheader}
+        \textbf{Description} & \textbf{Quantité} & \textbf{Prix unitaire} & \textbf{Total} \\
+        \hline
+        \rowcolor{tablebg} % Fond blanc pour les données
+        
+        efferalgant & 2,00 & 3000,00 FCFA & 6000,00 FCFA \\
+        \hline
+        
+        \rowcolor{totalrow}
+        \multicolumn{3}{|c|}{\textbf{Total général}} & \textbf6000,00 FCFA \\
+        \hline
+    \end{tabular}
+
+    % Ajout de la date pour vérifier la dynamique
+    \vspace{15pt}
+    \textit{Généré le : 9 mai 2025 09:27}
+
+    \end{minipage}%
+}
+\end{center}
+
+% Ending the document
+\end{document}

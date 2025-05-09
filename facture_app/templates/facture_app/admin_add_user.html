@@ -1,0 +1,86 @@
+{% extends "facture_app/base.html" %}
+{% load static i18n widget_tweaks %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'facture_app/css/admin_add_user.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row">
+        <!-- Barre latérale -->
+        <div class="col-md-3">
+            <div class="list-group mb-4">
+                <a href="{% url 'invoicing:admin_add_user' %}" class="list-group-item list-group-item-action active">
+                    {% trans "Utilisateurs" %} <span class="badge bg-success float-end">+ Ajouter</span>
+                </a>
+                <a href="{% url 'invoicing:invoices-list' %}" class="list-group-item list-group-item-action">{% trans "Factures" %}</a>
+                <a href="{% url 'invoicing:create-product' %}" class="list-group-item list-group-item-action">{% trans "Produits" %}</a>
+                <a href="{% url 'invoicing:create-customer' %}" class="list-group-item list-group-item-action">{% trans "Clients" %}</a>
+            </div>
+        </div>
+        <!-- Formulaire -->
+        <div class="col-md-9">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">{% trans "Ajouter un nouvel utilisateur" %}</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.username.id_for_label }}" class="form-label">{% trans "Nom d'utilisateur" %}</label>
+                                {{ form.username|add_class:"form-control" }}
+                                {% for error in form.username.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">{% trans "Adresse e-mail" %}</label>
+                                {{ form.email|add_class:"form-control" }}
+                                {% for error in form.email.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.password1.id_for_label }}" class="form-label">{% trans "Mot de passe" %}</label>
+                                {{ form.password1|add_class:"form-control" }}
+                                {% for error in form.password1.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.password2.id_for_label }}" class="form-label">{% trans "Confirmer le mot de passe" %}</label>
+                                {{ form.password2|add_class:"form-control" }}
+                                {% for error in form.password2.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.first_name.id_for_label }}" class="form-label">{% trans "Prénom" %}</label>
+                                {{ form.first_name|add_class:"form-control" }}
+                                {% for error in form.first_name.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.last_name.id_for_label }}" class="form-label">{% trans "Nom de famille" %}</label>
+                                {{ form.last_name|add_class:"form-control" }}
+                                {% for error in form.last_name.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">{% trans "Ajouter l'utilisateur" %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

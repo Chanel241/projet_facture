@@ -1,11 +1,14 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.views import LogoutView
 
 app_name = 'invoicing'
 
 urlpatterns = [
     # Tableau de bord et liste des factures
     path('', views.HomeView.as_view(), name='invoices-list'),
+    # Créer un admin
+    path('add-admin/', views.AddAdminView.as_view(), name='admin_add_user'),  # Changé de 'create-admin' à 'admin_add_user'
     # Créer un client
     path('add-customer/', views.AddCustomerView.as_view(), name='create-customer'),
     # Créer une facture
@@ -20,4 +23,6 @@ urlpatterns = [
     path('modify-invoice/', views.ModifyInvoiceView.as_view(), name='modify-invoice'),
     # Supprimer une facture
     path('delete-invoice/', views.DeleteInvoiceView.as_view(), name='delete-invoice'),
+    # Déconnexion
+    path('logout/', LogoutView.as_view(next_page='invoicing:invoices-list'), name='logout'),
 ]

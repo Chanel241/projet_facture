@@ -1,11 +1,11 @@
-# Hooyia Invoicing System French Translations
-# Copyright (C) 2025 Hooyia
-# This file is distributed under the same license as the Hooyia Invoicing System package.
+# Ecole-241 Invoicing System French Translations
+# Copyright (C) 2025 Ecole-241
+# This file is distributed under the same license as the Ecole-241 Invoicing System package.
 # Chanel <chanel@example.com>, 2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Hooyia Invoicing System\n"
+"Project-Id-Version: Ecole-241 Invoicing System\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-01 20:34+0100\n"
 "PO-Revision-Date: 2025-05-01 21:00+0100\n"
@@ -34,12 +34,12 @@ msgid "Marquer les factures sélectionnées comme payées"
 msgstr "Marquer les factures sélectionnées comme payées"
 
 #: facture_app/admin.py:75 facture_app/admin.py:76
-msgid "Administration du système de facturation Hooyia"
-msgstr "Administration du système de facturation Hooyia"
+msgid "Administration du système de facturation Ecole-241"
+msgstr "Administration du système de facturation Ecole-241"
 
 #: facture_app/admin.py:77
-msgid "Tableau de bord du système de facturation Hooyia"
-msgstr "Tableau de bord du système de facturation Hooyia"
+msgid "Tableau de bord du système de facturation Ecole-241"
+msgstr "Tableau de bord du système de facturation Ecole-241"
 
 #: facture_app/forms.py:10 facture_app/forms.py:39 facture_app/models.py:17
 #: facture_app/models.py:123 facture_app/templates/add_customer.html:11
@@ -124,9 +124,9 @@ msgstr "Femme"
 
 #: facture_app/models.py:21
 msgid ""
-"Le numéro de téléphone doit être au format international (ex. : +1234567890)."
+"Le numéro de téléphone doit être au format international (ex. : +24174532657)."
 msgstr ""
-"Le numéro de téléphone doit être au format international (ex. : +1234567890)."
+"Le numéro de téléphone doit être au format international (ex. : +24174532657)."
 
 #: facture_app/models.py:27
 msgid "Date de création"
@@ -278,10 +278,10 @@ msgstr "Nom du produit"
 
 #: facture_app/templates/base.html:8
 msgid ""
-"Système de facturation Hooyia pour la gestion des clients, factures et "
+"Système de facturation Ecole-241 pour la gestion des clients, factures et "
 "produits."
 msgstr ""
-"Système de facturation Hooyia pour la gestion des clients, factures et "
+"Système de facturation Ecole-241 pour la gestion des clients, factures et "
 "produits."
 
 #: facture_app/templates/base.html:12 facture_app/templates/base.html:19
@@ -394,20 +394,20 @@ msgid "Imprimer"
 msgstr "Imprimer"
 
 #: facture_app/templates/invoice.html:43
-msgid "Donald Programmer"
-msgstr "Donald Programmer"
+msgid "Chanel Royal"
+msgstr "Chanel Royal"
 
 #: facture_app/templates/invoice.html:48
-msgid "Donald Programmer Inc, 45 NorthWest"
-msgstr "Donald Programmer Inc, 45 NorthWest"
+msgid "Chanel Royal, Libreville"
+msgstr "Chanel Royal, Libreville"
 
 #: facture_app/templates/invoice.html:49
-msgid "Cameroun, Douala"
-msgstr "Cameroun, Douala"
+msgid "Gabon, Libreville"
+msgstr "Gabon, Libreville"
 
 #: facture_app/templates/invoice.html:59
-msgid "Cameroun"
-msgstr "Cameroun"
+msgid "Gabon"
+msgstr "Gabon"
 
 #: facture_app/templates/invoice.html:77
 msgid "Articles de la facture"

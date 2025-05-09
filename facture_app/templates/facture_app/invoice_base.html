@@ -1,0 +1,153 @@
+{% load static i18n %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Facture" %} #{{ obj.id }}</title>
+    <style>
+        @page {
+            margin: 20pt;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica", "Arial", sans-serif;
+            background-color: #df4e86;
+            color: #0a0a0a;
+            font-size: 12pt;
+        }
+        .container {
+            width: 100%;
+            max-width: 600pt;
+            margin: 0 auto;
+            background-color: #f0e9eb;
+            padding: 20pt;
+            border: 1pt solid #ddd;
+        }
+        .header {
+            background-color: #eb89af;
+            padding: 10pt;
+            text-align: center;
+            margin-bottom: 10pt;
+        }
+        h3 {
+            margin: 0;
+            font-size: 18pt;
+            font-weight: bold;
+            color: #3b5eb8;
+        }
+        h5 {
+            font-size: 14pt;
+            margin: 0 0 5pt 0;
+        }
+        p {
+            margin: 5pt 0;
+            font-size: 12pt;
+        }
+        .section {
+            margin: 10pt 0;
+        }
+        .flex-container {
+            display: block; /* Simplifié pour compatibilité PDF */
+        }
+        .flex-item {
+            margin-bottom: 10pt;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            margin-top: 10pt;
+        }
+        th, td {
+            border: 1pt solid #dee2e6;
+            padding: 8pt;
+            text-align: center;
+            font-size: 12pt;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        .total-row {
+            background-color: #d4edda;
+            font-weight: bold;
+        }
+        .total-row td {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h3>NovaFac</h3>
+            <p>{% trans "Facture" %} #{{ obj.id }}</p>
+        </div>
+        <div class="section">
+            <div class="flex-container">
+                <div class="flex-item">
+                    <h5>{% trans "Facturé à" %}</h5>
+                    <p>{{ obj.customer.name }}</p>
+                    <p>{{ obj.customer.address|default:"Non spécifié" }}</p>
+                    <p>{{ obj.customer.email|default:"Non spécifié" }}</p>
+                </div>
+                <div class="flex-item">
+                    <h5>{% trans "Informations de l'entreprise" %}</h5>
+                    <p>Ma Société</p>
+                    <p>Gabon, Libreville</p>
+                    <p>contact@novafac.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>{% trans "Description" %}</th>
+                        <th>{% trans "Quantité" %}</th>
+                        <th>{% trans "Prix unitaire" %}</th>
+                        <th>{% trans "Total" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in articles %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity|floatformat:2 }}</td>
+                        <td>{{ item.product.price|floatformat:2 }} FCFA</td>
+                        <td>{{ item.get_total|floatformat:2 }} FCFA</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">{% trans "Aucun article trouvé." %}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="total-row">
+                        <td colspan="3"><strong>{% trans "Total général" %}</strong></td>
+                        <td><strong>{{ obj.total|floatformat:2 }} FCFA</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% if not is_pdf %}
+        <div class="section text-end">
+            <a href="{% url 'invoicing:get-invoice-pdf' obj.id %}" class="btn btn-primary">{% trans "Télécharger PDF" %}</a>
+            <form method="post" action="{% url 'invoicing:modify-invoice' %}" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="id_modified" value="{{ obj.id }}">
+                <input type="hidden" name="modified" value="True">
+                <button type="submit" class="btn btn-secondary">{% trans "Modifier" %}</button>
+            </form>
+            <form method="post" action="{% url 'invoicing:delete-invoice' %}" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="id_supprimer" value="{{ obj.id }}">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('{% trans "Êtes-vous sûr de vouloir supprimer cette facture ?" %}')">{% trans "Supprimer" %}</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

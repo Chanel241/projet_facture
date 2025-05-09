@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+{% load static i18n widget_tweaks %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <!-- Configuration des métadonnées -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% trans 'Système de facturation NovaFac pour la gestion des clients, factures et produits.' %}">
+    <!-- Chargement des styles Bootstrap et personnalisés -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'facture_app/css/home.css' %}">
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+    <!-- Titre de la page -->
+    <title>{% trans "NovaFac" %}</title>
+</head>
+<body class="min-vh-100 d-flex flex-column">
+    <!-- En-tête avec navigation -->
+    {% get_available_languages as LANGUAGES %}
+    {% get_language_info_list for LANGUAGES as languages %}
+    <header class="custom-header">
+        <div class="custom-container">
+            <div class="d-flex align-items-center">
+                <a class="nav-logo" href="/">NovaFac</a>
+                <a class="nav-link ms-3" href="{% url 'invoicing:invoices-list' %}">{% trans "Accueil" %}</a>
+            </div>
+            <div class="nav-lang">
+                <!-- Menu déroulant pour les langues -->
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% trans "Langages" %}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                        {% for language in languages %}
+                        <li>
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="language" value="{{ language.code }}">
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button type="submit" class="dropdown-item">{{ language.name_local }}</button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- Menu déroulant pour les options -->
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="optionsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% trans "More options" %}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="optionsDropdown">
+                        <li>
+                            <form action="{% url 'invoicing:create-invoice' %}" method="get">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button type="submit" class="dropdown-item">{% trans "Ajouter une facture" %}</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{% url 'invoicing:admin_add_user' %}" method="get">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button type="submit" class="dropdown-item">{% trans "Ajout d'utilisateur" %}</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{% url 'invoicing:create-product' %}" method="get">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button type="submit" class="dropdown-item">{% trans "Ajouter un produit" %}</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{% url 'invoicing:create-customer' %}" method="get">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button type="submit" class="dropdown-item">{% trans "Ajouter un client" %}</button>
+                            </form>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form action="{% url 'invoicing:logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item">{% trans "Déconnexion" %}</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Contenu principal -->
+    <main class="flex-grow-1">
+        <div class="container my-3">
+            <!-- Affichage des messages -->
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <h2 class="text-center mb-4">{% trans "Liste des Factures" %}</h2>
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="{% trans 'Search...' %}" id="searchInput">
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>{% trans "Customer Name" %}</th>
+                            <th>{% trans "Date" %}</th>
+                            <th>{% trans "Total" %}</th>
+                            <th>{% trans "Paid" %}</th>
+                            <th>{% trans "Type of Invoice" %}</th>
+                            <th>{% trans "Action" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if invoices %}
+                        {% for invoice in invoices %}
+                        <tr>
+                            <td>{{ invoice.id }}</td>
+                            <td>{{ invoice.customer.name }}</td>
+                            <td>{{ invoice.invoice_date_time|date:"d M Y, H:i p" }}</td>
+                            <td>{{ invoice.total|floatformat:2 }} FCFA</td>
+                            <td>
+                                <form method="post" action="{% url 'invoicing:modify-invoice' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id_modified" value="{{ invoice.id }}">
+                                    <select name="modified" onchange="this.form.submit()" class="form-select form-select-sm">
+                                        <option value="True" {% if invoice.paid %}selected{% endif %}>✔</option>
+                                        <option value="False" {% if not invoice.paid %}selected{% endif %}>✖</option>
+                                    </select>
+                                </form>
+                            </td>
+                            <td>{{ invoice.get_invoice_type_display }}</td>
+                            <td>
+                                <a href="{% url 'invoicing:view-invoice' invoice.id %}" class="btn btn-sm btn-success">{% trans "View" %}</a>
+                                <a href="{% url 'invoicing:generate-invoice-pdf' invoice.id %}" class="btn btn-sm btn-warning">{% trans "PDF" %}</a>
+                                <form method="post" action="{% url 'invoicing:delete-invoice' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id_supprimer" value="{{ invoice.id }}">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('{% trans "Êtes-vous sûr de vouloir supprimer cette facture ?" %}')">{% trans "Delete" %}</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center">{% trans "No invoices available." %}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            {% include 'facture_app/pagination.html' %}
+        </div>
+    </main>
+    <!-- Pied de page -->
+    <footer class="text-center py-2">
+        <div class="container">
+            {% trans "NovaFac" %} © 2025 {% trans "Copyright" %}: <a href="https://chanelroyal.com">Chanel</a>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            let value = this.value.toLowerCase();
+            let rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                let text = row.textContent.toLowerCase();
+                row.style.display = text.includes(value) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

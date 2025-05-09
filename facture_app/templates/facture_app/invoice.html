@@ -1,20 +1,27 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
+{% block extrahead %}
+    <!-- Chargement des styles spécifiques à la facture -->
+    <link rel="stylesheet" href="{% static 'facture_app/css/invoice.css' %}">
+{% endblock extrahead %}
+
 {% block content %}
 <div class="container my-4">
     <div class="card shadow-sm invoice-container">
+        <!-- En-tête de la facture -->
         <div class="card-header">
             <h3 class="invoice-logo">NovaFac</h3>
-            <p class="invoice-num">Facture #{{ invoice.id }}</p>
+            <p class="invoice-num">Facture #{{ obj.id }}</p>
         </div>
+        <!-- Corps de la facture -->
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <h5>{% trans "Facturé à" %}</h5>
-                    <p>{{ invoice.customer.name }}</p>
-                    <p>{{ invoice.customer.address }}</p>
-                    <p>{{ invoice.customer.email }}</p>
+                    <p>{{ obj.customer.name }}</p>
+                    <p>{{ obj.customer.address }}</p>
+                    <p>{{ obj.customer.email }}</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <h5>{% trans "Informations de l'entreprise" %}</h5>
@@ -23,6 +30,7 @@
                     <p>contact@novafac.com</p>
                 </div>
             </div>
+            <!-- Tableau des articles -->
             <div class="row mt-4">
                 <div class="col-12">
                     <table class="table table-striped">
@@ -35,12 +43,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for item in invoice.items.all %}
+                            {% for item in articles %}
                             <tr>
-                                <td>{{ item.description }}</td>
+                                <td>{{ item.product.name }}</td>
                                 <td>{{ item.quantity }}</td>
-                                <td>{{ item.unit_price|floatformat:2 }} €</td>
-                                <td>{{ item.total|floatformat:2 }} €</td>
+                                <td>{{ item.product.price|floatformat:2 }} FCFA</td>
+                                <td>{{ item.get_total|floatformat:2 }} FCFA</td>
                             </tr>
                             {% empty %}
                             <tr>
@@ -49,17 +57,27 @@
                             {% endfor %}
                             <tr>
                                 <td colspan="3" class="text-end"><strong>{% trans "Total général" %}</strong></td>
-                                <td><strong>{{ invoice.total|floatformat:2 }} €</strong></td>
+                                <td><strong>{{ obj.total|floatformat:2 }} FCFA</strong></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <!-- Actions -->
             <div class="row mt-4">
                 <div class="col-12 text-end">
-                    <a href="{% url 'invoicing:generate-invoice-pdf' invoice.id %}" class="btn btn-primary">{% trans "Télécharger PDF" %}</a>
-                    <a href="{% url 'invoicing:modify-invoice' %}" class="btn btn-secondary">{% trans "Modifier" %}</a>
-                    <a href="{% url 'invoicing:delete-invoice' %}" class="btn btn-danger">{% trans "Supprimer" %}</a>
+                    <a href="{% url 'invoicing:generate-invoice-pdf' obj.id %}" class="btn btn-primary">{% trans "Télécharger PDF" %}</a>
+                    <form method="post" action="{% url 'invoicing:modify-invoice' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="id_modified" value="{{ obj.id }}">
+                        <input type="hidden" name="modified" value="True">
+                        <button type="submit" class="btn btn-secondary">{% trans "Modifier" %}</button>
+                    </form>
+                    <form method="post" action="{% url 'invoicing:delete-invoice' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="id_supprimer" value="{{ obj.id }}">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('{% trans "Êtes-vous sûr de vouloir supprimer cette facture ?" %}')">{% trans "Supprimer" %}</button>
+                    </form>
                 </div>
             </div>
         </div>

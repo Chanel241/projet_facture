@@ -30,6 +30,14 @@ class InvoiceForm(forms.ModelForm):
             'invoice_type': _("Type de facture"),
             'comments': _("Commentaires"),
         }
+        widgets = {
+            'customer': forms.Select(attrs={'class': 'form-control'}),
+            'invoice_type': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['customer'].queryset = Customer.objects.all()
 
 class PharmacyProductForm(forms.ModelForm):
     class Meta:

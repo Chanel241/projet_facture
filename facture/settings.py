@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import config
+import os
 
 # Project paths
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -7,7 +8,13 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [BASE_DIR / 'facture_app' / 'static']
+
+# Vérifier et créer le répertoire media/temp si nécessaire
+TEMP_DIR = MEDIA_ROOT / 'temp'
+if not TEMP_DIR.exists():
+    TEMP_DIR.mkdir(parents=True, exist_ok=True)
+    os.chmod(TEMP_DIR, 0o755)  # Définir les permissions en lecture/écriture pour l'utilisateur
 
 # Configuration des traductions
 LOCALE_PATHS = [
@@ -28,10 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    # Third-party apps
     'django_celery_beat',
-    # Local apps
     'facture_app',
+    'widget_tweaks',
 ]
 
 # Middleware
@@ -87,7 +93,7 @@ LANGUAGES = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'facture_app' / 'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -95,6 +101,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -117,25 +124,44 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
-CELERY_TASK_SOFT_TIME_LIMIT = 60  # 60 seconds soft limit for tasks
-CELERY_TASK_TIME_LIMIT = 120  # 120 seconds hard limit for tasks
+CELERY_TASK_SOFT_TIME_LIMIT = 120  # Temps maximal avant avertissement (en secondes)
+CELERY_TASK_TIME_LIMIT = 180  # Temps maximal total (en secondes), ajusté pour éviter les timeouts
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 # Logging configuration
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'formatter': 'verbose',
         },
         'file': {
             'class': 'logging.FileHandler',
             'filename': BASE_DIR / 'debug.log',
+            'level': 'DEBUG',
+            'formatter': 'verbose',
         },
     },
     'root': {
         'handlers': ['console', 'file'],
-        'level': 'INFO',
+        'level': 'DEBUG',  # Changer à DEBUG pour capturer tous les détails
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
     },
 }
 

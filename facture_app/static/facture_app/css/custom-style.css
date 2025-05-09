@@ -1,26 +1,26 @@
 body {
-    background-color: #1e3a8a; /* Bleu sombre */
+    background-color: #df4e86;; /* Bleu sombre */
     background-image: none; /* Supprime toute image de fond */
     color: #ffffff; /* Texte blanc pour contraste */
 }
 
 .navbar {
-    border-bottom: 1px solid #2d4a9e; /* Bordure bleu foncé légèrement plus clair */
+    border-bottom: 1px solid #df4e86;; /* Bordure bleu foncé légèrement plus clair */
 }
 
 .card {
     border-radius: 0.5rem;
-    background-color: #2d4a9e; /* Fond des cartes en bleu foncé */
+    background-color: #5fbbe9;; /* Fond des cartes en bleu foncé */
     color: #ffffff; /* Texte blanc dans les cartes */
 }
 
 .card-header {
     border-radius: 0.5rem 0.5rem 0 0;
-    background-color: #1e3a8a; /* En-tête des cartes */
+    background-color: #0b0b0c; /* En-tête des cartes */
 }
 
 .table {
-    background-color: #2d4a9e;
+    background-color: #161616;
     border-radius: 0.25rem;
     color: #ffffff;
 }
@@ -31,8 +31,8 @@ body {
 }
 
 .btn-primary {
-    background-color: #3b5eb8; /* Bouton bleu clair */
-    border-color: #3b5eb8;
+    background-color: #f166d3; /* Bouton bleu clair */
+    border-color: #050505;
 }
 
 .btn-primary:hover {
@@ -64,14 +64,18 @@ body {
 
 .form-control, .form-select {
     border-radius: 0.25rem;
-    background-color: #1e3a8a;
-    color: #ffffff;
+    background-color: #f8f9fa; /* Gris clair pour la barre de recherche */
+    color: #000000; /* Texte noir pour contraste */
     border-color: #3b5eb8;
 }
 
 .form-control:focus, .form-select:focus {
-    background-color: #1e3a8a;
-    color: #ffffff;
+    background-color: #f8f9fa;
+    color: #000000;
     border-color: #5c80d6;
     box-shadow: 0 0 0 0.2rem rgba(60, 128, 214, 0.25);
+}
+
+.input-group {
+    background-color: #f8f9fa; /* Gris clair pour la barre de recherche */
 }

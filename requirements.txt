@@ -11,6 +11,7 @@ Django==5.2
 django-celery-beat==2.8.0
 django-redis==5.4.0
 django-timezone-field==7.1
+django-widget-tweaks==1.5.0
 kombu==5.5.3
 pdfkit==1.0.0
 prompt_toolkit==3.0.51
@@ -18,7 +19,7 @@ psycopg2-binary==2.9.10
 python-crontab==3.2.0
 python-dateutil==2.9.0.post0
 python-decouple==3.8
-redis==5.0.8
+redis==4.6.0
 six==1.17.0
 sqlparse==0.5.3
 tzdata==2025.2

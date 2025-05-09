@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Facture #1</title>
+    <style>
+        body {
+            margin: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #df4e86;
+            color: #0a0a0a;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #f5f7fc;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        .header {
+            background-color: #eb89af;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h3 {
+            margin: 0;
+            font-size: 24px;
+        }
+        p {
+            margin: 5px 0;
+        }
+        .section {
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #2d4a9e;
+            color: #0c0c0c;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 2px solid #111111;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #eb89af;
+            font-weight: bold;
+        }
+        .total-row td {
+            background-color: #2d4a9e;
+            font-weight: bold;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h3>NovaFac</h3>
+            <p>Facture #1</p>
+        </div>
+        <div class="section">
+            <h4>Facturé à</h4>
+            <p>buchot</p>
+            <p>Bessieux</p>
+            <p>cbuchot@gmail.com</p>
+        </div>
+        <div class="section">
+            <h4>Informations de l'entreprise</h4>
+            <p>Ma Société</p>
+            <p>Gabon, Libreville</p>
+            <p>contact@novafac.com</p>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>efferalgant</td>
+                    <td>2,00</td>
+                    <td>3000,00 FCFA</td>
+                    <td>6000,00 FCFA</td>
+                </tr>
+                
+                <tr class="total-row">
+                    <td colspan="3"></td>
+                    <td>6000,00 FCFA</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
