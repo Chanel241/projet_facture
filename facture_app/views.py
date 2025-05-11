@@ -19,6 +19,7 @@ import subprocess
 import os
 import time
 from django.conf import settings
+from django.utils import translation
 
 logger = logging.getLogger(__name__)
 
@@ -27,35 +28,75 @@ class SuperuserRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
         return self.request.user.is_active and self.request.user.is_superuser
 
 class HomeView(SuperuserRequiredMixin, View):
-    template_name = 'facture_app/home.html'  # Ajouté le chemin explicite
+    template_name = 'facture_app/home.html'
 
     def get(self, request, *args, **kwargs):
+        logger.info(f"Langue active : {translation.get_language()}")
+        logger.info(f"Chemin demandé : {request.path}")
         invoices = Invoice.objects.select_related('customer', 'save_by').order_by('-invoice_date_time')
         items = pagination(request, invoices)
         context = {'invoices': items}
         return render(request, self.template_name, context)
 
 class AddAdminView(SuperuserRequiredMixin, View):
-    template_name = 'facture_app/admin_add_user.html'  # Correct
+    template_name = 'facture_app/admin_add_user.html'
 
     def get(self, request, *args, **kwargs):
-        form = UserCreationForm()
-        return render(request, self.template_name, {'form': form})
+        form1 = UserCreationForm(prefix="form1")
+        form2 = UserCreationForm(prefix="form2")
+        return render(request, self.template_name, {'form1': form1, 'form2': form2})
 
     def post(self, request, *args, **kwargs):
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_staff = True
-            user.is_superuser = True
-            user.save()
-            messages.success(request, _("Administrateur créé avec succès."))
+        logger.info(f"Langue active lors de la soumission : {translation.get_language()}")
+        submitted_form_id = request.POST.get('form_id')
+        saved = False
+
+        if submitted_form_id == 'form1':
+            data = {
+                'username': request.POST.get('form1-username'),
+                'password1': request.POST.get('form1-password1'),
+                'password2': request.POST.get('form1-password2'),
+            }
+            form1 = UserCreationForm(data)
+            if form1.is_valid():
+                user = form1.save(commit=False)
+                user.is_staff = True
+                user.is_superuser = True
+                user.save()
+                saved = True
+                messages.success(request, _("Administrateur créé avec succès (formulaire principal)."))
+            else:
+                messages.error(request, _(f"Données invalides dans le formulaire principal : {form1.errors}"))
+
+        elif submitted_form_id == 'form2':
+            data = {
+                'username': request.POST.get('form1-username'),
+                'password1': request.POST.get('form2-password1'),
+                'password2': request.POST.get('form2-password2'),
+            }
+            form2 = UserCreationForm(data)
+            if form2.is_valid():
+                user = form2.save(commit=False)
+                user.is_staff = True
+                user.is_superuser = True
+                user.save()
+                saved = True
+                messages.success(request, _("Administrateur créé avec succès (formulaire supplémentaire)."))
+            else:
+                messages.error(request, _(f"Données invalides dans le formulaire supplémentaire : {form2.errors}"))
+
+        else:
+            messages.error(request, _("Aucun formulaire valide n'a été soumis."))
+
+        if saved:
             return redirect('invoicing:invoices-list')
-        messages.error(request, _("Données invalides fournies."))
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {
+            'form1': UserCreationForm(prefix="form1"),
+            'form2': UserCreationForm(prefix="form2")
+        })
 
 class AddCustomerView(SuperuserRequiredMixin, View):
-    template_name = 'facture_app/add_customer.html'  # Ajouté le chemin explicite
+    template_name = 'facture_app/add_customer.html'
 
     def get(self, request, *args, **kwargs):
         form = CustomerForm()
@@ -75,7 +116,7 @@ class AddCustomerView(SuperuserRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 class AddInvoiceView(SuperuserRequiredMixin, View):
-    template_name = 'facture_app/add_invoice.html'  # Ajouté le chemin explicite
+    template_name = 'facture_app/add_invoice.html'
 
     def get(self, request, *args, **kwargs):
         form = InvoiceForm()
@@ -122,7 +163,7 @@ class AddInvoiceView(SuperuserRequiredMixin, View):
         return render(request, self.template_name, {'form': form, 'products': PharmacyProduct.objects.all(), 'customers': Customer.objects.all()})
 
 class AddPharmacyProductView(SuperuserRequiredMixin, View):
-    template_name = 'facture_app/add_product.html'  # Ajouté le chemin explicite
+    template_name = 'facture_app/add_product.html'
 
     def get(self, request, *args, **kwargs):
         form = PharmacyProductForm()
@@ -140,7 +181,7 @@ class AddPharmacyProductView(SuperuserRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 class InvoiceVisualizationView(SuperuserRequiredMixin, View):
-    template_name = 'facture_app/invoice.html'  # Ajouté le chemin explicite
+    template_name = 'facture_app/invoice.html'
 
     def get(self, request, *args, **kwargs):
         context = get_invoice(kwargs.get('pk'))
@@ -176,45 +217,38 @@ def generate_invoice_pdf_task(pk):
     """Tâche Celery pour générer un PDF de facture de manière asynchrone avec LaTeX."""
     logger.info(f"Début de la génération du PDF pour la facture ID={pk}")
     try:
-        # Récupérer les données de la facture
         context = get_invoice(pk)
         if not context:
             logger.error(f"Facture ID={pk} non trouvée")
             return None
-        context['date'] = datetime.datetime.now()  # Ajouter la date actuelle pour vérifier la dynamique
+        context['date'] = datetime.datetime.now()
         context['is_pdf'] = True
         if not context.get('obj') or not context.get('obj').customer:
             logger.error(f"Données invalides pour la facture ID={pk}: client ou facture manquant")
             return None
 
-        # Loguer les données pour vérifier qu'elles changent
         logger.info(f"Contexte utilisé pour la facture ID={pk}: {context}")
 
-        # Rendre le modèle LaTeX
         template = 'facture_app/invoice_template.tex'
         latex_content = render_to_string(template, context)
-        logger.info(f"LaTeX généré pour la facture ID={pk}: {latex_content[:500]}...")  # Loguer un extrait
+        logger.info(f"LaTeX généré pour la facture ID={pk}: {latex_content[:500]}...")
 
-        # Créer un répertoire temporaire pour les fichiers
         temp_dir = os.path.join(settings.MEDIA_ROOT, 'temp')
         os.makedirs(temp_dir, exist_ok=True)
-        timestamp = int(time.time())  # Ajouter un timestamp pour éviter les conflits
+        timestamp = int(time.time())
         tex_file_path = os.path.join(temp_dir, f'invoice_{pk}_{timestamp}.tex')
         pdf_file_path = os.path.join(temp_dir, f'invoice_{pk}_{timestamp}.pdf')
 
-        # Nettoyer les fichiers temporaires existants pour cette facture
         for file_name in os.listdir(temp_dir):
             if file_name.startswith(f'invoice_{pk}_'):
                 file_path = os.path.join(temp_dir, file_name)
                 os.remove(file_path)
                 logger.info(f"Fichier temporaire supprimé : {file_path}")
 
-        # Écrire le fichier LaTeX temporaire
         with open(tex_file_path, 'w', encoding='utf-8') as f:
             f.write(latex_content)
         logger.info(f"Fichier LaTeX écrit à : {tex_file_path}")
 
-        # Générer le PDF avec latexmk
         result = subprocess.run(
             ['latexmk', '-pdf', '-interaction=nonstopmode', '-f', tex_file_path],
             cwd=temp_dir,
@@ -226,12 +260,10 @@ def generate_invoice_pdf_task(pk):
             logger.error(f"Erreur lors de l'exécution de latexmk pour la facture ID={pk}: {result.stderr}")
             raise Exception(f"Erreur latexmk : {result.stderr}")
 
-        # Vérifier si le PDF a été généré
         if not os.path.exists(pdf_file_path):
             logger.error(f"PDF non généré pour la facture ID={pk}")
             raise Exception("Échec de la génération du PDF")
 
-        # Lire le PDF et le retourner
         with open(pdf_file_path, 'rb') as f:
             pdf_content = f.read()
         logger.info(f"PDF généré avec succès pour la facture ID={pk}")
@@ -241,7 +273,6 @@ def generate_invoice_pdf_task(pk):
         raise
 
 def get_invoice_pdf(request, *args, **kwargs):
-    """Déclenche la génération asynchrone de PDF et retourne le résultat."""
     pk = kwargs.get('pk')
     logger.info(f"Envoi de la tâche generate_invoice_pdf_task pour la facture ID={pk}")
     result = generate_invoice_pdf_task.delay(pk)

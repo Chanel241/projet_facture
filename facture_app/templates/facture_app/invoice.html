@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "facture_app/base.html" %}
 {% load static i18n %}
 
 {% block extrahead %}
@@ -66,7 +66,6 @@
             <!-- Actions -->
             <div class="row mt-4">
                 <div class="col-12 text-end">
-                    <a href="{% url 'invoicing:generate-invoice-pdf' obj.id %}" class="btn btn-primary">{% trans "Télécharger PDF" %}</a>
                     <form method="post" action="{% url 'invoicing:modify-invoice' %}" style="display:inline;">
                         {% csrf_token %}
                         <input type="hidden" name="id_modified" value="{{ obj.id }}">

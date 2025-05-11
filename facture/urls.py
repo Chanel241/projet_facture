@@ -7,13 +7,13 @@ from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('i18n/', include('django.conf.urls.i18n'))
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
+# Supprimé prefix_default_language=False pour inclure le préfixe de langue par défaut
 urlpatterns += i18n_patterns(
-    path('', include('facture_app.urls', namespace='invoicing')),  # Ajout de l'espace de noms 'invoicing'
+    path('', include('facture_app.urls', namespace='invoicing')),
     path('favicon.ico', RedirectView.as_view(url=settings.STATIC_URL + 'favicon.ico', permanent=True)),
-    prefix_default_language=False
 )
 
 if settings.DEBUG:

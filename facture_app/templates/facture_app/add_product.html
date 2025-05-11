@@ -47,7 +47,7 @@
                             <form action="{% url 'invoicing:admin_add_user' %}" method="get">
                                 {% csrf_token %}
                                 <input type="hidden" name="next" value="{{ request.path }}">
-                                <button type="submit" class="dropdown-item">{% trans "Ajouter un Admin" %}</button>
+                                <button type="submit" class="dropdown-item">{% trans "Ajout d'utilisateur" %}</button>
                             </form>
                         </li>
                         <li>

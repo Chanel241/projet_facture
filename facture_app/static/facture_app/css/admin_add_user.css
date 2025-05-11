@@ -1,59 +1,94 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
+    background-color: #f0f0f0; /* Gris clair */
+    color: #1a3c6e; /* Bleu foncé pour les libellés et titres */
 }
 
-.container {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
+h2, h6 {
+    color: #1a3c6e;
+}
+
+.section-title {
+    background-color: #1a3c6e; /* Bleu sombre */
+    color: white; /* Texte blanc */
+    padding: 0.5rem; /* Espacement interne */
+    border-radius: 4px; /* Coins arrondis optionnels */
+    margin-bottom: 0.5rem !important; /* Ajustement de l'espacement */
+    width: 100%; /* Occupe toute la largeur disponible */
+    display: block; /* Assure un comportement de bloc */
+    box-sizing: border-box; /* Inclut le padding dans la largeur */
 }
 
 .list-group-item.active {
-    background-color: #007bff;
-    color: white;
+    background-color: #ffcccb; /* Rose clair */
+    color: #1a3c6e; /* Texte bleu foncé pour contraste */
 }
 
-.badge {
-    background-color: #28a745;
-    color: white;
-    padding: 3px 7px;
-    border-radius: 5px;
-    float: right;
+.list-group-item {
+    padding: 10px 15px;
 }
 
-.card {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+.badge.bg-success {
+    background-color: #28a745; /* Vert pour les badges + Ajouter */
 }
 
-.card-header {
-    background: #007bff;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
+.text-muted {
+    color: #6c757d; /* Gris clair pour les instructions */
 }
 
-.form-control {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+.form-label {
+    font-weight: bold;
 }
 
 .btn-primary {
-    background: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #007bff; /* Bleu pour les boutons principaux */
+    border-color: #007bff;
 }
 
-.btn-primary:hover {
-    background: #0056b3;
+.btn-secondary {
+    background-color: #6c757d; /* Gris pour le dernier bouton */
+    border-color: #6c757d;
+}
+
+.form-control {
+    background-color: #fff3cd; /* Fond jaune clair pour les inputs */
+    margin-bottom: 0.5rem; /* Espacement avant les instructions */
+}
+
+/* Style pour les lignes de séparation */
+hr.separator {
+    border: 0;
+    border-top: 2px solid #000000; /* Ligne plus épaisse (2px) et noire */
+    margin: 1rem 0; /* Espacement au-dessus et en dessous */
+}
+
+/* Ajustement pour espacement */
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* Ajustement pour équilibrer l'espace dans la barre de gauche */
+.col-md-3 {
+    padding-right: 15px; /* Espacement à droite pour équilibrer */
+    border-right: 1px solid #000000; /* Ligne noire fine à droite */
+}
+
+/* Ajustement pour équilibrer l'espace dans la barre de droite */
+.col-md-9 {
+    padding-left: 15px; /* Espacement à gauche pour équilibrer */
+}
+
+/* Style pour le sélecteur de langue */
+.language-select {
+    background-color: transparent !important;
+    color: white !important;
+    border: none !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: pointer !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
 }

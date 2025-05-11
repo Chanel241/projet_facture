@@ -1,11 +1,17 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-10 22:22+0000\n"
-"PO-Revision-Date: 2025-05-10 20:21+0000\n"
-"Last-Translator: Chanel chanel@example.com\n"
-"Language-Team: French fr@li.org\n"
+"POT-Creation-Date: 2025-05-10 22:52+0000\n"
+"PO-Revision-Date: 2025-05-11 10:00+0000\n"
+"Last-Translator: Grok <grok@x.ai>\n"
+"Language-Team: French <fr@li.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,16 +21,16 @@ msgstr ""
 #: venv/lib/python3.12/site-packages/click/_termui_impl.py:556
 #, python-brace-format
 msgid "{editor}: Editing failed"
-msgstr "Échec de l'édition avec {editor}"
+msgstr "{editor} : Échec de l'édition"
 
 #: venv/lib/python3.12/site-packages/click/_termui_impl.py:560
 #, python-brace-format
 msgid "{editor}: Editing failed: {e}"
-msgstr "Échec de l'édition avec {editor} : {e}"
+msgstr "{editor} : Échec de l'édition : {e}"
 
 #: venv/lib/python3.12/site-packages/click/core.py:1124
 msgid "Aborted!"
-msgstr "Annulé !"
+msgstr "Interrompu !"
 
 #: venv/lib/python3.12/site-packages/click/core.py:1349
 #: venv/lib/python3.12/site-packages/click/core.py:1379
@@ -33,8 +39,6 @@ msgid "(Deprecated) {text}"
 msgstr "(Obsolète) {text}"
 
 #: venv/lib/python3.12/site-packages/click/core.py:1396
-#, fuzzy
-#| msgid "More options"
 msgid "Options"
 msgstr "Options"
 
@@ -42,16 +46,14 @@ msgstr "Options"
 #, python-brace-format
 msgid "Got unexpected extra argument ({args})"
 msgid_plural "Got unexpected extra arguments ({args})"
-msgstr[0] "Argument supplémentaire inattendu ({args})"
-msgstr[1] "Arguments supplémentaires inattendus ({args})"
+msgstr[0] "Argument supplémentaire inattendu reçu ({args})"
+msgstr[1] "Arguments supplémentaires inattendus reçus ({args})"
 
 #: venv/lib/python3.12/site-packages/click/core.py:1438
 msgid "DeprecationWarning: The command {name!r} is deprecated."
-msgstr "Avertissement d'obsolescence : La commande {name!r} est obsolète."
+msgstr "Avertissement de dépréciation : La commande {name!r} est obsolète."
 
 #: venv/lib/python3.12/site-packages/click/core.py:1645
-#, fuzzy
-#| msgid "Commentaires"
 msgid "Commands"
 msgstr "Commandes"
 
@@ -61,7 +63,7 @@ msgstr "Commande manquante."
 
 #: venv/lib/python3.12/site-packages/click/core.py:1755
 msgid "No such command {name!r}."
-msgstr "Aucune commande {name!r} n'existe."
+msgstr "Aucune commande telle que {name!r}."
 
 #: venv/lib/python3.12/site-packages/click/core.py:2313
 msgid "Value must be an iterable."
@@ -71,13 +73,13 @@ msgstr "La valeur doit être un itérable."
 #, python-brace-format
 msgid "Takes {nargs} values but 1 was given."
 msgid_plural "Takes {nargs} values but {len} were given."
-msgstr[0] "Requiert {nargs} valeur(s), mais 1 a été fourni."
-msgstr[1] "Requiert {nargs} valeur(s), mais {len} ont été fournies."
+msgstr[0] "Attend {nargs} valeurs mais 1 a été donnée."
+msgstr[1] "Attend {nargs} valeurs mais {len} ont été données."
 
 #: venv/lib/python3.12/site-packages/click/core.py:2783
 #, python-brace-format
 msgid "env var: {var}"
-msgstr "variable d'environnement : {var}"
+msgstr "Variable d'environnement : {var}"
 
 #: venv/lib/python3.12/site-packages/click/core.py:2813
 msgid "(dynamic)"
@@ -86,7 +88,7 @@ msgstr "(dynamique)"
 #: venv/lib/python3.12/site-packages/click/core.py:2828
 #, python-brace-format
 msgid "default: {default}"
-msgstr "défaut : {default}"
+msgstr "par défaut : {default}"
 
 #: venv/lib/python3.12/site-packages/click/core.py:2841
 msgid "required"
@@ -131,8 +133,6 @@ msgid "Missing argument"
 msgstr "Argument manquant"
 
 #: venv/lib/python3.12/site-packages/click/exceptions.py:189
-#, fuzzy
-#| msgid "More options"
 msgid "Missing option"
 msgstr "Option manquante"
 
@@ -143,7 +143,7 @@ msgstr "Paramètre manquant"
 #: venv/lib/python3.12/site-packages/click/exceptions.py:193
 #, python-brace-format
 msgid "Missing {param_type}"
-msgstr "{param_type} manquant"
+msgstr "Type de paramètre manquant : {param_type}"
 
 #: venv/lib/python3.12/site-packages/click/exceptions.py:200
 #, python-brace-format
@@ -153,7 +153,7 @@ msgstr "Paramètre manquant : {param_name}"
 #: venv/lib/python3.12/site-packages/click/exceptions.py:220
 #, python-brace-format
 msgid "No such option: {name}"
-msgstr "Aucune option {name}"
+msgstr "Aucune option telle que : {name}"
 
 #: venv/lib/python3.12/site-packages/click/exceptions.py:232
 #, python-brace-format
@@ -172,7 +172,7 @@ msgstr "Impossible d'ouvrir le fichier {filename!r} : {message}"
 
 #: venv/lib/python3.12/site-packages/click/parser.py:233
 msgid "Argument {name!r} takes {nargs} values."
-msgstr "L'argument {name!r} prend {nargs} valeur(s)."
+msgstr "L'argument {name!r} prend {nargs} valeurs."
 
 #: venv/lib/python3.12/site-packages/click/parser.py:415
 msgid "Option {name!r} does not take a value."
@@ -186,19 +186,19 @@ msgstr[1] "L'option {name!r} nécessite {nargs} arguments."
 
 #: venv/lib/python3.12/site-packages/click/shell_completion.py:326
 msgid "Shell completion is not supported for Bash versions older than 4.4."
-msgstr "L'auto-complétion de shell n'est pas prise en charge pour les versions de Bash antérieures à 4.4."
+msgstr "La complétion de shell n'est pas prise en charge pour les versions de Bash antérieures à 4.4."
 
 #: venv/lib/python3.12/site-packages/click/shell_completion.py:333
 msgid "Couldn't detect Bash version, shell completion is not supported."
-msgstr "Impossible de détecter la version de Bash, l'auto-complétion de shell n'est pas prise en charge."
+msgstr "Impossible de détecter la version de Bash, la complétion de shell n'est pas prise en charge."
 
 #: venv/lib/python3.12/site-packages/click/termui.py:158
 msgid "Repeat for confirmation"
-msgstr "Répéter pour confirmation"
+msgstr "Répétez pour confirmation"
 
 #: venv/lib/python3.12/site-packages/click/termui.py:174
 msgid "Error: The value you entered was invalid."
-msgstr "Erreur : La valeur saisie est invalide."
+msgstr "Erreur : La valeur que vous avez entrée est invalide."
 
 #: venv/lib/python3.12/site-packages/click/termui.py:176
 #, python-brace-format
@@ -207,7 +207,7 @@ msgstr "Erreur : {e.message}"
 
 #: venv/lib/python3.12/site-packages/click/termui.py:187
 msgid "Error: The two entered values do not match."
-msgstr "Erreur : Les deux valeurs saisies ne correspondent pas."
+msgstr "Erreur : Les deux valeurs entrées ne correspondent pas."
 
 #: venv/lib/python3.12/site-packages/click/termui.py:243
 msgid "Error: invalid input"
@@ -230,7 +230,7 @@ msgstr ""
 msgid "{value!r} is not {choice}."
 msgid_plural "{value!r} is not one of {choices}."
 msgstr[0] "{value!r} n'est pas {choice}."
-msgstr[1] "{value!r} n'est pas l'un des {choices}."
+msgstr[1] "{value!r} ne fait pas partie de {choices}."
 
 #: venv/lib/python3.12/site-packages/click/types.py:393
 msgid "{value!r} does not match the format {format}."
@@ -285,7 +285,7 @@ msgstr "{name} {filename!r} n'est pas lisible."
 
 #: venv/lib/python3.12/site-packages/click/types.py:916
 msgid "{name} {filename!r} is not writable."
-msgstr "{name} {filename!r} n'est pas inscriptible."
+msgstr "{name} {filename!r} n'est pas accessible en écriture."
 
 #: venv/lib/python3.12/site-packages/click/types.py:925
 msgid "{name} {filename!r} is not executable."
@@ -295,8 +295,8 @@ msgstr "{name} {filename!r} n'est pas exécutable."
 #, python-brace-format
 msgid "{len_type} values are required, but {len_value} was given."
 msgid_plural "{len_type} values are required, but {len_value} were given."
-msgstr[0] "{len_type} valeur(s) requise(s), mais {len_value} a été fourni."
-msgstr[1] "{len_type} valeur(s) requise(s), mais {len_value} ont été fournies."
+msgstr[0] "{len_type} valeurs sont requises, mais {len_value} a été donnée."
+msgstr[1] "{len_type} valeurs sont requises, mais {len_value} ont été données."
 
 #: venv/lib/python3.12/site-packages/django/contrib/messages/apps.py:16
 msgid "Messages"
@@ -304,7 +304,7 @@ msgstr "Messages"
 
 #: venv/lib/python3.12/site-packages/django/contrib/sitemaps/apps.py:8
 msgid "Site Maps"
-msgstr "Cartes de site"
+msgstr "Cartes du site"
 
 #: venv/lib/python3.12/site-packages/django/contrib/staticfiles/apps.py:9
 msgid "Static Files"
@@ -358,16 +358,14 @@ msgstr "Entrez une adresse email valide."
 msgid ""
 "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
 msgstr ""
-"Entrez un « slug » valide composé de lettres, chiffres, tirets ou "
-"soulignements."
+"Entrez un « slug » valide composé de lettres, chiffres, underscores ou tirets."
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:297
 msgid ""
 "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
 "hyphens."
 msgstr ""
-"Entrez un « slug » valide composé de lettres Unicode, chiffres, tirets ou "
-"soulignements."
+"Entrez un « slug » valide composé de lettres Unicode, chiffres, underscores ou tirets."
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:309
 #: venv/lib/python3.12/site-packages/django/core/validators.py:318
@@ -397,7 +395,7 @@ msgstr "Entrez uniquement des chiffres séparés par des virgules."
 #: venv/lib/python3.12/site-packages/django/core/validators.py:381
 #, python-format
 msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-msgstr "Assurez-vous que cette valeur est %(limit_value)s (elle est %(show_value)s)."
+msgstr "Assurez-vous que cette valeur est %(limit_value)s (elle est actuellement %(show_value)s)."
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:416
 #, python-format
@@ -412,7 +410,7 @@ msgstr "Assurez-vous que cette valeur est supérieure ou égale à %(limit_value
 #: venv/lib/python3.12/site-packages/django/core/validators.py:434
 #, python-format
 msgid "Ensure this value is a multiple of step size %(limit_value)s."
-msgstr "Assurez-vous que cette valeur est un multiple de l'étape %(limit_value)s."
+msgstr "Assurez-vous que cette valeur est un multiple de la taille de pas %(limit_value)s."
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:441
 #, python-format
@@ -420,9 +418,8 @@ msgid ""
 "Ensure this value is a multiple of step size %(limit_value)s, starting from "
 "%(offset)s, e.g. %(offset)s, %(valid_value1)s, %(valid_value2)s, and so on."
 msgstr ""
-"Assurez-vous que cette valeur est un multiple de l'étape %(limit_value)s, en "
-"commençant par %(offset)s, par ex. %(offset)s, %(valid_value1)s, "
-"%(valid_value2)s, etc."
+"Assurez-vous que cette valeur est un multiple de la taille de pas %(limit_value)s, en commençant par "
+"%(offset)s, par exemple %(offset)s, %(valid_value1)s, %(valid_value2)s, etc."
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:473
 #, python-format
@@ -432,8 +429,8 @@ msgid ""
 msgid_plural ""
 "Ensure this value has at least %(limit_value)d characters (it has "
 "%(show_value)d)."
-msgstr[0] "Assurez-vous que cette valeur a au moins %(limit_value)d caractère (elle a %(show_value)d)."
-msgstr[1] "Assurez-vous que cette valeur a au moins %(limit_value)d caractères (elle a %(show_value)d)."
+msgstr[0] "Assurez-vous que cette valeur a au moins %(limit_value)d caractère (elle en a %(show_value)d)."
+msgstr[1] "Assurez-vous que cette valeur a au moins %(limit_value)d caractères (elle en a %(show_value)d)."
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:491
 #, python-format
@@ -443,8 +440,8 @@ msgid ""
 msgid_plural ""
 "Ensure this value has at most %(limit_value)d characters (it has "
 "%(show_value)d)."
-msgstr[0] "Assurez-vous que cette valeur a au plus %(limit_value)d caractère (elle a %(show_value)d)."
-msgstr[1] "Assurez-vous que cette valeur a au plus %(limit_value)d caractères (elle a %(show_value)d)."
+msgstr[0] "Assurez-vous que cette valeur a au plus %(limit_value)d caractère (elle en a %(show_value)d)."
+msgstr[1] "Assurez-vous que cette valeur a au plus %(limit_value)d caractères (elle en a %(show_value)d)."
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:514
 #: venv/lib/python3.12/site-packages/django/forms/fields.py:366
@@ -481,8 +478,8 @@ msgid ""
 "File extension “%(extension)s” is not allowed. Allowed extensions are: "
 "%(allowed_extensions)s."
 msgstr ""
-"L'extension de fichier « %(extension)s » n'est pas autorisée. Les extensions "
-"autorisées sont : %(allowed_extensions)s."
+"L'extension de fichier « %(extension)s » n'est pas autorisée. Les extensions autorisées sont : "
+"%(allowed_extensions)s."
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:659
 msgid "Null characters are not allowed."
@@ -496,7 +493,7 @@ msgstr "et"
 #: venv/lib/python3.12/site-packages/django/db/models/base.py:1602
 #, python-format
 msgid "%(model_name)s with this %(field_labels)s already exists."
-msgstr "%(model_name)s avec ce %(field_labels)s existe déjà."
+msgstr "%(model_name)s avec ce(s) %(field_labels)s existe déjà."
 
 #: venv/lib/python3.12/site-packages/django/db/models/constraints.py:22
 #, python-format
@@ -538,16 +535,16 @@ msgstr "Champ de type : %(field_type)s"
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1162
 #, python-format
 msgid "“%(value)s” value must be either True or False."
-msgstr "La valeur « %(value)s » doit être soit True soit False."
+msgstr "La valeur « %(value)s » doit être soit True, soit False."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1163
 #, python-format
 msgid "“%(value)s” value must be either True, False, or None."
-msgstr "La valeur « %(value)s » doit être soit True, soit False, soit None."
+msgstr "La valeur « %(value)s » doit être soit True, False, ou None."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1165
 msgid "Boolean (Either True or False)"
-msgstr "Booléen (Soit True soit False)"
+msgstr "Booléen (soit True, soit False)"
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1215
 #, python-format
@@ -568,8 +565,7 @@ msgid ""
 "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
 "format."
 msgstr ""
-"La valeur « %(value)s » a un format de date invalide. Elle doit être au "
-"format AAAA-MM-JJ."
+"La valeur « %(value)s » a un format de date invalide. Elle doit être au format AAAA-MM-JJ."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1431
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1566
@@ -578,8 +574,7 @@ msgid ""
 "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
 "date."
 msgstr ""
-"La valeur « %(value)s » a le bon format (AAAA-MM-JJ) mais c'est une date "
-"invalide."
+"La valeur « %(value)s » a le bon format (AAAA-MM-JJ) mais c'est une date invalide."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1435
 msgid "Date (without time)"
@@ -591,8 +586,7 @@ msgid ""
 "“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
 "uuuuuu]][TZ] format."
 msgstr ""
-"La valeur « %(value)s » a un format invalide. Elle doit être au format AAAA-"
-"MM-JJ HH:MM[:ss[.uuuuuu]][TZ]."
+"La valeur « %(value)s » a un format invalide. Elle doit être au format AAAA-MM-JJ HH:MM[:ss[.uuuuuu]][TZ]."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1570
 #, python-format
@@ -600,8 +594,7 @@ msgid ""
 "“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
 "[TZ]) but it is an invalid date/time."
 msgstr ""
-"La valeur « %(value)s » a le bon format (AAAA-MM-JJ HH:MM[:ss[.uuuuuu]][TZ]) "
-"mais c'est une date/heure invalide."
+"La valeur « %(value)s » a le bon format (AAAA-MM-JJ HH:MM[:ss[.uuuuuu]][TZ]) mais c'est une date/heure invalide."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1575
 msgid "Date (with time)"
@@ -622,12 +615,9 @@ msgid ""
 "“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
 "uuuuuu] format."
 msgstr ""
-"La valeur « %(value)s » a un format invalide. Elle doit être au format [JJ] "
-"[[HH:]MM:]ss[.uuuuuu]."
+"La valeur « %(value)s » a un format invalide. Elle doit être au format [JJ] [[HH:]MM:]ss[.uuuuuu]."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1868
-#, fuzzy
-#| msgid "Description"
 msgid "Duration"
 msgstr "Durée"
 
@@ -642,7 +632,7 @@ msgstr "Chemin du fichier"
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2023
 #, python-format
 msgid "“%(value)s” value must be a float."
-msgstr "La valeur « %(value)s » doit être un nombre flottant."
+msgstr "La valeur « %(value)s » doit être un flottant."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2025
 msgid "Floating point number"
@@ -659,7 +649,7 @@ msgstr "Entier"
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2163
 msgid "Big (8 byte) integer"
-msgstr "Entier long (8 octets)"
+msgstr "Grand entier (8 octets)"
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2180
 msgid "Small integer"
@@ -677,15 +667,15 @@ msgstr "Adresse IP"
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2311
 #, python-format
 msgid "“%(value)s” value must be either None, True or False."
-msgstr "La valeur « %(value)s » doit être soit None, soit True, soit False."
+msgstr "La valeur « %(value)s » doit être soit None, True ou False."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2313
 msgid "Boolean (Either True, False or None)"
-msgstr "Booléen (Soit True, soit False, soit None)"
+msgstr "Booléen (soit True, False ou None)"
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2364
 msgid "Positive big integer"
-msgstr "Entier long positif"
+msgstr "Grand entier positif"
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2379
 msgid "Positive integer"
@@ -710,8 +700,7 @@ msgid ""
 "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
 "format."
 msgstr ""
-"La valeur « %(value)s » a un format invalide. Elle doit être au format "
-"HH:MM[:ss[.uuuuuu]]."
+"La valeur « %(value)s » a un format invalide. Elle doit être au format HH:MM[:ss[.uuuuuu]]."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2530
 #, python-format
@@ -719,8 +708,7 @@ msgid ""
 "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
 "invalid time."
 msgstr ""
-"La valeur « %(value)s » a le bon format (HH:MM[:ss[.uuuuuu]]) mais c'est une "
-"heure invalide."
+"La valeur « %(value)s » a le bon format (HH:MM[:ss[.uuuuuu]]) mais c'est une heure invalide."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2534
 msgid "Time"
@@ -741,7 +729,7 @@ msgstr "« %(value)s » n'est pas un UUID valide."
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2733
 msgid "Universally unique identifier"
-msgstr "Identifiant unique universel"
+msgstr "Identifiant universellement unique"
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/files.py:244
 msgid "File"
@@ -840,20 +828,19 @@ msgstr "Le fichier soumis est vide."
 msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
 msgid_plural ""
 "Ensure this filename has at most %(max)d characters (it has %(length)d)."
-msgstr[0] "Assurez-vous que ce nom de fichier a au plus %(max)d caractère (il a %(length)d)."
-msgstr[1] "Assurez-vous que ce nom de fichier a au plus %(max)d caractères (il a %(length)d)."
+msgstr[0] "Assurez-vous que ce nom de fichier a au plus %(max)d caractère (il en a %(length)d)."
+msgstr[1] "Assurez-vous que ce nom de fichier a au plus %(max)d caractères (il en a %(length)d)."
 
 #: venv/lib/python3.12/site-packages/django/forms/fields.py:649
 msgid "Please either submit a file or check the clear checkbox, not both."
-msgstr "Veuillez soumettre un fichier ou cocher la case de suppression, pas les deux."
+msgstr "Veuillez soit soumettre un fichier, soit cocher la case de suppression, mais pas les deux."
 
 #: venv/lib/python3.12/site-packages/django/forms/fields.py:717
 msgid ""
 "Upload a valid image. The file you uploaded was either not an image or a "
 "corrupted image."
 msgstr ""
-"Téléchargez une image valide. Le fichier que vous avez téléchargé n'est pas "
-"une image ou est corrompu."
+"Téléchargez une image valide. Le fichier que vous avez téléchargé n'est pas une image ou est corrompu."
 
 #: venv/lib/python3.12/site-packages/django/forms/fields.py:889
 #: venv/lib/python3.12/site-packages/django/forms/fields.py:975
@@ -883,7 +870,7 @@ msgstr "Entrez un JSON valide."
 #. Translators: This is the default suffix added to form field labels
 #: venv/lib/python3.12/site-packages/django/forms/forms.py:97
 msgid ":"
-msgstr ":"
+msgstr " :"
 
 #: venv/lib/python3.12/site-packages/django/forms/forms.py:239
 #, python-format
@@ -896,9 +883,8 @@ msgid ""
 "ManagementForm data is missing or has been tampered with. Missing fields: "
 "%(field_names)s. You may need to file a bug report if the issue persists."
 msgstr ""
-"Les données du ManagementForm sont manquantes ou ont été modifiées. Champs "
-"manquants : %(field_names)s. Vous devrez peut-être signaler un bug si le "
-"problème persiste."
+"Les données du ManagementForm sont manquantes ou ont été altérées. Champs manquants : "
+"%(field_names)s. Vous devrez peut-être signaler un bug si le problème persiste."
 
 #: venv/lib/python3.12/site-packages/django/forms/formsets.py:65
 #, python-format
@@ -927,12 +913,12 @@ msgstr "Supprimer"
 #: venv/lib/python3.12/site-packages/django/forms/models.py:901
 #, python-format
 msgid "Please correct the duplicate data for %(field)s."
-msgstr "Veuillez corriger les données dupliquées pour %(field)s."
+msgstr "Veuillez corriger les données en double pour %(field)s."
 
 #: venv/lib/python3.12/site-packages/django/forms/models.py:906
 #, python-format
 msgid "Please correct the duplicate data for %(field)s, which must be unique."
-msgstr "Veuillez corriger les données dupliquées pour %(field)s, qui doit être unique."
+msgstr "Veuillez corriger les données en double pour %(field)s, qui doivent être uniques."
 
 #: venv/lib/python3.12/site-packages/django/forms/models.py:913
 #, python-format
@@ -940,12 +926,12 @@ msgid ""
 "Please correct the duplicate data for %(field_name)s which must be unique "
 "for the %(lookup)s in %(date_field)s."
 msgstr ""
-"Veuillez corriger les données dupliquées pour %(field_name)s qui doit être "
-"unique pour le %(lookup)s dans %(date_field)s."
+"Veuillez corriger les données en double pour %(field_name)s qui doivent être uniques "
+"pour %(lookup)s dans %(date_field)s."
 
 #: venv/lib/python3.12/site-packages/django/forms/models.py:922
 msgid "Please correct the duplicate values below."
-msgstr "Veuillez corriger les valeurs dupliquées ci-dessous."
+msgstr "Veuillez corriger les valeurs en double ci-dessous."
 
 #: venv/lib/python3.12/site-packages/django/forms/models.py:1359
 msgid "The inline value did not match the parent instance."
@@ -966,8 +952,8 @@ msgid ""
 "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
 "may be ambiguous or it may not exist."
 msgstr ""
-"%(datetime)s n'a pas pu être interprété dans le fuseau horaire "
-"%(current_timezone)s ; cela peut être ambigu ou inexistant."
+"%(datetime)s n’a pas pu être interprété dans le fuseau horaire %(current_timezone)s ; "
+"il peut être ambigu ou ne pas exister."
 
 #: venv/lib/python3.12/site-packages/django/forms/widgets.py:527
 msgid "Clear"
@@ -990,8 +976,6 @@ msgid "Yes"
 msgstr "Oui"
 
 #: venv/lib/python3.12/site-packages/django/forms/widgets.py:868
-#, fuzzy
-#| msgid "Nom"
 msgid "No"
 msgstr "Non"
 
@@ -1035,11 +1019,11 @@ msgstr "%s Po"
 
 #: venv/lib/python3.12/site-packages/django/utils/dateformat.py:74
 msgid "p.m."
-msgstr "p.m."
+msgstr "après-midi"
 
 #: venv/lib/python3.12/site-packages/django/utils/dateformat.py:75
 msgid "a.m."
-msgstr "a.m."
+msgstr "matin"
 
 #: venv/lib/python3.12/site-packages/django/utils/dateformat.py:80
 msgid "PM"
@@ -1163,15 +1147,15 @@ msgstr "Décembre"
 
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:39
 msgid "jan"
-msgstr "jan"
+msgstr "janv"
 
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:40
 msgid "feb"
-msgstr "fév"
+msgstr "févr"
 
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:41
 msgid "mar"
-msgstr "mar"
+msgstr "mars"
 
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:42
 msgid "apr"
@@ -1183,19 +1167,19 @@ msgstr "mai"
 
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:44
 msgid "jun"
-msgstr "jun"
+msgstr "juin"
 
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:45
 msgid "jul"
-msgstr "jul"
+msgstr "juil"
 
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:46
 msgid "aug"
-msgstr "aoû"
+msgstr "août"
 
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:47
 msgid "sep"
-msgstr "sep"
+msgstr "sept"
 
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:48
 msgid "oct"
@@ -1331,7 +1315,7 @@ msgstr "Décembre"
 
 #: venv/lib/python3.12/site-packages/django/utils/ipv6.py:20
 msgid "This is not a valid IPv6 address."
-msgstr "Ceci n'est pas une adresse IPv6 valide."
+msgstr "Ce n'est pas une adresse IPv6 valide."
 
 #: venv/lib/python3.12/site-packages/django/utils/text.py:67
 #, python-format
@@ -1397,7 +1381,7 @@ msgstr "Interdit"
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:30
 msgid "CSRF verification failed. Request aborted."
-msgstr "Vérification CSRF échouée. Requête annulée."
+msgstr "Échec de la vérification CSRF. Requête annulée."
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:34
 msgid ""
@@ -1406,10 +1390,7 @@ msgid ""
 "required for security reasons, to ensure that your browser is not being "
 "hijacked by third parties."
 msgstr ""
-"Vous voyez ce message car ce site HTTPS exige qu'un en-tête « Referer » soit "
-"envoyé par votre navigateur web, mais aucun n'a été envoyé. Cet en-tête est "
-"requis pour des raisons de sécurité, afin de s'assurer que votre navigateur "
-"n'est pas piraté par des tiers."
+"Vous voyez ce message car ce site HTTPS nécessite qu’un en-tête « Referer » soit envoyé par votre navigateur, mais aucun n’a été envoyé. Cet en-tête est requis pour des raisons de sécurité, afin de s’assurer que votre navigateur n’est pas détourné par des tiers."
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:40
 msgid ""
@@ -1417,9 +1398,7 @@ msgid ""
 "enable them, at least for this site, or for HTTPS connections, or for “same-"
 "origin” requests."
 msgstr ""
-"Si vous avez configuré votre navigateur pour désactiver les en-têtes "
-"« Referer », veuillez les réactiver, au moins pour ce site, ou pour les "
-"connexions HTTPS, ou pour les requêtes « same-origin »."
+"Si vous avez configuré votre navigateur pour désactiver les en-têtes « Referer », veuillez les réactiver, au moins pour ce site, ou pour les connexions HTTPS, ou pour les requêtes « same-origin »."
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:45
 msgid ""
@@ -1429,12 +1408,7 @@ msgid ""
 "If you’re concerned about privacy, use alternatives like <a "
 "rel=\"noreferrer\" …> for links to third-party sites."
 msgstr ""
-"Si vous utilisez la balise <meta name=\"referrer\" content=\"no-referrer\"> "
-"ou l'en-tête « Referrer-Policy: no-referrer », veuillez les supprimer. La "
-"protection CSRF nécessite l'en-tête « Referer » pour une vérification stricte "
-"du référent. Si vous êtes préoccupé par la vie privée, utilisez des "
-"alternatives comme <a rel=\"noreferrer\" …> pour les liens vers des sites "
-"tiers."
+"Si vous utilisez la balise <meta name=\"referrer\" content=\"no-referrer\"> ou incluez l’en-tête « Referrer-Policy: no-referrer », veuillez les supprimer. La protection CSRF nécessite l’en-tête « Referer » pour effectuer une vérification stricte. Si vous êtes préoccupé par la confidentialité, utilisez des alternatives comme <a rel=\"noreferrer\" …> pour les liens vers des sites tiers."
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:54
 msgid ""
@@ -1442,21 +1416,18 @@ msgid ""
 "submitting forms. This cookie is required for security reasons, to ensure "
 "that your browser is not being hijacked by third parties."
 msgstr ""
-"Vous voyez ce message car ce site exige un cookie CSRF lors de la soumission "
-"de formulaires. Ce cookie est requis pour des raisons de sécurité, afin de "
-"s'assurer que votre navigateur n'est pas piraté par des tiers."
+"Vous voyez ce message car ce site nécessite un cookie CSRF lors de la soumission de formulaires. Ce cookie est requis pour des raisons de sécurité, afin de s’assurer que votre navigateur n’est pas détourné par des tiers."
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:60
 msgid ""
 "If you have configured your browser to disable cookies, please re-enable "
 "them, at least for this site, or for “same-origin” requests."
 msgstr ""
-"Si vous avez configuré votre navigateur pour désactiver les cookies, veuillez "
-"les réactiver, au moins pour ce site, ou pour les requêtes « same-origin »."
+"Si vous avez configuré votre navigateur pour désactiver les cookies, veuillez les réactiver, au moins pour ce site, ou pour les requêtes « same-origin »."
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:66
 msgid "More information is available with DEBUG=True."
-msgstr "Plus d'informations sont disponibles avec DEBUG=True."
+msgstr "Plus d’informations sont disponibles avec DEBUG=True."
 
 #: venv/lib/python3.12/site-packages/django/views/generic/dates.py:44
 msgid "No year specified"
@@ -1466,7 +1437,7 @@ msgstr "Aucune année spécifiée"
 #: venv/lib/python3.12/site-packages/django/views/generic/dates.py:115
 #: venv/lib/python3.12/site-packages/django/views/generic/dates.py:214
 msgid "Date out of range"
-msgstr "Date hors plage"
+msgstr "Date hors de portée"
 
 #: venv/lib/python3.12/site-packages/django/views/generic/dates.py:94
 msgid "No month specified"
@@ -1484,7 +1455,7 @@ msgstr "Aucune semaine spécifiée"
 #: venv/lib/python3.12/site-packages/django/views/generic/dates.py:384
 #, python-format
 msgid "No %(verbose_name_plural)s available"
-msgstr "Aucun(e) %(verbose_name_plural)s disponible"
+msgstr "Aucun %(verbose_name_plural)s disponible"
 
 #: venv/lib/python3.12/site-packages/django/views/generic/dates.py:680
 #, python-format
@@ -1492,22 +1463,21 @@ msgid ""
 "Future %(verbose_name_plural)s not available because %(class_name)s."
 "allow_future is False."
 msgstr ""
-"Les %(verbose_name_plural)s futurs ne sont pas disponibles car "
-"%(class_name)s.allow_future est False."
+"Les %(verbose_name_plural)s futurs ne sont pas disponibles car %(class_name)s.allow_future est False."
 
 #: venv/lib/python3.12/site-packages/django/views/generic/dates.py:720
 #, python-format
 msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
-msgstr "Chaîne de date invalide « %(datestr)s » avec le format « %(format)s »"
+msgstr "Chaîne de date invalide « %(datestr)s » pour le format « %(format)s »"
 
 #: venv/lib/python3.12/site-packages/django/views/generic/detail.py:56
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
-msgstr "Aucun(e) %(verbose_name)s correspondant à la requête n'a été trouvé"
+msgstr "Aucun %(verbose_name)s trouvé correspondant à la requête"
 
 #: venv/lib/python3.12/site-packages/django/views/generic/list.py:70
 msgid "Page is not “last”, nor can it be converted to an int."
-msgstr "La page n'est pas « dernière » et ne peut pas être convertie en entier."
+msgstr "La page n’est pas « dernière », et ne peut pas être convertie en entier."
 
 #: venv/lib/python3.12/site-packages/django/views/generic/list.py:77
 #, python-format
@@ -1526,7 +1496,7 @@ msgstr "Les index de répertoires ne sont pas autorisés ici."
 #: venv/lib/python3.12/site-packages/django/views/static.py:51
 #, python-format
 msgid "“%(path)s” does not exist"
-msgstr "« %(path)s » n'existe pas"
+msgstr "« %(path)s » n’existe pas"
 
 #: venv/lib/python3.12/site-packages/django/views/static.py:68
 #: venv/lib/python3.12/site-packages/django/views/templates/directory_index.html:8
@@ -1538,7 +1508,7 @@ msgstr "Index de %(directory)s"
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:7
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:204
 msgid "The install worked successfully! Congratulations!"
-msgstr "L'installation a réussi ! Félicitations !"
+msgstr "L’installation a réussi ! Félicitations !"
 
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:206
 #, python-format
@@ -1546,9 +1516,8 @@ msgid ""
 "View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
 "target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
 msgstr ""
-"Voir les <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">notes de version</a> pour Django "
-"%(version)s"
+"Consultez les <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">notes de version</a> pour Django %(version)s"
 
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:208
 #, python-format
@@ -1559,9 +1528,8 @@ msgid ""
 "configured any URLs."
 msgstr ""
 "Vous voyez cette page car <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener\">DEBUG="
-"True</a> est dans votre fichier de configuration et vous n'avez pas configuré "
-"d'URL."
+"%(version)s/ref/settings/#debug\" target=\"_blank\" "
+"rel=\"noopener\">DEBUG=True</a> est dans votre fichier de paramètres et vous n’avez pas configuré d’URL."
 
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:217
 msgid "Django Documentation"
@@ -1569,7 +1537,7 @@ msgstr "Documentation Django"
 
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:218
 msgid "Topics, references, & how-to’s"
-msgstr "Sujets, références et tutoriels"
+msgstr "Sujets, références et guides pratiques"
 
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:226
 msgid "Tutorial: A Polling App"
@@ -1577,7 +1545,7 @@ msgstr "Tutoriel : Une application de sondage"
 
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:227
 msgid "Get started with Django"
-msgstr "Commencer avec Django"
+msgstr "Démarrez avec Django"
 
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:235
 msgid "Django Community"
@@ -1585,7 +1553,7 @@ msgstr "Communauté Django"
 
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:236
 msgid "Connect, get help, or contribute"
-msgstr "Connectez-vous, obtenez de l'aide ou contribuez"
+msgstr "Connectez-vous, obtenez de l’aide ou contribuez"
 
 #: venv/lib/python3.12/site-packages/kombu/transport/qpid.py:1311
 #, python-format
@@ -1677,8 +1645,6 @@ msgstr "Type de facture"
 
 #: facture_app/forms.py:31 facture_app/models.py:60
 #: facture_app/templates/facture_app/add_invoice.html:144
-#: facture_app/templates/facture_app/add_invoice.html:200
-#: facture_app/templates/facture_app/invoice.html:42
 msgid "Commentaires"
 msgstr "Commentaires"
 
@@ -1764,283 +1730,18 @@ msgstr "Payé"
 #: facture_app/models.py:59
 #: facture_app/templates/facture_app/add_invoice.html:132
 #: facture_app/templates/facture_app/add_invoice.html:140
+#: facture_app/templates/facture_app/add_invoice.html:200
 #: facture_app/templates/facture_app/home.html:119
 #: facture_app/templates/facture_app/invoice.html:42
-msgid "Montant"
-msgstr "Montant"
-
-#: facture_app/models.py:61
-#: facture_app/templates/facture_app/add_invoice.html:167
 #: facture_app/templates/facture_app/invoice_base.html:112
-
-#: facture_app/templates/facture_app/invoice_base.html:115
-msgid "Date d'émission"
-msgstr "Date d'émission"
-
-#: facture_app/templates/facture_app/invoice_base.html:118
-msgid "Client:"
-msgstr "Client :"
-
-#: facture_app/templates/facture_app/invoice_base.html:121
-msgid "Adresse:"
-msgstr "Adresse :"
-
-#: facture_app/templates/facture_app/invoice_base.html:124
-msgid "Téléphone:"
-msgstr "Téléphone :"
-
-#: facture_app/templates/facture_app/invoice_base.html:127
-msgid "Email:"
-msgstr "Email :"
-
-#: facture_app/templates/facture_app/invoice_base.html:130
-msgid "Total HT"
-msgstr "Total HT"
-
-#: facture_app/templates/facture_app/invoice_base.html:133
-msgid "TVA (20%)"
-msgstr "TVA (20%)"
-
-#: facture_app/templates/facture_app/invoice_base.html:136
-msgid "Total TTC"
-msgstr "Total TTC"
-
-#: facture_app/templates/facture_app/invoice.html:15
-msgid "Facture N°"
-msgstr "Facture N°"
-
-#: facture_app/templates/facture_app/invoice.html:20
-msgid "Reçu N°"
-msgstr "Reçu N°"
-
-#: facture_app/templates/facture_app/invoice.html:25
-msgid "Facture Proforma N°"
-msgstr "Facture Proforma N°"
-
-#: facture_app/templates/facture_app/invoice.html:39
-msgid "Quantité"
-msgstr "Quantité"
-
-#: facture_app/templates/facture_app/invoice.html:39
-msgid "Prix unitaire"
-msgstr "Prix unitaire"
-
-#: facture_app/templates/facture_app/invoice.html:39
 msgid "Total"
 msgstr "Total"
 
-#: facture_app/templates/facture_app/invoice.html:47
-msgid "Payée"
-msgstr "Payée"
+#: facture_app/models.py:64
+#: facture_app/templates/facture_app/add_customer.html:51
+#: facture_app/templates/facture_app/admin_add_user.html:62
+msgid "Factures"
+msgstr "Factures"
 
-#: facture_app/templates/facture_app/invoice.html:49
-msgid "Non payée"
-msgstr "Non payée"
-
-#: facture_app/templates/facture_app/invoice.html:54
-msgid "Télécharger en PDF"
-msgstr "Télécharger en PDF"
-
-#: facture_app/templates/facture_app/invoice.html:60
-msgid "Modifier la facture"
-msgstr "Modifier la facture"
-
-#: facture_app/templates/facture_app/invoice.html:66
-msgid "Supprimer la facture"
-msgstr "Supprimer la facture"
-
-#: facture_app/templates/facture_app/home.html:25
-msgid "Bienvenue sur le système de facturation Ecole-241"
-msgstr "Bienvenue sur le système de facturation Ecole-241"
-
-#: facture_app/templates/facture_app/home.html:29
-msgid "Rechercher une facture..."
-msgstr "Rechercher une facture..."
-
-#: facture_app/templates/facture_app/home.html:35
-msgid "Ajouter une facture"
-msgstr "Ajouter une facture"
-
-#: facture_app/templates/facture_app/home.html:41
-msgid "Ajouter un client"
-msgstr "Ajouter un client"
-
-#: facture_app/templates/facture_app/home.html:47
-msgid "Ajouter un produit"
-msgstr "Ajouter un produit"
-
-#: facture_app/templates/facture_app/home.html:53
-msgid "Exporter en CSV"
-msgstr "Exporter en CSV"
-
-#: facture_app/templates/facture_app/home.html:59
-msgid "Exporter en PDF"
-msgstr "Exporter en PDF"
-
-#: facture_app/templates/facture_app/home.html:67
-msgid "Langue :"
-msgstr "Langue :"
-
-#: facture_app/templates/facture_app/home.html:71
-msgid "Français"
-msgstr "Français"
-
-#: facture_app/templates/facture_app/home.html:77
-msgid "Anglais"
-msgstr "Anglais"
-
-#: facture_app/templates/facture_app/home.html:90
-msgid "Liste des factures"
-msgstr "Liste des factures"
-
-#: facture_app/templates/facture_app/home.html:97
-msgid "Aucune facture disponible."
-msgstr "Aucune facture disponible."
-
-#: facture_app/templates/facture_app/home.html:105
-msgid "Numéro"
-msgstr "Numéro"
-
-#: facture_app/templates/facture_app/home.html:107
-msgid "Type"
-msgstr "Type"
-
-#: facture_app/templates/facture_app/home.html:109
-#: facture_app/templates/facture_app/add_invoice.html:115
-msgid "Date"
-msgstr "Date"
-
-#: facture_app/templates/facture_app/home.html:111
-msgid "État"
-msgstr "État"
-
-#: facture_app/templates/facture_app/home.html:113
-msgid "Actions"
-msgstr "Actions"
-
-#: facture_app/templates/facture_app/home.html:125
-msgid "Modifier"
-msgstr "Modifier"
-
-#: facture_app/templates/facture_app/home.html:138
-msgid "Afficher"
-msgstr "Afficher"
-
-#: facture_app/templates/facture_app/add_invoice.html:18
-msgid "Ajouter une facture - Ecole-241"
-msgstr "Ajouter une facture - Ecole-241"
-
-#: facture_app/templates/facture_app/add_invoice.html:50
-msgid "Ajouter une facture"
-msgstr "Ajouter une facture"
-
-#: facture_app/templates/facture_app/add_invoice.html:58
-msgid "Détails de la facture"
-msgstr "Détails de la facture"
-
-#: facture_app/templates/facture_app/add_invoice.html:65
-msgid "Aucun client disponible. Veuillez d'abord ajouter un client."
-msgstr "Aucun client disponible. Veuillez d'abord ajouter un client."
-
-#: facture_app/templates/facture_app/add_invoice.html:70
-msgid "Sélectionner un client"
-msgstr "Sélectionner un client"
-
-#: facture_app/templates/facture_app/add_invoice.html:85
-msgid "Aucun produit disponible. Veuillez d'abord ajouter un produit."
-msgstr "Aucun produit disponible. Veuillez d'abord ajouter un produit."
-
-#: facture_app/templates/facture_app/add_invoice.html:90
-msgid "Ajouter un produit à la facture"
-msgstr "Ajouter un produit à la facture"
-
-#: facture_app/templates/facture_app/add_invoice.html:121
-#: facture_app/templates/facture_app/add_product.html:105
-msgid "Produits"
-msgstr "Produits"
-
-#: facture_app/templates/facture_app/add_invoice.html:156
-#: facture_app/templates/facture_app/add_product.html:165
-msgid "Ajouter un autre produit"
-msgstr "Ajouter un autre produit"
-
-#: facture_app/templates/facture_app/add_invoice.html:176
-msgid "Enregistrer la facture"
-msgstr "Enregistrer la facture"
-
-#: facture_app/templates/facture_app/add_invoice.html:182
-msgid "Annuler"
-msgstr "Annuler"
-
-#: facture_app/templates/facture_app/add_product.html:18
-msgid "Ajouter un produit - Ecole-241"
-msgstr "Ajouter un produit - Ecole-241"
-
-#: facture_app/templates/facture_app/add_product.html:50
-msgid "Ajouter un produit"
-msgstr "Ajouter un produit"
-
-#: facture_app/templates/facture_app/add_product.html:58
-msgid "Détails du produit"
-msgstr "Détails du produit"
-
-#: facture_app/templates/facture_app/add_product.html:174
-msgid "Enregistrer le produit"
-msgstr "Enregistrer le produit"
-
-#: facture_app/templates/facture_app/add_product.html:180
-msgid "Annuler"
-msgstr "Annuler"
-
-#: facture_app/templates/facture_app/add_customer.html:25
-#: facture_app/templates/facture_app/admin_add_user.html:36
-msgid "Ajouter un client"
-msgstr "Ajouter un client"
-
-#: facture_app/templates/facture_app/admin_add_user.html:44
-msgid "Détails de l'utilisateur"
-msgstr "Détails de l'utilisateur"
-
-#: facture_app/templates/facture_app/admin_add_user.html:70
-msgid "Activée"
-msgstr "Activée"
-
-#: facture_app/templates/facture_app/admin_add_user.html:76
-msgid "Désactivée"
-msgstr "Désactivée"
-
-#: facture_app/templates/facture_app/admin_add_user.html:81
-msgid "Statut du compte"
-msgstr "Statut du compte"
-
-#: facture_app/templates/facture_app/admin_add_user.html:90
-msgid "Enregistrer l'utilisateur"
-msgstr "Enregistrer l'utilisateur"
-
-#: facture_app/templates/facture_app/admin_add_user.html:96
-msgid "Annuler"
-msgstr "Annuler"
-
-#: facture_app/templates/facture_app/base.html:45
-msgid "Système de facturation Ecole-241"
-msgstr "Système de facturation Ecole-241"
-
-#: facture_app/templates/facture_app/base.html:52
-msgid "Accueil"
-msgstr "Accueil"
-
-#: facture_app/templates/facture_app/base.html:58
-msgid "Administration"
-msgstr "Administration"
-
-#: facture_app/templates/facture_app/base.html:64
-msgid "Déconnexion"
-msgstr "Déconnexion"
-
-#: facture_app/templates/facture_app/base.html:70
-msgid "Connexion"
-msgstr "Connexion"
-
-#: facture_app/templates/facture_app/base.html:90
-msgid "© 2025 Ecole-241. Tous droits réservés."
-msgstr "© 2025 Ecole-241. Tous droits réservés."
+#: facture_app/models.py:82
+#: facture_app/templates/facture_app

@@ -1,86 +1,217 @@
-{% extends "facture_app/base.html" %}
-{% load static i18n widget_tweaks %}
-
-{% block extrahead %}
-<link rel="stylesheet" href="{% static 'facture_app/css/admin_add_user.css' %}">
-{% endblock extrahead %}
-
-{% block content %}
-<div class="container my-4">
-    <div class="row">
-        <!-- Barre latérale -->
-        <div class="col-md-3">
-            <div class="list-group mb-4">
-                <a href="{% url 'invoicing:admin_add_user' %}" class="list-group-item list-group-item-action active">
-                    {% trans "Utilisateurs" %} <span class="badge bg-success float-end">+ Ajouter</span>
-                </a>
-                <a href="{% url 'invoicing:invoices-list' %}" class="list-group-item list-group-item-action">{% trans "Factures" %}</a>
-                <a href="{% url 'invoicing:create-product' %}" class="list-group-item list-group-item-action">{% trans "Produits" %}</a>
-                <a href="{% url 'invoicing:create-customer' %}" class="list-group-item list-group-item-action">{% trans "Clients" %}</a>
+{% load i18n %}
+{% get_current_language as lang_code %}
+<html lang="{{ lang_code }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Ajout de utilisateur" %}</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'facture_app/css/admin_add_user.css' %}">
+    <style>
+        .hidden-form {
+            display: none;
+        }
+        .form-container {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <!-- En-tête -->
+    <header class="bg-primary text-white p-3">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h4>{% trans "Administration du système de facturation Ecole-241" %}</h4>
+                </div>
+                <div class="col-auto d-flex align-items-center">
+                    <span>{% blocktrans %}Bienvenue, {{ user.username }}{% endblocktrans %}</span>
+                    <!-- Menu déroulant de langue -->
+                    <form action="{% url 'set_language' %}" method="post" class="text-white ms-3">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <select name="language" onchange="this.form.submit()">
+                            <option value="fr" {% if lang_code == "fr" %}selected{% endif %}>Français</option>
+                            <option value="en" {% if lang_code == "en" %}selected{% endif %}>English</option>
+                        </select>
+                    </form>
+                    <a href="{% url 'invoicing:invoices-list' %}" class="text-white ms-3">{% trans "Accueil" %}</a>
+                    <a href="{% url 'invoicing:logout' %}" class="text-white ms-3">{% trans "Déconnexion" %}</a>
+                </div>
             </div>
         </div>
-        <!-- Formulaire -->
-        <div class="col-md-9">
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    <h5 class="mb-0">{% trans "Ajouter un nouvel utilisateur" %}</h5>
+    </header>
+
+    <div class="container-fluid my-4">
+        <div class="row">
+            <!-- Menu vertical -->
+            <div class="col-md-3">
+                <div class="section-title mb-2">{% trans "AUTHENTIFICATION ET AUTORISATION" %}</div>
+                <div class="list-group mb-4">
+                    <a href="#" class="list-group-item list-group-item-action">{% trans "Groupes" %} <span class="badge bg-success float-end add-group-form">{% trans "+ Ajouter" %}</span></a>
+                    <a href="#" class="list-group-item list-group-item-action active">{% trans "Utilisateurs" %} <span class="badge bg-success float-end">{% trans "+ Ajouter" %}</span></a>
                 </div>
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="{{ form.username.id_for_label }}" class="form-label">{% trans "Nom d'utilisateur" %}</label>
-                                {{ form.username|add_class:"form-control" }}
-                                {% for error in form.username.errors %}
-                                    <div class="text-danger">{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                            <div class="col-md-6">
-                                <label for="{{ form.email.id_for_label }}" class="form-label">{% trans "Adresse e-mail" %}</label>
-                                {{ form.email|add_class:"form-control" }}
-                                {% for error in form.email.errors %}
-                                    <div class="text-danger">{{ error }}</div>
-                                {% endfor %}
-                            </div>
+                <div class="section-title mb-2">{% trans "SYSTÈME DE FACTURATION NOVAFAC" %}</div>
+                <div class="list-group">
+                    <a href="{% url 'invoicing:create-product' %}" class="list-group-item list-group-item-action">{% trans "Articles" %} <span class="badge bg-success float-end">{% trans "+ Ajouter" %}</span></a>
+                    <a href="{% url 'invoicing:create-customer' %}" class="list-group-item list-group-item-action">{% trans "Clients" %} <span class="badge bg-success float-end">{% trans "+ Ajouter" %}</span></a>
+                    <a href="{% url 'invoicing:create-invoice' %}" class="list-group-item list-group-item-action">{% trans "Factures" %} <span class="badge bg-success float-end">{% trans "+ Ajouter" %}</span></a>
+                </div>
+            </div>
+            <!-- Contenu principal -->
+            <div class="col-md-9">
+                <div id="form-container" class="row">
+                    <!-- Formulaire principal -->
+                    <div class="col-12">
+                        <div class="form-container" id="main-form-container">
+                            <h2 class="mb-4">{% trans "Ajout de utilisateur" %}</h2>
+                            <p>{% trans "Après avoir créé un utilisateur, vous pourrez modifier davantage de ses options." %}</p>
+                            <form method="post" id="main-form" data-form-id="form1">
+                                {% csrf_token %}
+                                <div class="row mb-3 align-items-center">
+                                    <label for="form1-username" class="col-md-4 col-form-label text-end">{% trans "Nom d'utilisateur :" %}</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="form1-username" name="form1-username" value="royal">
+                                        <small class="text-muted d-block ps-3">{% trans "Requis, 150 caractères maximum. Uniquement des lettres, nombres et caractères (@ . + - _ =)." %}</small>
+                                    </div>
+                                </div>
+                                <hr class="separator">
+                                <div class="row mb-3 align-items-center">
+                                    <label class="col-md-4 col-form-label text-end">{% trans "Authentification par mot de passe :" %}</label>
+                                    <div class="col-md-8">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="form1-auth_mode" id="form1-auth_active" value="active" checked>
+                                            <label class="form-check-label" for="form1-auth_active">{% trans "Activée" %}</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="form1-auth_mode" id="form1-auth_inactive" value="inactive">
+                                            <label class="form-check-label" for="form1-auth_inactive">{% trans "Désactivée" %}</label>
+                                        </div>
+                                        <small class="text-muted d-block ps-3">{% trans "Indique si cet utilisateur pourra s’authentifier avec un mot de passe ou pas. Si ce n’est pas le cas, il est possible que l’authentification puisse tout de même se faire par d’autres procédés, comme l’authentification unique (Single Sign-On) ou LDAP." %}</small>
+                                    </div>
+                                </div>
+                                <hr class="separator">
+                                <div class="row mb-3 align-items-center">
+                                    <label for="form1-password1" class="col-md-4 col-form-label text-end">{% trans "Mot de passe :" %}</label>
+                                    <div class="col-md-8">
+                                        <input type="password" class="form-control" id="form1-password1" name="form1-password1">
+                                        <small class="text-muted d-block ps-3">{% trans "Votre mot de passe ne peut pas : être identique à vos autres informations personnelles. Votre mot de passe doit contenir au minimum 8 caractères. Votre mot de passe ne peut pas être un mot de passe couramment utilisé. Votre mot de passe ne peut pas être entièrement numérique." %}</small>
+                                    </div>
+                                </div>
+                                <hr class="separator">
+                                <div class="row mb-3 align-items-center">
+                                    <label for="form1-password2" class="col-md-4 col-form-label text-end">{% trans "Confirmation du mot de passe :" %}</label>
+                                    <div class="col-md-8">
+                                        <input type="password" class="form-control" id="form1-password2" name="form1-password2">
+                                        <small class="text-muted d-block ps-3">{% trans "Saisissez le même mot de passe que précédemment, pour vérification." %}</small>
+                                    </div>
+                                </div>
+                                <hr class="separator">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button type="submit" class="btn btn-primary">{% trans "ENREGISTRER" %}</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="{{ form.password1.id_for_label }}" class="form-label">{% trans "Mot de passe" %}</label>
-                                {{ form.password1|add_class:"form-control" }}
-                                {% for error in form.password1.errors %}
-                                    <div class="text-danger">{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                            <div class="col-md-6">
-                                <label for="{{ form.password2.id_for_label }}" class="form-label">{% trans "Confirmer le mot de passe" %}</label>
-                                {{ form.password2|add_class:"form-control" }}
-                                {% for error in form.password2.errors %}
-                                    <div class="text-danger">{{ error }}</div>
-                                {% endfor %}
-                            </div>
+                    </div>
+                    <!-- Formulaire supplémentaire -->
+                    <div class="col-12">
+                        <div id="additional-form" class="hidden-form form-container">
+                            <h3>{% trans "Ajout d'un autre administrateur" %}</h3>
+                            <form method="post" data-form-id="form2">
+                                {% csrf_token %}
+                                <div class="row mb-3 align-items-center">
+                                    <label for="form2-username" class="col-md-4 col-form-label text-end">{% trans "Nom d'utilisateur :" %}</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="form2-username" name="form2-username">
+                                        <small class="text-muted d-block ps-3">{% trans "Requis, 150 caractères maximum. Uniquement des lettres, nombres et caractères (@ . + - _ =)." %}</small>
+                                    </div>
+                                </div>
+                                <hr class="separator">
+                                <div class="row mb-3 align-items-center">
+                                    <label class="col-md-4 col-form-label text-end">{% trans "Authentification par mot de passe :" %}</label>
+                                    <div class="col-md-8">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="form2-auth_mode" id="form2-auth_active" value="active" checked>
+                                            <label class="form-check-label" for="form2-auth_active">{% trans "Activée" %}</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="form2-auth_mode" id="form2-auth_inactive" value="inactive">
+                                            <label class="form-check-label" for="form2-auth_inactive">{% trans "Désactivée" %}</label>
+                                        </div>
+                                        <small class="text-muted d-block ps-3">{% trans "Indique si cet utilisateur pourra s’authentifier avec un mot de passe ou pas." %}</small>
+                                    </div>
+                                </div>
+                                <hr class="separator">
+                                <div class="row mb-3 align-items-center">
+                                    <label for="form2-password1" class="col-md-4 col-form-label text-end">{% trans "Mot de passe :" %}</label>
+                                    <div class="col-md-8">
+                                        <input type="password" class="form-control" id="form2-password1" name="form2-password1">
+                                        <small class="text-muted d-block ps-3">{% trans "Votre mot de passe doit contenir au minimum 8 caractères." %}</small>
+                                    </div>
+                                </div>
+                                <hr class="separator">
+                                <div class="row mb-3 align-items-center">
+                                    <label for="form2-password2" class="col-md-4 col-form-label text-end">{% trans "Confirmation du mot de passe :" %}</label>
+                                    <div class="col-md-8">
+                                        <input type="password" class="form-control" id="form2-password2" name="form2-password2">
+                                        <small class="text-muted d-block ps-3">{% trans "Saisissez le même mot de passe que précédemment." %}</small>
+                                    </div>
+                                </div>
+                                <hr class="separator">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button type="submit" class="btn btn-primary">{% trans "ENREGISTRER" %}</button>
+                                    <button type="button" class="btn btn-secondary remove-form">{% trans "ANNULER" %}</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="{{ form.first_name.id_for_label }}" class="form-label">{% trans "Prénom" %}</label>
-                                {{ form.first_name|add_class:"form-control" }}
-                                {% for error in form.first_name.errors %}
-                                    <div class="text-danger">{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                            <div class="col-md-6">
-                                <label for="{{ form.last_name.id_for_label }}" class="form-label">{% trans "Nom de famille" %}</label>
-                                {{ form.last_name|add_class:"form-control" }}
-                                {% for error in form.last_name.errors %}
-                                    <div class="text-danger">{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">{% trans "Ajouter l'utilisateur" %}</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock content %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addGroupButton = document.querySelector('.add-group-form');
+            const mainFormContainer = document.getElementById('main-form-container');
+            const additionalForm = document.getElementById('additional-form');
+            const removeFormButton = document.querySelector('.remove-form');
+
+            if (!addGroupButton || !mainFormContainer || !additionalForm || !removeFormButton) {
+                console.error("Un ou plusieurs éléments sont manquants dans le DOM");
+                return;
+            }
+
+            addGroupButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log("Clic sur '+ Ajouter' détecté");
+                mainFormContainer.classList.add('hidden-form');
+                additionalForm.classList.remove('hidden-form');
+            });
+
+            removeFormButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log("Clic sur 'ANNULER' détecté");
+                additionalForm.classList.add('hidden-form');
+                mainFormContainer.classList.remove('hidden-form');
+            });
+
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const formId = this.getAttribute('data-form-id');
+                    console.log("Soumission du formulaire avec form_id:", formId);
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'form_id';
+                    hiddenInput.value = formId;
+                    this.appendChild(hiddenInput);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

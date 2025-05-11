@@ -1,0 +1,121 @@
+% Defining the document class and basic setup
+\documentclass[a4paper,12pt]{article}
+
+% Importing necessary packages for layout and formatting
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+
+% Setting page geometry for consistent margins
+\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
+
+% Defining colors for the invoice
+\definecolor{background}{HTML}{df4e86} % Fond rose de la page entière
+\definecolor{containerbg}{HTML}{e9ecef} % Fond gris clair du conteneur principal
+\definecolor{headerbg}{HTML}{eb89af} % Bandeau rose de l'en-tête
+\definecolor{tableheader}{HTML}{f8f9fa} % Fond gris clair de l'en-tête du tableau
+\definecolor{totalrow}{HTML}{d4edda} % Fond vert pâle pour la ligne Total
+\definecolor{tablebg}{HTML}{ffffff} % Fond blanc pour les données du tableau
+\definecolor{bordercolor}{HTML}{000000} % Bordures noires
+
+% Setting the background color for the entire page
+\pagecolor{background}
+
+% Customizing table column types for better alignment
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% Adjust table border thickness and spacing
+\setlength{\arrayrulewidth}{0.5pt}
+\setlength{\tabcolsep}{5pt} % Réduire l'espacement horizontal dans le tableau
+\renewcommand{\arraystretch}{1.2} % Ajuster l'espacement vertical dans le tableau
+
+% Starting the document
+\begin{document}
+
+% Removing default page numbering
+\pagestyle{empty}
+
+% Creating the main container with a border
+\begin{center}
+\fboxrule=0.5pt % Épaisseur de la bordure
+\fbox{%
+    \begin{minipage}{0.85\textwidth}
+    \color{black}
+    \pagecolor[HTML]{e9ecef} % Fond gris clair pour le conteneur principal
+
+    % Creating the header section aligned to the left
+    \raggedright
+    \fbox{%
+        \colorbox{headerbg}{%
+            \begin{minipage}{\dimexpr\textwidth-4\fboxsep\relax}
+            \raggedright
+            \vspace{5pt}
+            \textbf{\Large NovaFac} \\
+            \vspace{3pt}
+            \normalsize Facture \mbox{\#2} \\
+            \vspace{5pt}
+            \end{minipage}
+        }%
+    }
+
+    % Adding vertical space after the header
+    \vspace{15pt}
+
+    % Creating the billing and company info section
+    \begin{minipage}{0.45\textwidth}
+        % Billing info aligned to the left
+        \raggedright
+        \textbf{\normalsize Facturé à} \\
+        \vspace{2pt}
+        carlos \\
+        bac-aviation \\
+        carlos234@gmail.com \\
+    \end{minipage}%
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        % Company info aligned to the right
+        \raggedleft
+        \textbf{\normalsize Informations de l'entreprise} \\
+        \vspace{2pt}
+        Ma Société \\
+        Gabon, Libreville \\
+        contact@novafac.com \\
+    \end{minipage}
+
+    % Adding vertical space before the table
+    \vspace{15pt}
+
+    % Creating the table for invoice items with adjusted column widths
+    \begin{center}
+    \begin{tabular}{|C{4.0cm}|C{2.0cm}|C{3.0cm}|C{3.0cm}|}
+        \hline
+        \rowcolor{tableheader}
+        \textbf{Description} & \textbf{Quantité} & \textbf{Prix unitaire} & \textbf{Total} \\
+        \hline
+        \rowcolor{tablebg}
+        
+        Matrixam & 3,00 & 7000,00 FCFA & 21000,00 FCFA \\
+        \hline
+        
+        \rowcolor{totalrow}
+        \multicolumn{3}{|c|}{\textbf{Total général}} & \textbf21000,00 FCFA \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    % Ajout de la date pour vérifier la dynamique
+    \vspace{15pt}
+    \textit{Généré le : 10 mai 2025 15:01}
+
+    \end{minipage}%
+}
+\end{center}
+
+% Ending the document
+\end{document}

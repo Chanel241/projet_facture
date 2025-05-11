@@ -44,8 +44,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # Vérifié et correctement positionné
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,9 +80,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-LANGUAGE_CODE = 'fr-fr'
+LANGUAGE_CODE = 'fr'  # Langue par défaut
 TIME_ZONE = 'UTC'
 USE_I18N = True
+USE_L10N = True  # Ajouté pour activer la localisation
 USE_TZ = True
 LANGUAGES = [
     ('fr', 'Français'),
@@ -101,7 +102,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.i18n',
+                'django.template.context_processors.i18n',  # Vérifié pour les langues
             ],
         },
     },
@@ -166,7 +167,9 @@ LOGGING = {
 }
 
 # Authentication
-LOGIN_URL = 'admin:login'
+LOGIN_URL = '/admin-login/'  # Redirection pour les utilisateurs non authentifiés
+LOGOUT_REDIRECT_URL = '/admin-login/'  # Redirection après déconnexion
+LOGIN_REDIRECT_URL = '/'  # Redirection après connexion réussie
 
 # Security settings
 SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=not DEBUG, cast=bool)
