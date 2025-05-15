@@ -1,0 +1,27 @@
+body { background-color: #f0f0f0; }
+        .login-container { 
+            max-width: 400px; 
+            margin: 100px auto; 
+            padding: 2rem; 
+            background-color: #584bcc; 
+            border-radius: 8px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+            border: 2px solid black;
+        }
+        .login-container h2 { 
+            color: white;
+        }
+        .username-row { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+        .username-row label { 
+            margin: 0;
+            white-space: nowrap;
+        }
+        .btn-primary { 
+            background-color: #2308b8; 
+            border-color: #070707; 
+            width: 100%; 
+        }

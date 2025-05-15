@@ -1,22 +1,22 @@
 body {
-    background-color: #df4e86;; /* Bleu sombre */
-    background-image: none; /* Supprime toute image de fond */
-    color: #ffffff; /* Texte blanc pour contraste */
+    background-color: #4dc4aa;
+    background-image: none;
+    color: #ffffff;
 }
 
 .navbar {
-    border-bottom: 1px solid #df4e86;; /* Bordure bleu foncé légèrement plus clair */
+    border-bottom: 1px solid #4dc4aa;
 }
 
 .card {
     border-radius: 0.5rem;
-    background-color: #5fbbe9;; /* Fond des cartes en bleu foncé */
-    color: #ffffff; /* Texte blanc dans les cartes */
+    background-color: #b7cfca;
+    color: #ffffff;
 }
 
 .card-header {
     border-radius: 0.5rem 0.5rem 0 0;
-    background-color: #0b0b0c; /* En-tête des cartes */
+    background-color: #0b0b0c;
 }
 
 .table {
@@ -27,22 +27,22 @@ body {
 
 .table th, .table td {
     vertical-align: middle;
-    border-color: #3b5eb8; /* Bordure des cellules en bleu clair */
+    border-color: #3b5eb8;
 }
 
 .btn-primary {
-    background-color: #f166d3; /* Bouton bleu clair */
+    background-color: #eb0c17;
     border-color: #050505;
 }
 
 .btn-primary:hover {
     background-color: #2d4a9e;
-    border-color: #1e3a8a;
+    border-color: #030303;
 }
 
 .alert {
     border-radius: 0.25rem;
-    color: #000000; /* Texte noir pour les alertes */
+    color: #5a5cee;
 }
 
 .invoice-container {
@@ -64,8 +64,8 @@ body {
 
 .form-control, .form-select {
     border-radius: 0.25rem;
-    background-color: #f8f9fa; /* Gris clair pour la barre de recherche */
-    color: #000000; /* Texte noir pour contraste */
+    background-color: #f8f9fa;
+    color: #000000;
     border-color: #3b5eb8;
 }
 
@@ -77,5 +77,5 @@ body {
 }
 
 .input-group {
-    background-color: #f8f9fa; /* Gris clair pour la barre de recherche */
+    background-color: #f8f9fa;
 }

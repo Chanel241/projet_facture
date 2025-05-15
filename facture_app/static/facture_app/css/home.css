@@ -4,11 +4,11 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #df4e86;
+    background-color: #ebe8e9;
 }
 
 .custom-header {
-    background-color: #f8f9fa;
+    background-color: #dadcdf;
     color: #fff;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -54,14 +54,14 @@ body {
 
 main {
     flex-grow: 1;
-    background-color: #df4e86;
+    background-color: #4dc4aa;
     color: #fff;
     padding: 20px 0;
 }
 
 main h2 {
     color: #fff;
-    font-size: 2.2rem; /* Taille augmentée */
+    font-size: 2.2rem;
     font-weight: bold;
 }
 
@@ -80,35 +80,35 @@ main h2 {
 
 .btn-primary {
     background-color: #007bff;
-    border-color: #007bff;
+    border-color: #080808;
 }
 
 .btn-success {
     background-color: #28a745;
-    border-color: #28a745;
+    border-color: #050505;
 }
 
 .btn-warning {
     background-color: #ffc107;
-    border-color: #ffc107;
+    border-color: #080808;
 }
 
 .btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
+    background-color: #da091e;
+    border-color: #070707;
 }
 
 footer {
-    background-color: #f8f9fa;
-    color: #0a0a0a; /* Texte ajusté pour être lisible */
+    background-color: #dadcdf;
+    color: #0a0a0a;
     padding: 10px 0;
 }
 
 footer a {
-    color: #0a0a0a; /* Lien ajusté pour être lisible */
+    color: #b4acac;
     text-decoration: underline;
 }
 
 footer a:hover {
-    color: #555; /* Couleur plus claire au survol */
+    color: #555;
 }

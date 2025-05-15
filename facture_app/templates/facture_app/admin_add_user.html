@@ -1,168 +1,220 @@
-{% load i18n %}
-{% get_current_language as lang_code %}
-<html lang="{{ lang_code }}">
+{% load static i18n widget_tweaks %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Ajout de utilisateur" %}</title>
-    {% load static %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'facture_app/css/admin_add_user.css' %}">
-    <style>
-        .hidden-form {
-            display: none;
-        }
-        .form-container {
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-    </style>
 </head>
-<body>
+<body style="margin: 0 !important; padding: 0 !important;">
     <!-- En-tête -->
-    <header class="bg-primary text-white p-3">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col">
-                    <h4>{% trans "Administration du système de facturation Ecole-241" %}</h4>
-                </div>
-                <div class="col-auto d-flex align-items-center">
-                    <span>{% blocktrans %}Bienvenue, {{ user.username }}{% endblocktrans %}</span>
-                    <!-- Menu déroulant de langue -->
-                    <form action="{% url 'set_language' %}" method="post" class="text-white ms-3">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <select name="language" onchange="this.form.submit()">
-                            <option value="fr" {% if lang_code == "fr" %}selected{% endif %}>Français</option>
-                            <option value="en" {% if lang_code == "en" %}selected{% endif %}>English</option>
-                        </select>
-                    </form>
-                    <a href="{% url 'invoicing:invoices-list' %}" class="text-white ms-3">{% trans "Accueil" %}</a>
-                    <a href="{% url 'invoicing:logout' %}" class="text-white ms-3">{% trans "Déconnexion" %}</a>
-                </div>
+    <header id="custom-header" style="margin: 0 !important; padding: 0 !important; border-bottom: 0 !important;">
+        <div class="header-container">
+            <div class="header-title">
+                <span>{% trans "Administration du système de facturation Ecole-241" %}</span>
+            </div>
+            <div class="header-actions">
+                <span>{% blocktrans %}Bienvenue, {{ user.username }}{% endblocktrans %}</span>
+                <a href="{% url 'invoicing:invoices-list' %}" class="header-link">{% trans "Accueil" %}</a>
+                <a href="{% url 'invoicing:logout' %}" class="header-link">{% trans "Déconnexion" %}</a>
+                <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                    <select name="language" onchange="this.form.submit()" style="margin-left: 10px; padding: 5px;">
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                                {{ language.name_local }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
             </div>
         </div>
     </header>
 
-    <div class="container-fluid my-4">
-        <div class="row">
+    <div class="container-fluid" style="margin: 0 !important; padding: 0 !important;">
+        <div class="row flex-row" style="margin: 0 !important; padding: 0 !important; display: flex; height: 100%;">
             <!-- Menu vertical -->
-            <div class="col-md-3">
+            <div class="col-md-3 sidebar" style="margin: 0 !important; padding: 0 !important;">
                 <div class="section-title mb-2">{% trans "AUTHENTIFICATION ET AUTORISATION" %}</div>
                 <div class="list-group mb-4">
-                    <a href="#" class="list-group-item list-group-item-action">{% trans "Groupes" %} <span class="badge bg-success float-end add-group-form">{% trans "+ Ajouter" %}</span></a>
-                    <a href="#" class="list-group-item list-group-item-action active">{% trans "Utilisateurs" %} <span class="badge bg-success float-end">{% trans "+ Ajouter" %}</span></a>
+                    <a href="#" class="list-group-item list-group-item-action">{% trans "Admin" %} <span class="badge bg-success float-end add-group-form">{% trans "+ Ajouter" %}</span></a>
+                    <a href="#" class="list-group-item list-group-item-action active">{% trans "Utilisateurs" %} <span class="badge bg-success float-end add-user-form">{% trans "+ Ajouter" %}</span></a>
+                    <a href="{% url 'invoicing:product-list' %}" class="list-group-item list-group-item-action">{% trans "Liste des produits" %}</a>
                 </div>
-                <div class="section-title mb-2">{% trans "SYSTÈME DE FACTURATION NOVAFAC" %}</div>
+                <div class="section-title mb-2">{% trans "SYSTÈME DE FACTURATION NOVAFACT" %}</div>
                 <div class="list-group">
-                    <a href="{% url 'invoicing:create-product' %}" class="list-group-item list-group-item-action">{% trans "Articles" %} <span class="badge bg-success float-end">{% trans "+ Ajouter" %}</span></a>
+                    <a href="{% url 'invoicing:add-product' %}" class="list-group-item list-group-item-action">{% trans "Produits" %} <span class="badge bg-success float-end">{% trans "+ Ajouter" %}</span></a>
                     <a href="{% url 'invoicing:create-customer' %}" class="list-group-item list-group-item-action">{% trans "Clients" %} <span class="badge bg-success float-end">{% trans "+ Ajouter" %}</span></a>
                     <a href="{% url 'invoicing:create-invoice' %}" class="list-group-item list-group-item-action">{% trans "Factures" %} <span class="badge bg-success float-end">{% trans "+ Ajouter" %}</span></a>
                 </div>
             </div>
             <!-- Contenu principal -->
-            <div class="col-md-9">
-                <div id="form-container" class="row">
-                    <!-- Formulaire principal -->
-                    <div class="col-12">
-                        <div class="form-container" id="main-form-container">
-                            <h2 class="mb-4">{% trans "Ajout de utilisateur" %}</h2>
-                            <p>{% trans "Après avoir créé un utilisateur, vous pourrez modifier davantage de ses options." %}</p>
+            <div class="col-md-9 main-content" style="margin: 0 !important; padding: 0 !important;">
+                <div id="form-container" style="margin: 0 !important; padding: 0 !important; height: 100%; border-top: 0 !important; position: relative; top: 0 !important;">
+                    {% if messages %}
+                        <div class="messages">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans 'Close' %}"></button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <!-- Formulaire Utilisateur Standard -->
+                    <div class="col-12" style="margin: 0 !important; padding: 0 !important;">
+                        <div class="form-container" id="main-form-container" style="margin: 0 !important; padding: 0 !important;">
+                            <h2 class="mb-4">{% trans "Ajout d'utilisateur" %}</h2>
                             <form method="post" id="main-form" data-form-id="form1">
                                 {% csrf_token %}
-                                <div class="row mb-3 align-items-center">
-                                    <label for="form1-username" class="col-md-4 col-form-label text-end">{% trans "Nom d'utilisateur :" %}</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" id="form1-username" name="form1-username" value="royal">
-                                        <small class="text-muted d-block ps-3">{% trans "Requis, 150 caractères maximum. Uniquement des lettres, nombres et caractères (@ . + - _ =)." %}</small>
-                                    </div>
-                                </div>
+                                <input type="hidden" name="form_id" value="form1">
+                                <h3 class="section-subtitle mt-4">{% trans "Informations d'identification" %}</h3>
                                 <hr class="separator">
-                                <div class="row mb-3 align-items-center">
-                                    <label class="col-md-4 col-form-label text-end">{% trans "Authentification par mot de passe :" %}</label>
-                                    <div class="col-md-8">
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" class="form-check-input" name="form1-auth_mode" id="form1-auth_active" value="active" checked>
-                                            <label class="form-check-label" for="form1-auth_active">{% trans "Activée" %}</label>
+                                <div class="form-group mb-3">
+                                    <div class="field-wrapper">
+                                        <label for="{{ form1.username.id_for_label }}" class="form-label">{% trans "Nom d'utilisateur :" %}</label>
+                                        <div class="input-container">
+                                            {{ form1.username|add_class:"form-control" }}
+                                            {% if form1.username.errors %}
+                                                {% for error in form1.username.errors %}
+                                                    <small class="text-danger">{{ error }}</small>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <small class="text-muted form-description">{% trans "Requis, 150 caractères maximum. Uniquement des lettres, nombres et caractères (@ . + - _ =)." %}</small>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" class="form-check-input" name="form1-auth_mode" id="form1-auth_inactive" value="inactive">
-                                            <label class="form-check-label" for="form1-auth_inactive">{% trans "Désactivée" %}</label>
+                                    </div>
+                                </div>
+                                <h3 class="section-subtitle mt-4">{% trans "Authentification" %}</h3>
+                                <hr class="separator">
+                                <div class="form-group mb-3">
+                                    <div class="field-wrapper auth-row">
+                                        <label class="form-label">{% trans "Authentification par mot de passe :" %}</label>
+                                        <div class="radio-container">
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="form1-auth_mode" id="form1-auth_active" value="active" checked>
+                                                <label class="form-check-label" for="form1-auth_active">{% trans "Activée" %}</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="form1-auth_mode" id="form1-auth_inactive" value="inactive">
+                                                <label class="form-check-label" for="form1-auth_inactive">{% trans "Désactivée" %}</label>
+                                            </div>
                                         </div>
-                                        <small class="text-muted d-block ps-3">{% trans "Indique si cet utilisateur pourra s’authentifier avec un mot de passe ou pas. Si ce n’est pas le cas, il est possible que l’authentification puisse tout de même se faire par d’autres procédés, comme l’authentification unique (Single Sign-On) ou LDAP." %}</small>
+                                    </div>
+                                    <small class="text-muted form-description auth-description">{% trans "Indique si cet utilisateur pourra s’authentifier avec un mot de passe ou pas." %}</small>
+                                </div>
+                                <h3 class="section-subtitle mt-4">{% trans "Mot de passe" %}</h3>
+                                <hr class="separator">
+                                <div class="form-group mb-3">
+                                    <div class="field-wrapper">
+                                        <label for="{{ form1.password1.id_for_label }}" class="form-label">{% trans "Mot de passe :" %}</label>
+                                        <div class="input-container">
+                                            {{ form1.password1|add_class:"form-control" }}
+                                            {% if form1.password1.errors %}
+                                                {% for error in form1.password1.errors %}
+                                                    <small class="text-danger">{{ error }}</small>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <small class="text-muted form-description">{% trans "Minimum 8 caractères, non identique aux informations personnelles, pas entièrement numérique." %}</small>
+                                        </div>
                                     </div>
                                 </div>
-                                <hr class="separator">
-                                <div class="row mb-3 align-items-center">
-                                    <label for="form1-password1" class="col-md-4 col-form-label text-end">{% trans "Mot de passe :" %}</label>
-                                    <div class="col-md-8">
-                                        <input type="password" class="form-control" id="form1-password1" name="form1-password1">
-                                        <small class="text-muted d-block ps-3">{% trans "Votre mot de passe ne peut pas : être identique à vos autres informations personnelles. Votre mot de passe doit contenir au minimum 8 caractères. Votre mot de passe ne peut pas être un mot de passe couramment utilisé. Votre mot de passe ne peut pas être entièrement numérique." %}</small>
+                                <div class="form-group mb-3">
+                                    <div class="field-wrapper">
+                                        <label for="{{ form1.password2.id_for_label }}" class="form-label">{% trans "Confirmation du mot de passe :" %}</label>
+                                        <div class="input-container">
+                                            {{ form1.password2|add_class:"form-control" }}
+                                            {% if form1.password2.errors %}
+                                                {% for error in form1.password2.errors %}
+                                                    <small class="text-danger">{{ error }}</small>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <small class="text-muted form-description">{% trans "Saisissez le même mot de passe que précédemment." %}</small>
+                                        </div>
                                     </div>
                                 </div>
-                                <hr class="separator">
-                                <div class="row mb-3 align-items-center">
-                                    <label for="form1-password2" class="col-md-4 col-form-label text-end">{% trans "Confirmation du mot de passe :" %}</label>
-                                    <div class="col-md-8">
-                                        <input type="password" class="form-control" id="form1-password2" name="form1-password2">
-                                        <small class="text-muted d-block ps-3">{% trans "Saisissez le même mot de passe que précédemment, pour vérification." %}</small>
-                                    </div>
-                                </div>
-                                <hr class="separator">
-                                <div class="d-flex justify-content-center gap-2">
+                                <div class="d-flex justify-content-center gap-2 mt-5">
                                     <button type="submit" class="btn btn-primary">{% trans "ENREGISTRER" %}</button>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <!-- Formulaire supplémentaire -->
-                    <div class="col-12">
-                        <div id="additional-form" class="hidden-form form-container">
-                            <h3>{% trans "Ajout d'un autre administrateur" %}</h3>
-                            <form method="post" data-form-id="form2">
+                    <!-- Formulaire Administrateur -->
+                    <div class="col-12" style="margin: 0 !important; padding: 0 !important;">
+                        <div id="additional-form" class="hidden-form form-container" style="margin: 0 !important; padding: 0 !important;">
+                            <h3 class="form-title">{% trans "Ajout d'un autre administrateur" %}</h3>
+                            <form method="post" id="admin-form" data-form-id="form2">
                                 {% csrf_token %}
-                                <div class="row mb-3 align-items-center">
-                                    <label for="form2-username" class="col-md-4 col-form-label text-end">{% trans "Nom d'utilisateur :" %}</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" id="form2-username" name="form2-username">
-                                        <small class="text-muted d-block ps-3">{% trans "Requis, 150 caractères maximum. Uniquement des lettres, nombres et caractères (@ . + - _ =)." %}</small>
-                                    </div>
-                                </div>
+                                <input type="hidden" name="form_id" value="form2">
+                                <h3 class="section-subtitle mt-4">{% trans "Informations d'identification" %}</h3>
                                 <hr class="separator">
-                                <div class="row mb-3 align-items-center">
-                                    <label class="col-md-4 col-form-label text-end">{% trans "Authentification par mot de passe :" %}</label>
-                                    <div class="col-md-8">
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" class="form-check-input" name="form2-auth_mode" id="form2-auth_active" value="active" checked>
-                                            <label class="form-check-label" for="form2-auth_active">{% trans "Activée" %}</label>
+                                <div class="form-group mb-3">
+                                    <div class="field-wrapper">
+                                        <label for="{{ form2.username.id_for_label }}" class="form-label">{% trans "Nom d'utilisateur :" %}</label>
+                                        <div class="input-container">
+                                            {{ form2.username|add_class:"form-control" }}
+                                            {% if form2.username.errors %}
+                                                {% for error in form2.username.errors %}
+                                                    <small class="text-danger">{{ error }}</small>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <small class="text-muted form-description">{% trans "Requis, 150 caractères maximum. Uniquement des lettres, nombres et caractères (@ . + - _ =)." %}</small>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" class="form-check-input" name="form2-auth_mode" id="form2-auth_inactive" value="inactive">
-                                            <label class="form-check-label" for="form2-auth_inactive">{% trans "Désactivée" %}</label>
+                                    </div>
+                                </div>
+                                <h3 class="section-subtitle mt-4">{% trans "Authentification" %}</h3>
+                                <hr class="separator">
+                                <div class="form-group mb-3">
+                                    <div class="field-wrapper auth-row">
+                                        <label class="form-label">{% trans "Authentification par mot de passe :" %}</label>
+                                        <div class="radio-container">
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="form2-auth_mode" id="form2-auth_active" value="active" checked>
+                                                <label class="form-check-label" for="form2-auth_active">{% trans "Activée" %}</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="form2-auth_mode" id="form2-auth_inactive" value="inactive">
+                                                <label class="form-check-label" for="form2-auth_inactive">{% trans "Désactivée" %}</label>
+                                            </div>
                                         </div>
-                                        <small class="text-muted d-block ps-3">{% trans "Indique si cet utilisateur pourra s’authentifier avec un mot de passe ou pas." %}</small>
+                                    </div>
+                                    <small class="text-muted form-description auth-description">{% trans "Indique si cet utilisateur pourra s’authentifier avec un mot de passe ou pas." %}</small>
+                                </div>
+                                <h3 class="section-subtitle mt-4">{% trans "Mot de passe" %}</h3>
+                                <hr class="separator">
+                                <div class="form-group mb-3">
+                                    <div class="field-wrapper">
+                                        <label for="{{ form2.password1.id_for_label }}" class="form-label">{% trans "Mot de passe :" %}</label>
+                                        <div class="input-container">
+                                            {{ form2.password1|add_class:"form-control" }}
+                                            {% if form2.password1.errors %}
+                                                {% for error in form2.password1.errors %}
+                                                    <small class="text-danger">{{ error }}</small>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <small class="text-muted form-description">{% trans "Minimum 8 caractères, non identique aux informations personnelles, pas entièrement numérique." %}</small>
+                                        </div>
                                     </div>
                                 </div>
-                                <hr class="separator">
-                                <div class="row mb-3 align-items-center">
-                                    <label for="form2-password1" class="col-md-4 col-form-label text-end">{% trans "Mot de passe :" %}</label>
-                                    <div class="col-md-8">
-                                        <input type="password" class="form-control" id="form2-password1" name="form2-password1">
-                                        <small class="text-muted d-block ps-3">{% trans "Votre mot de passe doit contenir au minimum 8 caractères." %}</small>
+                                <div class="form-group mb-3">
+                                    <div class="field-wrapper">
+                                        <label for="{{ form2.password2.id_for_label }}" class="form-label">{% trans "Confirmation du mot de passe :" %}</label>
+                                        <div class="input-container">
+                                            {{ form2.password2|add_class:"form-control" }}
+                                            {% if form2.password2.errors %}
+                                                {% for error in form2.password2.errors %}
+                                                    <small class="text-danger">{{ error }}</small>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <small class="text-muted form-description">{% trans "Saisissez le même mot de passe que précédemment." %}</small>
+                                        </div>
                                     </div>
                                 </div>
-                                <hr class="separator">
-                                <div class="row mb-3 align-items-center">
-                                    <label for="form2-password2" class="col-md-4 col-form-label text-end">{% trans "Confirmation du mot de passe :" %}</label>
-                                    <div class="col-md-8">
-                                        <input type="password" class="form-control" id="form2-password2" name="form2-password2">
-                                        <small class="text-muted d-block ps-3">{% trans "Saisissez le même mot de passe que précédemment." %}</small>
-                                    </div>
-                                </div>
-                                <hr class="separator">
-                                <div class="d-flex justify-content-center gap-2">
+                                <div class="d-flex justify-content-center" style="gap: 20px !important; margin-top: 1.5rem !important;">
                                     <button type="submit" class="btn btn-primary">{% trans "ENREGISTRER" %}</button>
                                     <button type="button" class="btn btn-secondary remove-form">{% trans "ANNULER" %}</button>
                                 </div>
@@ -173,43 +225,42 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const addGroupButton = document.querySelector('.add-group-form');
+            const addAdminButton = document.querySelector('.add-group-form');
+            const addUserButton = document.querySelector('.add-user-form');
             const mainFormContainer = document.getElementById('main-form-container');
             const additionalForm = document.getElementById('additional-form');
             const removeFormButton = document.querySelector('.remove-form');
 
-            if (!addGroupButton || !mainFormContainer || !additionalForm || !removeFormButton) {
+            if (!addAdminButton || !addUserButton || !mainFormContainer || !additionalForm || !removeFormButton) {
                 console.error("Un ou plusieurs éléments sont manquants dans le DOM");
                 return;
             }
 
-            addGroupButton.addEventListener('click', function(e) {
+            // Afficher le premier formulaire par défaut
+            mainFormContainer.classList.remove('hidden-form');
+
+            // Afficher form2 pour "Admin" (+ Ajouter)
+            addAdminButton.addEventListener('click', function(e) {
                 e.preventDefault();
-                console.log("Clic sur '+ Ajouter' détecté");
                 mainFormContainer.classList.add('hidden-form');
                 additionalForm.classList.remove('hidden-form');
             });
 
-            removeFormButton.addEventListener('click', function(e) {
+            // Afficher form1 pour "Utilisateurs" (+ Ajouter)
+            addUserButton.addEventListener('click', function(e) {
                 e.preventDefault();
-                console.log("Clic sur 'ANNULER' détecté");
                 additionalForm.classList.add('hidden-form');
                 mainFormContainer.classList.remove('hidden-form');
             });
 
-            document.querySelectorAll('form').forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    const formId = this.getAttribute('data-form-id');
-                    console.log("Soumission du formulaire avec form_id:", formId);
-                    const hiddenInput = document.createElement('input');
-                    hiddenInput.type = 'hidden';
-                    hiddenInput.name = 'form_id';
-                    hiddenInput.value = formId;
-                    this.appendChild(hiddenInput);
-                });
+            // Masquer form2 et afficher form1 pour "ANNULER"
+            removeFormButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                additionalForm.classList.add('hidden-form');
+                mainFormContainer.classList.remove('hidden-form');
             });
         });
     </script>

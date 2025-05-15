@@ -1,58 +1,33 @@
 <!DOCTYPE html>
-<html lang="fr">
+{% load static i18n widget_tweaks %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion Administration</title>
-    {% load static %}
-    {% load widget_tweaks %}  <!-- Chargement du filtre add_class -->
+    <title>{% trans "Connexion" %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <style>
-        body { background-color: #f0f0f0; }
-        .login-container { 
-            max-width: 400px; 
-            margin: 100px auto; 
-            padding: 2rem; 
-            background-color: #cfc5c5; 
-            border-radius: 8px; 
-            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
-            border: 2px solid black; /* Bordure noire autour du conteneur */
-        }
-        .login-container h2 { 
-            color: white; /* Texte "Connexion Administration" en blanc */
-        }
-        .username-row { 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; /* Espace entre le label et le champ */
-        }
-        .username-row label { 
-            margin: 0; /* Supprime les marges par défaut */
-            white-space: nowrap; /* Empêche le label de passer à la ligne */
-        }
-        .btn-primary { 
-            background-color: #007bff; 
-            border-color: #007bff; 
-            width: 100%; 
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'facture_app/css/admin_login.css' %}">
 </head>
 <body>
     <div class="login-container">
-        <h2 class="text-center mb-4">Connexion Administration</h2>
-        <form method="post">
+        <h2 class="text-center mb-4">{% trans "Connexion" %}</h2>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans 'Close' %}"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="post" action="{% url 'invoicing:admin_login' %}">
             {% csrf_token %}
             {% for field in form %}
                 <div class="mb-3">
-                    {% if field.label == "Nom d'utilisateur" %}
-                        <div class="username-row">
-                            {{ field.label_tag }}
-                            {{ field|add_class:"form-control" }}
-                        </div>
-                    {% else %}
-                        {{ field.label_tag }}
-                        {{ field|add_class:"form-control" }}
-                    {% endif %}
+                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                    {{ field|add_class:"form-control" }}
                     {% if field.errors %}
                         {% for error in field.errors %}
                             <small class="text-danger">{{ error }}</small>
@@ -60,8 +35,7 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <input type="hidden" name="next" value="{% url 'invoicing:invoices-list' %}">
-            <button type="submit" class="btn btn-primary">Se connecter</button>
+            <button type="submit" class="btn btn-primary w-100">{% trans "Se connecter" %}</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

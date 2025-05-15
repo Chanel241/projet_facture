@@ -1,5 +1,5 @@
 body {
-    background-color: #df4e86;
+    background-color: #4dc4aa;
     font-family: Arial, sans-serif;
     margin: 0;
     display: flex;
@@ -8,7 +8,7 @@ body {
 }
 
 .custom-header {
-    background-color: #f8f9fa;
+    background-color: #dadcdf;
     color: #fff;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -75,8 +75,8 @@ main {
 }
 
 .form-control {
-    border: 2px solid #df4e86;
-    background-color: #f1e8e8;
+    border: 2px solid #0e0d0d;
+    background-color: #fdfdfa;
     color: #495057;
 }
 

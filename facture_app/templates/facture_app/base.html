@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% load static i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
@@ -6,11 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% trans 'Système de facturation NovaFac pour la gestion des clients, factures et produits.' %}">
+    <meta name="description" content="{% trans 'NovaFac billing system for managing customers, invoices, and products.' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     {% block extrahead %}
     {% endblock extrahead %}
-    <title>{% trans "NovaFac" %}</title>
+    <title>{% block title %}{% trans "NovaFac" %}{% endblock title %}</title>
 </head>
 <body class="min-vh-100 d-flex flex-column">
     {% get_available_languages as LANGUAGES %}
@@ -24,9 +23,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item dropdown me-4"> <!-- Ajout de me-4 pour un espace à droite -->
+                        <li class="nav-item dropdown me-4">
                             <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {% trans "Langues" %}
+                                {% trans "Languages" %}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                                 {% for language in languages %}
@@ -42,16 +41,17 @@
                             </ul>
                         </li>
                         {% if obj %}
-                        <li class="nav-item me-4"> <!-- Ajout de me-4 pour un espace à droite -->
-                            <a class="nav-link btn btn-primary text-white" href="{% url 'invoicing:generate-invoice-pdf' obj.id %}">
-                                {% trans "Télécharger un PDF" %}
+                        <!-- Suppression du bouton "Modifier" -->
+                        <li class="nav-item me-4">
+                            <a class="nav-link btn btn-primary text-white" href="{% url 'invoicing:generate-invoice-pdf' pk=obj.id %}">
+                                {% trans "Download PDF" %}
                             </a>
                         </li>
                         {% endif %}
                         <li class="nav-item">
                             <form action="{% url 'invoicing:logout' %}" method="post" style="display:inline;">
                                 {% csrf_token %}
-                                <button type="submit" class="nav-link btn btn-danger text-white">{% trans "Déconnexion" %}</button>
+                                <button type="submit" class="nav-link btn btn-danger text-white">{% trans "Logout" %}</button>
                             </form>
                         </li>
                     </ul>
@@ -73,7 +73,7 @@
     </main>
     <footer class="bg-light text-center text-dark py-4 mt-auto">
         <div class="container">
-            {% trans "NovaFac" %} © 2025 {% trans "Droits d'auteur" %}:
+            {% trans "NovaFac" %} © 2025 {% trans "Copyright" %}:
             <a href="https://chanelroyal.com">Chanel</a>
         </div>
     </footer>

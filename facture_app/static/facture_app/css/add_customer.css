@@ -1,5 +1,5 @@
 body {
-    background-color: #df4e86;
+    background-color: #4dc4aa;
     font-family: Arial, sans-serif;
     margin: 0;
     display: flex;
@@ -8,17 +8,18 @@ body {
 }
 
 .custom-header {
-    background-color: #f8f9fa;
+    background-color: #dadcdf;
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    height: 60px;
+    height: 50px;
     display: flex;
     align-items: center;
 }
 
 .custom-footer {
+    background-color: #dadcdf;
     padding: 0;
     line-height: 1;
-    height: 60px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,7 +65,7 @@ body {
 }
 
 .nav-lang .dropdown-menu {
-    background-color: #1a2b49;
+    background-color: #030303;
     border: none;
 }
 
@@ -80,16 +81,16 @@ body {
     width: 100%;
     max-width: 800px;
     margin: 20px auto;
-    min-height: 470px;
+    min-height: 400px;
     margin-bottom: 20px;
     background-color: #e8ecee;
-    color: #df4e86;
+    color: #f7f3f4;
 }
 
 .card-header {
     text-align: center;
-    background-color: #1b7ddf;
-    color: #13cc13;
+    background-color: #0c0c0c;
+    color: #f6f7f6;
 }
 
 .spacer {
@@ -97,9 +98,9 @@ body {
 }
 
 .btn-warning {
-    background-color: #df4e86 !important;
+    background-color: #1c0dec !important;
     color: white !important;
-    border: none;
+    border: 2px solid #000000;
 }
 
 .custom-form .col-md-6 .col-12 .form-label {
@@ -117,7 +118,7 @@ body {
     padding: 6px 12px;
     font-size: 16px;
     line-height: 1.5;
-    border: 2px solid #df4e86 !important;
+    border: 2px solid #050505 !important;
     border-radius: 4px;
     background-color: #f1e8e8;
     color: #495057;
@@ -134,7 +135,7 @@ body {
     padding: 6px 32px 6px 12px;
     font-size: 16px;
     line-height: 1.5;
-    border: 2px solid #df4e86 !important;
+    border: 2px solid #0e0d0d !important;
     border-radius: 4px;
     background-color: #f1e8e8;
     color: #495057;

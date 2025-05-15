@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% load static i18n widget_tweaks %}
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
@@ -6,11 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% trans 'Système de facturation NovaFac pour la gestion des clients, factures et produits.' %}">
+    <meta name="description" content="{% trans 'NovaFac billing system for managing customers, invoices, and products.' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'facture_app/css/add_invoice.css' %}">
-    <title>{% trans "NovaFac" %}</title>
+    <title>{% if invoice_id %}{% trans "NovaFac - Modify Invoice" %}{% else %}{% trans "NovaFac - Add Invoice" %}{% endif %}</title>
 </head>
 <body class="min-vh-100 d-flex flex-column">
     {% get_available_languages as LANGUAGES %}
@@ -22,7 +21,7 @@
                 <!-- Menu déroulant pour les langues -->
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {% trans "Langages" %}
+                        {% trans "Languages" %}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                         {% for language in languages %}
@@ -43,39 +42,34 @@
                         {% trans "More options" %}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="optionsDropdown">
+                        {% if user.is_staff %}
                         <li>
                             <form action="{% url 'invoicing:admin_add_user' %}" method="get">
                                 {% csrf_token %}
                                 <input type="hidden" name="next" value="{{ request.path }}">
-                                <button type="submit" class="dropdown-item">{% trans "Ajout d'utilisateur" %}</button>
+                                <button type="submit" class="dropdown-item">{% trans "Add User" %}</button>
                             </form>
                         </li>
+                        {% endif %}
                         <li>
                             <form action="{% url 'invoicing:create-customer' %}" method="get">
                                 {% csrf_token %}
                                 <input type="hidden" name="next" value="{{ request.path }}">
-                                <button type="submit" class="dropdown-item">{% trans "Ajouter un client" %}</button>
+                                <button type="submit" class="dropdown-item">{% trans "Add Customer" %}</button>
                             </form>
                         </li>
                         <li>
-                            <form action="{% url 'invoicing:create-invoice' %}" method="get">
+                            <form action="{% url 'invoicing:add-product' %}" method="get">
                                 {% csrf_token %}
                                 <input type="hidden" name="next" value="{{ request.path }}">
-                                <button type="submit" class="dropdown-item">{% trans "Ajouter une facture" %}</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="{% url 'invoicing:create-product' %}" method="get">
-                                {% csrf_token %}
-                                <input type="hidden" name="next" value="{{ request.path }}">
-                                <button type="submit" class="dropdown-item">{% trans "Ajouter un produit" %}</button>
+                                <button type="submit" class="dropdown-item">{% trans "Add Product" %}</button>
                             </form>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="{% url 'invoicing:logout' %}" method="post">
                                 {% csrf_token %}
-                                <button type="submit" class="dropdown-item">{% trans "Déconnexion" %}</button>
+                                <button type="submit" class="dropdown-item">{% trans "Logout" %}</button>
                             </form>
                         </li>
                     </ul>
@@ -87,14 +81,16 @@
         <div class="container my-2">
             <div class="card shadow-sm">
                 <div class="card-header bg-dark text-white">
-                    <h1 class="h4 mb-0">{% trans "Enregistrer une nouvelle facture" %}</h1>
+                    <h1 class="h4 mb-0">
+                        {% if invoice_id %}{% trans "Modify Invoice" %}{% else %}{% trans "Register a new Invoice" %}{% endif %}
+                    </h1>
                 </div>
                 <div class="card-body">
-                    <form method="post">
+                    <form method="post" action="{% if invoice_id %}{% url 'invoicing:modify-invoice' pk=invoice_id %}{% else %}{% url 'invoicing:create-invoice' %}{% endif %}">
                         {% csrf_token %}
                         <div class="row g-1">
                             <div class="col-md-6">
-                                <label for="{{ form.customer.id_for_label }}" class="form-label">{% trans "Client" %}</label>
+                                <label for="{{ form.customer.id_for_label }}" class="form-label">{% trans "Customer" %}</label>
                                 {{ form.customer }}
                                 {% if form.customer.errors %}
                                 <div class="invalid-feedback d-block">
@@ -103,7 +99,7 @@
                                 {% endif %}
                             </div>
                             <div class="col-md-6">
-                                <label for="{{ form.invoice_type.id_for_label }}" class="form-label">{% trans "Type de facture" %}</label>
+                                <label for="{{ form.invoice_type.id_for_label }}" class="form-label">{% trans "Invoice Type" %}</label>
                                 {{ form.invoice_type }}
                                 {% if form.invoice_type.errors %}
                                 <div class="invalid-feedback d-block">
@@ -113,36 +109,69 @@
                             </div>
                         </div>
                         <div id="wrapper" class="mt-2">
+                            {% if articles %}
+                                {% for article in articles %}
+                                <div class="form-row" data-item="{{ forloop.counter }}">
+                                    <div class="row g-1">
+                                        <div class="col-md-6">
+                                            <label for="product-{{ forloop.counter }}" class="form-label">{% trans "Product" %} #{{ forloop.counter }}</label>
+                                            <select name="product" class="form-control" id="product-{{ forloop.counter }}" required aria-required="true">
+                                                <option value="" disabled>{% trans "Choose a product" %}</option>
+                                                {% for product in products %}
+                                                <option value="{{ product.id }}" data-price="{{ product.price }}" data-stock="{{ product.stock_quantity }}"
+                                                        {% if product.id == article.product.id %}selected{% endif %}>
+                                                    {{ product.name }} ({{ product.price }} FCFA, Stock: {{ product.stock_quantity }})
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="qty-{{ forloop.counter }}" class="form-label">{% trans "Quantity" %}</label>
+                                            <input required name="qty" type="number" min="0.1" step="0.1" class="form-control" id="qty-{{ forloop.counter }}"
+                                                   value="{{ article.quantity }}" aria-required="true" onchange="updateTotals()">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="total-a-{{ forloop.counter }}" class="form-label">{% trans "Line Total" %}</label>
+                                            <input name="total-a" type="number" step="0.1" readonly class="form-control" id="total-a-{{ forloop.counter }}"
+                                                   value="{{ article.get_total|floatformat:2 }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
                             <div class="form-row" data-item="1">
                                 <div class="row g-1">
                                     <div class="col-md-6">
-                                        <label for="product-1" class="form-label">{% trans "#1 Produit" %}</label>
+                                        <label for="product-1" class="form-label">{% trans "Product" %} #1</label>
                                         <select name="product" class="form-control" id="product-1" required aria-required="true">
-                                            <option value="" disabled selected>{% trans "Choisir un produit" %}</option>
+                                            <option value="" disabled selected>{% trans "Choose a product" %}</option>
                                             {% for product in products %}
-                                            <option value="{{ product.id }}" data-price="{{ product.price }}" data-stock="{{ product.stock_quantity }}">{{ product.name }} ({{ product.price }} FCFA, Stock: {{ product.stock_quantity }})</option>
+                                            <option value="{{ product.id }}" data-price="{{ product.price }}" data-stock="{{ product.stock_quantity }}">
+                                                {{ product.name }} ({{ product.price }} FCFA, Stock: {{ product.stock_quantity }})
+                                            </option>
                                             {% endfor %}
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="qty-1" class="form-label">{% trans "Quantité" %}</label>
-                                        <input required name="qty" type="number" min="0.1" step="0.1" class="form-control" id="qty-1" aria-required="true" onchange="updateTotals()">
+                                        <label for="qty-1" class="form-label">{% trans "Quantity" %}</label>
+                                        <input required name="qty" type="number" min="0.1" step="0.1" class="form-control" id="qty-1" value="1" aria-required="true" onchange="updateTotals()">
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="total-a-1" class="form-label">{% trans "Total" %}</label>
-                                        <input name="total-a" type="number" step="0.1" readonly class="form-control" id="total-a-1">
+                                        <label for="total-a-1" class="form-label">{% trans "Line Total" %}</label>
+                                        <input name="total-a" type="number" step="0.1" readonly class="form-control" id="total-a-1" value="0">
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                         <div class="row g-1 mt-1">
                             <div class="col-12">
-                                <label for="total" class="form-label">{% trans "Total" %}</label>
-                                <input value="0" type="number" step="0.1" readonly class="form-control" id="total">
+                                <label for="total" class="form-label">{% trans "Grand Total" %}</label>
+                                <input value="{% if articles %}{{ obj.total|floatformat:2 }}{% else %}0{% endif %}" type="number" step="0.1" readonly class="form-control" id="total">
                             </div>
                             <div class="col-12">
-                                <label for="{{ form.comments.id_for_label }}" class="form-label">{% trans "Commentaires" %}</label>
-                                <textarea name="comments" id="{{ form.comments.id_for_label }}" class="form-control" style="height:20px;"></textarea>
+                                <label for="{{ form.comments.id_for_label }}" class="form-label">{% trans "Comments" %}</label>
+                                <textarea name="comments" id="{{ form.comments.id_for_label }}" class="form-control" style="height:20px;">{% if form.comments.value %}{{ form.comments.value }}{% endif %}</textarea>
                                 {% if form.comments.errors %}
                                 <div class="invalid-feedback d-block">
                                     {{ form.comments.errors|join:", " }}
@@ -151,19 +180,19 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-2">
-                            <button type="submit" class="btn btn-danger" style="color: white;">{% trans "Enregistrer" %}</button>
+                            <button type="submit" class="btn btn-danger" style="color: white;">{% trans "Save" %}</button>
                         </div>
                     </form>
                     <div class="row g-1 mt-1">
                         <div class="col-md-6">
-                            <button id="btn-add" class="btn btn-outline-danger w-100">{% trans "Ajouter une nouvelle ligne d'article" %}</button>
+                            <button id="btn-add" class="btn btn-outline-danger w-100">{% trans "Add New Row" %}</button>
                         </div>
                         <div class="col-md-6">
-                            <button id="btn-remove" class="btn btn-outline-warning w-100">{% trans "Supprimer la dernière ligne d'article" %}</button>
+                            <button id="btn-remove" class="btn btn-outline-warning w-100">{% trans "Remove Last Row" %}</button>
                         </div>
                     </div>
                     <div class="alert alert-info mt-3 custom-alert-height text-center">
-                        {% trans "Vérifiez que la quantité demandée ne dépasse pas le stock disponible pour chaque produit." %}
+                        {% trans "Ensure that the requested quantity does not exceed the available stock for each product." %}
                     </div>
                 </div>
             </div>
@@ -171,66 +200,73 @@
     </main>
     <footer class="bg-light text-center text-dark custom-footer">
         <div class="container custom-container">
-            {% trans "NovaFac" %} © 2025 {% trans "Droits d'auteur" %}:
+            {% trans "NovaFac" %} © 2025 {% trans "Copyright" %}:
             <a href="https://chanelroyal.com">Chanel</a>
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
-        $(document).ready(function () {
-            $('#btn-add').on('click', function () {
-                const number = $('#wrapper').children().length + 1;
-                const formAdd = `
-                    <div class="form-row" data-item="${number}">
-                        <div class="row g-1">
-                            <div class="col-md-6">
-                                <label for="product-${number}" class="form-label">${number} {% trans "Produit" %}</label>
-                                <select name="product" class="form-control" id="product-${number}" required aria-required="true">
-                                    <option value="" disabled selected>{% trans "Choisir un produit" %}</option>
-                                    {% for product in products %}
-                                    <option value="{{ product.id }}" data-price="{{ product.price }}" data-stock="{{ product.stock_quantity }}">{{ product.name }} ({{ product.price }} FCFA, Stock: {{ product.stock_quantity }})</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <label for="qty-${number}" class="form-label">{% trans "Quantité" %}</label>
-                                <input required name="qty" type="number" min="0.1" step="0.1" class="form-control" id="qty-${number}" aria-required="true" onchange="updateTotals()">
-                            </div>
-                            <div class="col-md-3">
-                                <label for="total-a-${number}" class="form-label">{% trans "Total" %}</label>
-                                <input name="total-a" type="number" step="0.1" readonly class="form-control" id="total-a-${number}">
-                            </div>
+    $(document).ready(function () {
+        $('#btn-add').on('click', function () {
+            const number = $('#wrapper').children().length + 1;
+            const formAdd = `
+                <div class="form-row" data-item="${number}">
+                    <div class="row g-1">
+                        <div class="col-md-6">
+                            <label for="product-${number}" class="form-label">{% trans "Product" %} #${number}</label>
+                            <select name="product" class="form-control" id="product-${number}" required aria-required="true">
+                                <option value="" disabled selected>{% trans "Choose a product" %}</option>
+                                {% for product in products %}
+                                <option value="{{ product.id }}" data-price="{{ product.price }}" data-stock="{{ product.stock_quantity }}">
+                                    {{ product.name }} ({{ product.price }} FCFA, Stock: {{ product.stock_quantity }})
+                                </option>
+                                {% endfor %}
+                            </select>
                         </div>
-                    </div>`;
-                $("#wrapper").append(formAdd);
-            });
-
-            $('#btn-remove').on('click', function () {
-                if ($('#wrapper').children().length > 1) {
-                    $("#wrapper").children().last().remove();
-                    updateTotals();
-                }
-            });
+                        <div class="col-md-3">
+                            <label for="qty-${number}" class="form-label">{% trans "Quantity" %}</label>
+                            <input required name="qty" type="number" min="0.1" step="0.1" class="form-control" id="qty-${number}" value="1" aria-required="true" onchange="updateTotals()">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="total-a-${number}" class="form-label">{% trans "Line Total" %}</label>
+                            <input name="total-a" type="number" step="0.1" readonly class="form-control" id="total-a-${number}" value="0">
+                        </div>
+                    </div>
+                </div>`;
+            $("#wrapper").append(formAdd);
+            updateTotals();
         });
 
-        function updateTotals() {
-            let grandTotal = 0;
-            $('#wrapper .form-row').each(function () {
-                const rowNum = $(this).data('item');
-                const qty = parseFloat($('#qty-' + rowNum).val()) || 0;
-                const price = parseFloat($('#product-' + rowNum + ' option:selected').data('price')) || 0;
-                const stock = parseFloat($('#product-' + rowNum + ' option:selected').data('stock')) || 0;
-                if (qty > stock) {
-                    alert('{% trans "La quantité demandée dépasse le stock disponible pour ce produit." %}');
-                    $('#qty-' + rowNum).val(stock);
-                    return;
-                }
-                const total = qty * price;
-                $('#total-a-' + rowNum).val(total.toFixed(2));
-                grandTotal += total;
-            });
-            $('#total').val(grandTotal.toFixed(2));
-        }
+        $('#btn-remove').on('click', function () {
+            if ($('#wrapper').children().length > 1) {
+                $("#wrapper").children().last().remove();
+                updateTotals();
+            }
+        });
+
+        // Initialisation des totaux pour les articles existants
+        updateTotals();
+    });
+
+    function updateTotals() {
+        let grandTotal = 0;
+        $('#wrapper .form-row').each(function () {
+            const rowNum = $(this).data('item');
+            const qty = parseFloat($('#qty-' + rowNum).val()) || 0;
+            const price = parseFloat($('#product-' + rowNum + ' option:selected').data('price')) || 0;
+            const stock = parseFloat($('#product-' + rowNum + ' option:selected').data('stock')) || 0;
+            if (qty > stock) {
+                alert('{% trans "The requested quantity exceeds the available stock for this product." %}');
+                $('#qty-' + rowNum).val(stock);
+                updateTotals(); // Ré-appeler pour ajuster les totaux après correction
+                return;
+            }
+            const total = qty * price;
+            $('#total-a-' + rowNum).val(total.toFixed(2));
+            grandTotal += total;
+        });
+        $('#total').val(grandTotal.toFixed(2));
+    }
     </script>
 </body>
 </html>

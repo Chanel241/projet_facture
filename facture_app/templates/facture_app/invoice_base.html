@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% trans "Facture" %} #{{ obj.id }}</title>
+    <title>{% trans "Invoice" %} #{{ obj.id }}</title>
     <style>
         @page {
             margin: 20pt;
@@ -84,21 +84,21 @@
     <div class="container">
         <div class="header">
             <h3>NovaFac</h3>
-            <p>{% trans "Facture" %} #{{ obj.id }}</p>
+            <p>{% trans "Invoice" %} #{{ obj.id }}</p>
         </div>
         <div class="section">
             <div class="flex-container">
                 <div class="flex-item">
-                    <h5>{% trans "Facturé à" %}</h5>
+                    <h5>{% trans "Billed to" %}</h5>
                     <p>{{ obj.customer.name }}</p>
-                    <p>{{ obj.customer.address|default:"Non spécifié" }}</p>
-                    <p>{{ obj.customer.email|default:"Non spécifié" }}</p>
+                    <p>{{ obj.customer.address|default:_("Not specified") }}</p> {# Using _() for default value #}
+                    <p>{{ obj.customer.email|default:_("Not specified") }}</p>  {# Using _() for default value #}
                 </div>
                 <div class="flex-item">
-                    <h5>{% trans "Informations de l'entreprise" %}</h5>
-                    <p>Ma Société</p>
-                    <p>Gabon, Libreville</p>
-                    <p>contact@novafac.com</p>
+                    <h5>{% trans "Company Information" %}</h5>
+                    <p>{% trans "My Company" %}</p> {# Assuming "Ma Société" should be translatable #}
+                    <p>{% trans "Gabon, Libreville" %}</p> {# Assuming this should be translatable #}
+                    <p>contact@novafac.com</p> {# Email addresses are usually not translated #}
                 </div>
             </div>
         </div>
@@ -107,9 +107,9 @@
                 <thead>
                     <tr>
                         <th>{% trans "Description" %}</th>
-                        <th>{% trans "Quantité" %}</th>
-                        <th>{% trans "Prix unitaire" %}</th>
-                        <th>{% trans "Total" %}</th>
+                        <th>{% trans "Quantity" %}</th>
+                        <th>{% trans "Unit Price" %}</th>
+                        <th>{% trans "Total Amount" %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -122,11 +122,11 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="4">{% trans "Aucun article trouvé." %}</td>
+                        <td colspan="4">{% trans "No items found." %}</td>
                     </tr>
                     {% endfor %}
                     <tr class="total-row">
-                        <td colspan="3"><strong>{% trans "Total général" %}</strong></td>
+                        <td colspan="3"><strong>{% trans "Grand Total" %}</strong></td>
                         <td><strong>{{ obj.total|floatformat:2 }} FCFA</strong></td>
                     </tr>
                 </tbody>
@@ -134,17 +134,17 @@
         </div>
         {% if not is_pdf %}
         <div class="section text-end">
-            <a href="{% url 'invoicing:get-invoice-pdf' obj.id %}" class="btn btn-primary">{% trans "Télécharger PDF" %}</a>
-            <form method="post" action="{% url 'invoicing:modify-invoice' %}" style="display:inline;">
+            <a href="{% url 'invoicing:get-invoice-pdf' obj.id %}" class="btn btn-primary">{% trans "Download PDF" %}</a>
+            <form method="post" action="{% url 'invoicing:modify-invoice' pk=obj.id %}" style="display:inline;">
                 {% csrf_token %}
                 <input type="hidden" name="id_modified" value="{{ obj.id }}">
                 <input type="hidden" name="modified" value="True">
-                <button type="submit" class="btn btn-secondary">{% trans "Modifier" %}</button>
+                <button type="submit" class="btn btn-secondary">{% trans "Modify" %}</button>
             </form>
             <form method="post" action="{% url 'invoicing:delete-invoice' %}" style="display:inline;">
                 {% csrf_token %}
                 <input type="hidden" name="id_supprimer" value="{{ obj.id }}">
-                <button type="submit" class="btn btn-danger" onclick="return confirm('{% trans "Êtes-vous sûr de vouloir supprimer cette facture ?" %}')">{% trans "Supprimer" %}</button>
+                <button type="submit" class="btn btn-danger" onclick="return confirm('{% trans "Are you sure you want to delete this invoice?" %}')">{% trans "Delete" %}</button>
             </form>
         </div>
         {% endif %}

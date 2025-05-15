@@ -23,7 +23,7 @@ LOCALE_PATHS = [
 
 # Security settings
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=True, cast=bool)  # Changé à True pour le développement
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
 
 # Installed applications
@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',  # Vérifié et correctement positionné
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,14 +80,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-LANGUAGE_CODE = 'fr'  # Langue par défaut
+LANGUAGE_CODE = 'fr'  # Changé à 'fr' pour correspondre aux URLs
 TIME_ZONE = 'UTC'
 USE_I18N = True
-USE_L10N = True  # Ajouté pour activer la localisation
+USE_L10N = True
 USE_TZ = True
 LANGUAGES = [
-    ('fr', 'Français'),
-    ('en', 'Anglais'),
+    ('en', 'English'),
+    ('fr', 'French'),
 ]
 
 # Templates
@@ -102,7 +102,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.i18n',  # Vérifié pour les langues
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -125,8 +125,8 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
-CELERY_TASK_SOFT_TIME_LIMIT = 120  # Temps maximal avant avertissement (en secondes)
-CELERY_TASK_TIME_LIMIT = 180  # Temps maximal total (en secondes), ajusté pour éviter les timeouts
+CELERY_TASK_SOFT_TIME_LIMIT = 120
+CELERY_TASK_TIME_LIMIT = 180
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 # Logging configuration
@@ -155,7 +155,7 @@ LOGGING = {
     },
     'root': {
         'handlers': ['console', 'file'],
-        'level': 'DEBUG',  # Changer à DEBUG pour capturer tous les détails
+        'level': 'DEBUG',
     },
     'loggers': {
         'django': {
@@ -167,9 +167,9 @@ LOGGING = {
 }
 
 # Authentication
-LOGIN_URL = '/admin-login/'  # Redirection pour les utilisateurs non authentifiés
-LOGOUT_REDIRECT_URL = '/admin-login/'  # Redirection après déconnexion
-LOGIN_REDIRECT_URL = '/'  # Redirection après connexion réussie
+LOGIN_URL = '/fr/admin-login/'  # Corrigé
+LOGIN_REDIRECT_URL = '/fr/'  # Corrigé
+LOGOUT_REDIRECT_URL = '/fr/admin-login/'  # Corrigé
 
 # Security settings
 SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=not DEBUG, cast=bool)

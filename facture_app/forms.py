@@ -61,3 +61,12 @@ class PharmacyProductForm(forms.ModelForm):
         if stock < 0:
             raise forms.ValidationError(_("La quantité en stock ne peut pas être négative."))
         return stock
+    
+class AdminLoginForm(forms.Form):
+        username = forms.CharField(
+        label=_("Username")  # Marqué pour traduction
+    )
+        password = forms.CharField(
+        label=_("Password"),  # Marqué pour traduction
+        widget=forms.PasswordInput
+    )

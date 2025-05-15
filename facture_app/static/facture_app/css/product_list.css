@@ -1,0 +1,110 @@
+body {
+    background-color: #4dc4aa;
+}
+
+.table-container {
+    max-width: 80%;
+    border: 2px solid #000000;
+}
+
+.table {
+    background-color: #ffffff;
+    border-collapse: collapse;
+}
+
+.table thead {
+    background-color: #95e4dd !important;
+    color: #333;
+}
+
+.table tbody tr {
+    background-color: #f0f0f0;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #e9ecef;
+}
+
+.table td, .table th {
+    border: 1pt solid #dee2e6;
+    padding: 8pt;
+    vertical-align: middle;
+}
+
+.action-btn {
+    padding: 6pt 12pt;
+    font-size: 14pt;
+    line-height: 1;
+}
+
+.btn-primary.action-btn {
+    background-color: #007bff;
+    border-color: #0a0a0a;
+    color: #ffffff;
+}
+
+.btn-primary.action-btn:hover {
+    background-color: #0056b3;
+    border-color: #070707;
+}
+
+.btn-danger.action-btn {
+    background-color: #e60e24;
+    border-color: #0c0c0c;
+    color: #ffffff;
+}
+
+.btn-danger.action-btn:hover {
+    background-color: #df4d5c;
+    border-color: #0a0a0a;
+}
+
+.btn-success.action-btn {
+    background-color: #171add;
+    border-color: #0d0e0d;
+    color: #ffffff;
+}
+
+.btn-success.action-btn:hover {
+    background-color: #218838;
+    border-color: #218838;
+    color: #ffffff;
+}
+
+.card {
+    background-color: #e2dfdf;
+    border: 1pt solid #dee2e6;
+}
+
+.card-header.bg-pink-light {
+    background-color: #9ec3e6;
+    border-bottom: 1pt solid #dee2e6;
+}
+
+h3 {
+    color: #333;
+    text-transform: uppercase;
+}
+
+.btn-black {
+    background-color: transparent; 
+    border: none; 
+    color: #000000; 
+}
+
+.btn-black:hover {
+    background-color: #f0f0f0; 
+    color: #333333;
+}
+
+.nav-link.dropdown-toggle.text-black {
+    color: #000000 !important; 
+}
+
+header {
+    background-color: #dadcdf; 
+}
+
+footer {
+    background-color: #dadcdf;
+}
