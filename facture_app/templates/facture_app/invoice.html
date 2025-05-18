@@ -1,75 +1,83 @@
-{% extends "facture_app/base.html" %}
-{% load static i18n %}
-
-{% block extrahead %}
-    <link rel="stylesheet" href="{% static 'facture_app/css/invoice.css' %}">
-{% endblock extrahead %}
+{% extends 'facture_app/invoice_base.html' %}
+{% load i18n %}
 
 {% block content %}
-<div class="container my-4">
-    <div class="card shadow-sm invoice-container">
-        <div class="card-header">
-            <h3 class="invoice-logo">NovaFac</h3>
+<div class="container">
+    <div class="invoice-container">
+        <!-- En-tête de la facture (conservé dans le PDF) -->
+        <div class="header">
+            <h1 class="invoice-logo">NovaFac</h1>
             <p class="invoice-num">{% trans "Invoice" %} #{{ obj.id }}</p>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>{% trans "Billed to" %}</h5>
-                    <p>{{ obj.customer.name }}</p>
-                    <p>{{ obj.customer.address }}</p>
-                    <p>{{ obj.customer.email }}</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <h5>{% trans "Company Information" %}</h5>
-                    <p>{% trans "My Company" %}</p>
-                    <p>{% trans "Gabon, Libreville" %}</p>
-                    <p>contact@novafac.com</p>
-                </div>
+
+        <div class="flex-container">
+            <div class="flex-item">
+                <h5>{% trans "Billed to" %}</h5>
+                <p style="word-wrap: break-word; max-width: 100%;">
+                    {{ obj.customer.name|default:"Non spécifié" }}<br>
+                    {{ obj.customer.address|default:"Non spécifié" }}<br>
+                    {{ obj.customer.email|default:"Non spécifié" }}
+                </p>
             </div>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>{% trans "Description" %}</th>
-                                <th>{% trans "Quantity" %}</th>
-                                <th>{% trans "Unit Price" %}</th>
-                                <th>{% trans "Total Amount" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in articles %}
-                            <tr>
-                                <td>{{ item.product.name }}</td>
-                                <td>{{ item.quantity }}</td>
-                                <td>{{ item.product.price|floatformat:2 }} FCFA</td>
-                                <td>{{ item.get_total|floatformat:2 }} FCFA</td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="4">{% trans "No items found." %}</td>
-                            </tr>
-                            {% endfor %}
-                            <tr>
-                                <td colspan="3" class="text-end"><strong>{% trans "Grand Total" %}</strong></td>
-                                <td><strong>{{ obj.total|floatformat:2 }} FCFA</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-12 text-end">
-                    <a href="{% url 'invoicing:modify-invoice' pk=obj.id %}" class="btn btn-secondary">{% trans "Modify" %}</a>
-                    <form method="post" action="{% url 'invoicing:delete-invoice' %}" style="display:inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="id_supprimer" value="{{ obj.id }}">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('{% trans "Are you sure you want to delete this invoice?" %}')">{% trans "Delete" %}</button>
-                    </form>
-                </div>
+            <div class="flex-item">
+                <h5>{% trans "Company Information" %}</h5>
+                <p style="word-wrap: break-word; max-width: 100%;">
+                    Mon entreprise<br>
+                    Gabon, Libreville<br>
+                    contact@novafac.com
+                </p>
             </div>
         </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{% trans "Description" %}</th>
+                    <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Unit Price" %}</th>
+                    <th>{% trans "Total Amount" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in articles %}
+                <tr>
+                    <td style="word-wrap: break-word; max-width: 300px;">{{ item.product.name|default:"Non spécifié" }}</td>
+                    <td>{{ item.quantity|floatformat:2 }}</td>
+                    <td>{{ item.product.price|floatformat:2 }} FCFA</td>
+                    <td>{{ item.get_total|floatformat:2 }} FCFA</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">{% trans "No items found." %}</td>
+                </tr>
+                {% endfor %}
+                <tr class="total-row">
+                    <td colspan="3">{% trans "Grand Total" %}</td>
+                    <td>{{ obj.total|floatformat:2 }} FCFA</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="text-align: right; padding: 5px;">
+            <em>{% trans "Generated on:" %} {{ date|date:"d F Y H:i" }}</em>
+        </p>
+
+        <!-- Boutons alignés à droite -->
+        {% if not is_pdf %}
+        <div class="no-print" style="text-align: right; padding: 5px;">
+            <a href="{% url 'invoicing:modify-invoice' pk=obj.id %}" class="btn btn-primary">{% trans "Edit" %}</a>
+            <form action="{% url 'invoicing:delete-invoice' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="id_supprimer" value="{{ obj.id }}">
+                <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+            </form>
+            <form action="{% url 'invoicing:send-invoice-email' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="id_send" value="{{ obj.id }}">
+                <button type="submit" class="btn btn-send">{% trans "Send by Email" %}</button>
+            </form>
+        </div>
+        {% endif %}
     </div>
 </div>
-{% endblock content %}
+{% endblock %}

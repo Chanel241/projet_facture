@@ -12,7 +12,7 @@ html, body {
 }
 
 h2, h6 {
-    color: #1a3c6e !important;
+    color: #312288 !important;
 }
 
 .form-container h2,
@@ -22,7 +22,7 @@ h2, h6 {
 }
 
 .section-title {
-    background-color: #1a3c6e !important;
+    background-color: #01060e !important;
     color: white !important;
     padding: 0.6rem !important;
     border-radius: 4px !important;
@@ -96,9 +96,10 @@ h2, h6 {
 }
 
 .badge.bg-success {
-    background-color: #28a745 !important;
+    background-color: #39399e !important;
     padding: 0.4rem 0.6rem !important;
     font-size: 0.8rem !important;
+    color: #f0f0f0;
 }
 
 .text-muted {
@@ -257,7 +258,7 @@ hr.separator {
 
 .section-subtitle {
     font-size: 1rem !important;
-    color: #1a3c6e !important;
+    color: #31218f !important;
     font-weight: bold !important;
     text-transform: uppercase !important;
     margin-bottom: 0.6rem !important;
@@ -302,7 +303,7 @@ hr.separator {
 }
 
 #custom-header {
-    background-color: #007bff !important;
+    background-color: #302281 !important;
     color: #ffffff !important;
     height: 60px !important;
     width: 100% !important;

@@ -1,5 +1,5 @@
 body {
-    background-color: #4dc4aa;
+    background-color: #243E6D;
     font-family: Arial, sans-serif;
     margin: 0;
     display: flex;
@@ -8,7 +8,7 @@ body {
 }
 
 .custom-header {
-    background-color: #dadcdf;
+    background-color: #F4F5F7;
     color: #fff;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -89,7 +89,7 @@ main {
 }
 
 .custom-footer {
-    background-color: #dadcdf;
+    background-color: #F4F5F7;
     padding: 0;
     line-height: 1;
     height: 60px;

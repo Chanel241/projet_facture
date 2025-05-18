@@ -1773,10 +1773,8 @@ msgid "Femme"
 msgstr "Femme"
 
 #: facture_app/models.py:21
-msgid ""
-"Le numéro de téléphone doit être au format international (ex. : +1234567890)."
-msgstr ""
-"Le numéro de téléphone doit être au format international (ex. : +1234567890)."
+msgid "Le numéro de téléphone doit être au format international (ex. : +1234567890)."
+msgstr "Le numéro de téléphone doit être au format international (ex. : +1234567890)."
 
 #: facture_app/models.py:27
 msgid "Date de création"
@@ -2010,9 +2008,7 @@ msgstr "Chanel"
 #: facture_app/templates/facture_app/home.html:9
 #: facture_app/templates/facture_app/product_list.html:8
 msgid "NovaFac billing system for managing customers, invoices, and products."
-msgstr ""
-"Système de facturation NovaFac pour gérer les clients, les factures et les "
-"produits."
+msgstr "Système de facturation NovaFac pour gérer les clients, les factures et les produits."
 
 #: facture_app/templates/facture_app/add_invoice.html:12
 msgid "NovaFac - Modify Invoice"
@@ -2056,7 +2052,6 @@ msgstr "Produit"
 msgid "Choose a product"
 msgstr "Choisir un produit"
 
-# Correction de "Nouveau produit" à "Choisir un produit"
 #: facture_app/templates/facture_app/add_invoice.html:136
 #: facture_app/templates/facture_app/add_invoice.html:163
 #: facture_app/templates/facture_app/add_invoice.html:234
@@ -2071,7 +2066,6 @@ msgstr "Quantité"
 msgid "Line Total"
 msgstr "Total de la ligne"
 
-# Correction de "Total" à "Total de la ligne"
 #: facture_app/templates/facture_app/add_invoice.html:176
 #: facture_app/templates/facture_app/invoice.html:55
 #: facture_app/templates/facture_app/invoice_base.html:129
@@ -2091,47 +2085,33 @@ msgstr "Enregistrer"
 msgid "Add New Row"
 msgstr "Ajouter une nouvelle ligne"
 
-# Correction de l'entrée fuzzy
 #: facture_app/templates/facture_app/add_invoice.html:198
 msgid "Remove Last Row"
 msgstr "Supprimer la dernière ligne"
 
-# Correction de l'entrée fuzzy
 #: facture_app/templates/facture_app/add_invoice.html:202
-msgid ""
-"Ensure that the requested quantity does not exceed the available stock for "
-"each product."
-msgstr ""
-"Assurez-vous que la quantité demandée ne dépasse pas le stock disponible "
-"pour chaque produit."
+msgid "Ensure that the requested quantity does not exceed the available stock for each product."
+msgstr "Assurez-vous que la quantité demandée ne dépasse pas le stock disponible pour chaque produit."
 
 #: facture_app/templates/facture_app/add_invoice.html:266
 msgid "The requested quantity exceeds the available stock for this product."
 msgstr "La quantité demandée dépasse le stock disponible pour ce produit."
 
 #: facture_app/templates/facture_app/add_product.html:14
-#, fuzzy
-#| msgid "NovaFac - Modify Invoice"
 msgid "NovaFac - Modifier un produit"
-msgstr "NovaFac - Modifier une facture"
+msgstr "NovaFac - Modifier un produit"
 
 #: facture_app/templates/facture_app/add_product.html:16
-#, fuzzy
-#| msgid "Ajouter un produit"
 msgid "NovaFac - Ajouter un produit"
-msgstr "Ajouter un produit"
+msgstr "NovaFac - Ajouter un produit"
 
 #: facture_app/templates/facture_app/add_product.html:85
-#, fuzzy
-#| msgid "Product"
 msgid "Product List"
-msgstr "Produit"
+msgstr "Liste des produits"
 
 #: facture_app/templates/facture_app/add_product.html:112
-#, fuzzy
-#| msgid "Ajouter un produit"
 msgid "Modifier un produit"
-msgstr "Ajouter un produit"
+msgstr "Modifier un produit"
 
 #: facture_app/templates/facture_app/add_product.html:114
 msgid "Register a New Product"
@@ -2226,12 +2206,8 @@ msgstr "Nom d'utilisateur :"
 
 #: facture_app/templates/facture_app/admin_add_user.html:88
 #: facture_app/templates/facture_app/admin_add_user.html:165
-msgid ""
-"Requis, 150 caractères maximum. Uniquement des lettres, nombres et "
-"caractères (@ . + - _ =)."
-msgstr ""
-"Requis, 150 caractères maximum. Uniquement des lettres, chiffres et "
-"caractères (@ . + - _ =)."
+msgid "Requis, 150 caractères maximum. Uniquement des lettres, nombres et caractères (@ . + - _ =)."
+msgstr "Requis, 150 caractères maximum. Uniquement des lettres, chiffres et caractères (@ . + - _ =)."
 
 #: facture_app/templates/facture_app/admin_add_user.html:92
 #: facture_app/templates/facture_app/admin_add_user.html:169
@@ -2255,10 +2231,8 @@ msgstr "Désactivée"
 
 #: facture_app/templates/facture_app/admin_add_user.html:108
 #: facture_app/templates/facture_app/admin_add_user.html:185
-msgid ""
-"Indique si cet utilisateur pourra s’authentifier avec un mot de passe ou pas."
-msgstr ""
-"Indique si cet utilisateur peut s'authentifier avec un mot de passe ou non."
+msgid "Indique si cet utilisateur pourra s’authentifier avec un mot de passe ou pas."
+msgstr "Indique si cet utilisateur peut s'authentifier avec un mot de passe ou non."
 
 #: facture_app/templates/facture_app/admin_add_user.html:110
 #: facture_app/templates/facture_app/admin_add_user.html:187
@@ -2272,10 +2246,8 @@ msgstr "Mot de passe :"
 
 #: facture_app/templates/facture_app/admin_add_user.html:122
 #: facture_app/templates/facture_app/admin_add_user.html:199
-msgid ""
-"Minimum 8 caractères, non identique aux informations personnelles, pas "
-"entièrement numérique."
-msgstr ""
+msgid "Minimum 8 caractères, non identique aux informations personnelles, pas entièrement numérique."
+msgstr "Minimum 8 caractères, non identique aux informations personnelles, pas entièrement numérique."
 
 #: facture_app/templates/facture_app/admin_add_user.html:128
 #: facture_app/templates/facture_app/admin_add_user.html:205
@@ -2302,14 +2274,12 @@ msgstr "Annuler"
 
 #: facture_app/templates/facture_app/admin_login.html:8
 #: facture_app/templates/facture_app/admin_login.html:14
-
-#| msgid "Déconnexion"
 msgid "Connexion"
-msgstr "Déconnexion"
+msgstr "Connexion"
 
 #: facture_app/templates/facture_app/admin_login.html:38
 msgid "Se connecter"
-msgstr ""
+msgstr "Se connecter"
 
 #: facture_app/templates/facture_app/base.html:47
 #: facture_app/templates/facture_app/invoice_base.html:137
@@ -2317,10 +2287,8 @@ msgid "Download PDF"
 msgstr "Télécharger le PDF"
 
 #: facture_app/templates/facture_app/home.html:16
-#, fuzzy
-#| msgid "NovaFac - Add Customer"
 msgid "NovaFac - Home"
-msgstr "NovaFac - Ajouter un client"
+msgstr "NovaFac - Accueil"
 
 #: facture_app/templates/facture_app/home.html:109
 msgid "Invoice List"
@@ -2351,13 +2319,8 @@ msgstr "Payé"
 #: facture_app/templates/facture_app/home.html:123
 #: facture_app/templates/facture_app/product_list.html:67
 #: facture_app/templates/facture_app/product_list.html:60
-#, fuzzy
 msgid "Actions"
-msgstr ""
-"#-#-#-#-#  django.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Options\n"
-"#-#-#-#-#  django.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Actions"
+msgstr "Actions"
 
 #: facture_app/templates/facture_app/home.html:147
 msgid "View"
@@ -2423,13 +2386,30 @@ msgstr "Modifier"
 msgid "Not specified"
 msgstr "Non spécifié"
 
+#: facture_app/templates/facture_app/invoice_base.html:137
+msgid "Print"
+msgstr "Imprimer"
+
+#: facture_app/templates/facture_app/invoice_base.html:142
+msgid "Send"
+msgstr "Envoyer"
+
+#: facture_app/templates/facture_app/invoice_base.html:2435
+#: facture_app/templates/facture_app/invoice_base.html:2959
+msgid "English"
+msgstr "Anglais"
+
+#: facture_app/templates/facture_app/invoice_base.html:2439
+#: facture_app/templates/facture_app/invoice_base.html:3001
+msgid "French"
+msgstr "Français"
+
 #: facture_app/templates/facture_app/pagination.html:7
 #: facture_app/templates/facture_app/pagination.html:11
 msgid "Previous"
 msgstr "Précédent"
 
-#: facture_app/templates/facture_app/pagination.html:23
-#: facture_app/templates/facture_app/pagination.html:27
+#: facture_app/templates/facture_app/pagination.html:12
 msgid "Next"
 msgstr "Suivant"
 
@@ -2471,34 +2451,29 @@ msgstr "Aucun produit trouvé."
 
 #: facture_app/views.py:54
 msgid "Nom d'utilisateur ou mot de passe incorrect."
-msgstr ""
+msgstr "Nom d'utilisateur ou mot de passe incorrect."
 
 #: facture_app/views.py:91
-#| msgid "Facture créée avec succès."
 msgid "Utilisateur standard créé avec succès."
-msgstr "Facture créée avec succès."
+msgstr "Utilisateur standard créé avec succès."
 
 #: facture_app/views.py:94
 #, python-format
 msgid "Erreur formulaire utilisateur standard: %s"
-msgstr ""
+msgstr "Erreur formulaire utilisateur standard: %s"
 
 #: facture_app/views.py:106
-#, fuzzy
-#| msgid "Facture créée avec succès."
 msgid "Administrateur créé avec succès."
-msgstr "Facture créée avec succès."
+msgstr "Administrateur créé avec succès."
 
 #: facture_app/views.py:109
-#, fuzzy, python-format
-#| msgid "Ajout d'un autre administrateur"
+#, python-format
 msgid "Erreur formulaire administrateur: %s"
-msgstr "Ajout d'un autre administrateur"
+msgstr "Erreur formulaire administrateur: %s"
 
 #: facture_app/views.py:114
-#| msgid "Aucun formulaire valide n'a été soumis."
 msgid "Aucun formulaire valide soumis."
-msgstr "Aucun formulaire valide n'a été soumis."
+msgstr "Aucun formulaire valide soumis."
 
 #: facture_app/views.py:134
 msgid "Client enregistré avec succès."
@@ -2506,82 +2481,81 @@ msgstr "Client enregistré avec succès."
 
 #: facture_app/views.py:138 facture_app/views.py:190 facture_app/views.py:245
 #: facture_app/views.py:383
-#, fuzzy, python-format
-#| msgid "Données invalides fournies."
+#, python-format
 msgid "Données invalides: %s"
-msgstr "Données invalides fournies."
+msgstr "Données invalides: %s"
 
 #: facture_app/views.py:163 facture_app/views.py:344
-#, fuzzy, python-format
-#| msgid "Quantité demandée (%s) dépasse le stock disponible (%s) pour %s."
+#, python-format
 msgid "Quantité demandée (%s) dépasse le stock (%s) pour %s."
-msgstr "Quantité demandée (%s) dépasse le stock disponible (%s) pour %s."
+msgstr "Quantité demandée (%s) dépasse le stock (%s) pour %s."
 
 #: facture_app/views.py:165 facture_app/views.py:346
-#, fuzzy, python-format
-#| msgid "Produit non trouvé."
+#, python-format
 msgid "Produit ID %s non trouvé."
-msgstr "Produit non trouvé."
+msgstr "Produit ID %s non trouvé."
 
 #: facture_app/views.py:185
 msgid "Facture créée avec succès."
 msgstr "Facture créée avec succès."
 
 #: facture_app/views.py:187 facture_app/views.py:380
-#| msgid "Données de produit incohérentes."
 msgid "Données produit incohérentes."
-msgstr "Données de produit incohérentes."
+msgstr "Données produit incohérentes."
 
 #: facture_app/views.py:207
 msgid "Produit enregistré avec succès."
 msgstr "Produit enregistré avec succès."
 
 #: facture_app/views.py:231 facture_app/views.py:248 facture_app/views.py:267
-#| msgid "Produit non trouvé."
 msgid "Produit non trouvé."
 msgstr "Produit non trouvé."
 
 #: facture_app/views.py:241
-#| msgid "Produit enregistré avec succès."
 msgid "Produit modifié avec succès."
-msgstr "Produit enregistré avec succès."
+msgstr "Produit modifié avec succès."
 
 #: facture_app/views.py:264
-#| msgid "Produit enregistré avec succès."
 msgid "Produit supprimé avec succès."
-msgstr "Produit enregistré avec succès."
+msgstr "Produit supprimé avec succès."
 
 #: facture_app/views.py:270
-#| msgid "Une erreur s'est produite lors de l'ajout du produit."
 msgid "Une erreur s'est produite lors de la suppression du produit."
-msgstr "Une erreur s'est produite lors de l'ajout du produit."
+msgstr "Une erreur s'est produite lors de la suppression du produit."
 
 #: facture_app/views.py:288 facture_app/views.py:313 facture_app/views.py:386
 #: facture_app/views.py:407
 msgid "Facture non trouvée."
-msgstr "Page non trouvée"
+msgstr "Facture non trouvée."
 
 #: facture_app/views.py:334
-#, fuzzy
-#| msgid "Facture mise à jour avec succès."
 msgid "Statut de paiement mis à jour avec succès."
-msgstr "Facture mise à jour avec succès."
+msgstr "Statut de paiement mis à jour avec succès."
 
 #: facture_app/views.py:378
-#, fuzzy
-#| msgid "Facture créée avec succès."
 msgid "Facture modifiée avec succès."
-msgstr "Facture créée avec succès."
+msgstr "Facture modifiée avec succès."
 
 #: facture_app/views.py:404
 msgid "Facture supprimée avec succès."
 msgstr "Facture supprimée avec succès."
 
 #: facture_app/views.py:490
-#, fuzzy
-#| msgid "Facture non trouvée ou génération de PDF échouée"
 msgid "Facture non trouvée ou génération PDF échouée"
-msgstr "Facture non trouvée ou génération de PDF échouée"
+msgstr "Facture non trouvée ou génération PDF échouée"
+
+#: facture_app/templates/facture_app/invoice_base.html:3717
+msgid "UTC"
+msgstr "UTC"
+
+msgid "Generated on:"
+msgstr "Généré le :"
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Send by Email"
+msgstr "Envoyer par email"
 
 #~ msgid "Groupes"
 #~ msgstr "Groupes"
@@ -2634,8 +2608,7 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 
 #, python-brace-format
 #~ msgid "Données invalides dans le formulaire supplémentaire : {form2.errors}"
-#~ msgstr ""
-#~ "Données invalides dans le formulaire supplémentaire : {form2.errors}"
+#~ msgstr "Données invalides dans le formulaire supplémentaire : {form2.errors}"
 
 #~ msgid "Facture associée"
 #~ msgstr "Facture associée"
@@ -2940,9 +2913,6 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 #~ msgid "Greek"
 #~ msgstr "Grec"
 
-#~ msgid "English"
-#~ msgstr "Anglais"
-
 #~ msgid "Australian English"
 #~ msgstr "Anglais australien"
 
@@ -2981,9 +2951,6 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 
 #~ msgid "Finnish"
 #~ msgstr "Finnois"
-
-#~ msgid "French"
-#~ msgstr "Français"
 
 #~ msgid "Frisian"
 #~ msgstr "Frison"
@@ -3215,11 +3182,8 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 #~ msgid "username"
 #~ msgstr "nom d'utilisateur"
 
-#~ msgid ""
-#~ "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
-#~ msgstr ""
-#~ "Requis. 150 caractères ou moins. Lettres, chiffres et @/./+/-/_ "
-#~ "uniquement."
+#~ msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+#~ msgstr "Requis. 150 caractères ou moins. Lettres, chiffres et @/./+/-/_ uniquement."
 
 #~ msgid "A user with that username already exists."
 #~ msgstr "Un utilisateur avec ce nom d'utilisateur existe déjà."
@@ -3243,28 +3207,19 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 #~ msgstr "Ancien mot de passe"
 
 #~ msgid "Your old password was entered incorrectly. Please enter it again."
-#~ msgstr ""
-#~ "Votre ancien mot de passe a été saisi incorrectement. Veuillez le saisir "
-#~ "à nouveau."
+#~ msgstr "Votre ancien mot de passe a été saisi incorrectement. Veuillez le saisir à nouveau."
 
-#~ msgid ""
-#~ "This username is already taken by another user with a different email."
-#~ msgstr ""
-#~ "Ce nom d'utilisateur est déjà pris par un autre utilisateur avec une "
-#~ "adresse email différente."
+#~ msgid "This username is already taken by another user with a different email."
+#~ msgstr "Ce nom d'utilisateur est déjà pris par un autre utilisateur avec une adresse email différente."
 
 #~ msgid "This email is already associated with another user."
 #~ msgstr "Cette adresse email est déjà associée à un autre utilisateur."
 
-#~ msgid ""
-#~ "The username must consist of letters, numbers, underscores or hyphens."
-#~ msgstr ""
-#~ "Le nom d'utilisateur doit être composé de lettres, chiffres, underscores "
-#~ "ou tirets."
+#~ msgid "The username must consist of letters, numbers, underscores or hyphens."
+#~ msgstr "Le nom d'utilisateur doit être composé de lettres, chiffres, underscores ou tirets."
 
 #~ msgid "The username cannot consist only of numbers."
-#~ msgstr ""
-#~ "Le nom d'utilisateur ne peut pas être composé uniquement de chiffres."
+#~ msgstr "Le nom d'utilisateur ne peut pas être composé uniquement de chiffres."
 
 #~ msgid "The username cannot be an email address."
 #~ msgstr "Le nom d'utilisateur ne peut pas être une adresse email."
@@ -3285,8 +3240,7 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 #~ msgstr "Le mot de passe doit contenir au moins un chiffre."
 
 #~ msgid "Password must contain at least one special character (@#$%^&+=)."
-#~ msgstr ""
-#~ "Le mot de passe doit contenir au moins un caractère spécial (@#$%^&+=)."
+#~ msgstr "Le mot de passe doit contenir au moins un caractère spécial (@#$%^&+=)."
 
 #~ msgid "Algorithm not supported."
 #~ msgstr "Algorithme non pris en charge."
@@ -3302,14 +3256,10 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 #~ msgstr "Les algorithmes de secours ne peuvent pas être vides."
 
 #~ msgid "Fallback algorithms must all be different from the main algorithm."
-#~ msgstr ""
-#~ "Les algorithmes de secours doivent tous être différents de l'algorithme "
-#~ "principal."
+#~ msgstr "Les algorithmes de secours doivent tous être différents de l'algorithme principal."
 
 #~ msgid "Fallback algorithms must all be different from each other."
-#~ msgstr ""
-#~ "Les algorithmes de secours doivent tous être différents les uns des "
-#~ "autres."
+#~ msgstr "Les algorithmes de secours doivent tous être différents les uns des autres."
 
 #~ msgid "name"
 #~ msgstr "nom"
@@ -3345,32 +3295,16 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 #~ msgstr "utilisateurs"
 
 #, python-format
-#~ msgid ""
-#~ "This password is too short. It must contain at least %(min_length)d "
-#~ "character."
-#~ msgid_plural ""
-#~ "This password is too short. It must contain at least %(min_length)d "
-#~ "characters."
-#~ msgstr[0] ""
-#~ "Ce mot de passe est trop court. Il doit contenir au moins %(min_length)d "
-#~ "caractère."
-#~ msgstr[1] ""
-#~ "Ce mot de passe est trop court. Il doit contenir au moins %(min_length)d "
-#~ "caractères."
+#~ msgid "This password is too short. It must contain at least %(min_length)d character."
+#~ msgid_plural "This password is too short. It must contain at least %(min_length)d characters."
+#~ msgstr[0] "Ce mot de passe est trop court. Il doit contenir au moins %(min_length)d caractère."
+#~ msgstr[1] "Ce mot de passe est trop court. Il doit contenir au moins %(min_length)d caractères."
 
 #, python-format
-#~ msgid ""
-#~ "Your password must contain at least %(min_length)d character of type "
-#~ "%(character_type)s."
-#~ msgid_plural ""
-#~ "Your password must contain at least %(min_length)d characters of type "
-#~ "%(character_type)s."
-#~ msgstr[0] ""
-#~ "Votre mot de passe doit contenir au moins %(min_length)d caractère de "
-#~ "type %(character_type)s."
-#~ msgstr[1] ""
-#~ "Votre mot de passe doit contenir au moins %(min_length)d caractères de "
-#~ "type %(character_type)s."
+#~ msgid "Your password must contain at least %(min_length)d character of type %(character_type)s."
+#~ msgid_plural "Your password must contain at least %(min_length)d characters of type %(character_type)s."
+#~ msgstr[0] "Votre mot de passe doit contenir au moins %(min_length)d caractère de type %(character_type)s."
+#~ msgstr[1] "Votre mot de passe doit contenir au moins %(min_length)d caractères de type %(character_type)s."
 
 #~ msgid "This password is too common."
 #~ msgstr "Ce mot de passe est trop commun."
@@ -3383,8 +3317,7 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 #~ msgstr "Ce mot de passe est trop similaire à %(attribute)s."
 
 #~ msgid "The password must contain at least one special character (@#$%^&+=)."
-#~ msgstr ""
-#~ "Le mot de passe doit contenir au moins un caractère spécial (@#$%^&+=)."
+#~ msgstr "Le mot de passe doit contenir au moins un caractère spécial (@#$%^&+=)."
 
 #~ msgid "The password must contain at least one uppercase letter."
 #~ msgstr "Le mot de passe doit contenir au moins une lettre majuscule."
@@ -3401,12 +3334,8 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 #~ msgid "Flat Pages"
 #~ msgstr "Pages statiques"
 
-#~ msgid ""
-#~ "If this is checked, a new flatpage will be created if one doesn’t exist "
-#~ "for the given URL."
-#~ msgstr ""
-#~ "Si cette case est cochée, une nouvelle page statique sera créée si aucune "
-#~ "n'existe pour l'URL donnée."
+#~ msgid "If this is checked, a new flatpage will be created if one doesn’t exist for the given URL."
+#~ msgstr "Si cette case est cochée, une nouvelle page statique sera créée si aucune n'existe pour l'URL donnée."
 
 #~ msgid "Title"
 #~ msgstr "Titre"
@@ -3423,11 +3352,8 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 #~ msgid "Registration required"
 #~ msgstr "Inscription requise"
 
-#~ msgid ""
-#~ "If this is checked, only logged-in users will be able to view the page."
-#~ msgstr ""
-#~ "Si cette case est cochée, seuls les utilisateurs connectés pourront voir "
-#~ "la page."
+#~ msgid "If this is checked, only logged-in users will be able to view the page."
+#~ msgstr "Si cette case est cochée, seuls les utilisateurs connectés pourront voir la page."
 
 #~ msgid "Sites"
 #~ msgstr "Sites"
@@ -3578,8 +3504,7 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 
 #, python-format
 #~ msgid "Nested arrays must have the same length. Got %(value)s."
-#~ msgstr ""
-#~ "Les tableaux imbriqués doivent avoir la même longueur. Obtenu %(value)s."
+#~ msgstr "Les tableaux imbriqués doivent avoir la même longueur. Obtenu %(value)s."
 
 #~ msgid "JSON Field"
 #~ msgstr "Champ JSON"
@@ -3621,25 +3546,16 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 #~ msgstr "Entrez deux valeurs valides."
 
 #, python-format
-#~ msgid ""
-#~ "Range boundaries must be of type %(expected_type)s, not %(value_type)s."
-#~ msgstr ""
-#~ "Les limites de la plage doivent être de type %(expected_type)s, et non "
-#~ "%(value_type)s."
+#~ msgid "Range boundaries must be of type %(expected_type)s, not %(value_type)s."
+#~ msgstr "Les limites de la plage doivent être de type %(expected_type)s, et non %(value_type)s."
 
 #, python-format
-#~ msgid ""
-#~ "The start of the range must be one of: %(valid_values)s, not %(value)s."
-#~ msgstr ""
-#~ "Le début de la plage doit être l'un des suivants : %(valid_values)s, et "
-#~ "non %(value)s."
+#~ msgid "The start of the range must be one of: %(valid_values)s, not %(value)s."
+#~ msgstr "Le début de la plage doit être l'un des suivants : %(valid_values)s, et non %(value)s."
 
 #, python-format
-#~ msgid ""
-#~ "The end of the range must be one of: %(valid_values)s, not %(value)s."
-#~ msgstr ""
-#~ "La fin de la plage doit être l'un des suivants : %(valid_values)s, et non "
-#~ "%(value)s."
+#~ msgid "The end of the range must be one of: %(valid_values)s, not %(value)s."
+#~ msgstr "La fin de la plage doit être l'un des suivants : %(valid_values)s, et non %(value)s."
 
 #~ msgid "Redirects"
 #~ msgstr "Redirections"
@@ -3694,6 +3610,3 @@ msgstr "Facture non trouvée ou génération de PDF échouée"
 
 #~ msgid "verbose name plural"
 #~ msgstr "nom verbeux pluriel"
-
-#~ msgid "UTC"
-#~ msgstr "UTC"

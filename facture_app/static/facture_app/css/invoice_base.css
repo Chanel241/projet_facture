@@ -1,0 +1,222 @@
+body {
+    background-color: #243E6D; /* Bleu sombre comme demandé */
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    margin: 0;
+}
+
+.container {
+    max-width: 794px; /* A4 width at 96dpi */
+    margin: 20px auto;
+}
+
+.invoice-container {
+    background-color: #F5F5F5;
+    border: 1px solid #000000;
+    padding: 25px; /* Augmenté de 15px à 25px pour la hauteur */
+    color: #000000; /* Texte en noir pour tout le contenu du formulaire */
+}
+
+.header {
+    background: #420FFA;
+    color: white; /* Texte en blanc pour l'en-tête du formulaire */
+    padding: 5px;
+}
+
+.invoice-logo {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.invoice-num {
+    margin: 5px 0 0;
+    font-size: 16px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px; /* Augmenté de 10px à 15px pour la hauteur */
+    margin-bottom: 20px; /* Augmenté de 15px à 20px pour la hauteur */
+}
+
+.flex-item {
+    flex: 1;
+    margin-right: 20px;
+    max-width: 50%;
+}
+
+.flex-item:last-child {
+    margin-right: 0;
+    text-align: right;
+}
+
+/* Ajuster les tailles de police pour les titres et les informations */
+.flex-item h5 {
+    font-size: 18px; /* Titre plus grand */
+    font-weight: bold;
+}
+
+.flex-item p {
+    font-size: 14px; /* Informations plus petites */
+    margin: 5px 0 0; /* Ajuster l'espacement */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Augmenté de 15px à 20px pour la hauteur */
+    margin-bottom: 20px; /* Augmenté de 15px à 20px pour la hauteur */
+}
+
+.table th,
+.table td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.table th {
+    background-color: #E9ECEF;
+    font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #FFFFFF;
+}
+
+.total-row {
+    background-color: #ADD8E6; /* Bleu clair pour la ligne Grand Total */
+    font-weight: bold;
+}
+
+.btn-send {
+    background-color: #3498DB; /* Couleur principale pour Send by Email */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+}
+
+/* Styles spécifiques pour les boutons dans invoice.html */
+.no-print .btn-primary {
+    background-color: #F39C12 !important; /* Couleur pour Edit */
+    color: white !important;
+    border: none;
+}
+
+.no-print .btn-danger {
+    background-color: #E63946 !important; /* Couleur pour Delete */
+    color: white !important;
+    border: none;
+}
+
+.global-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #F0F0F0; /* Gris clair comme demandé */
+    color: #000000; /* Texte en noir */
+}
+
+.global-header .global-logo {
+    color: #000000; /* Texte en noir */
+    font-size: 30px; /* Déjà ajusté à 30px */
+    font-weight: bold;
+    text-decoration: none; /* Enlève le surlignage */
+}
+
+.global-header .global-header-buttons a,
+.global-header .global-header-buttons button,
+.global-header .language-selector {
+    color: #000000; /* Assure que tout le texte est en noir */
+}
+
+.global-header-buttons {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.global-header-buttons .global-header-btn {
+    color: white;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.global-header-buttons .download {
+    background-color: #0D6EFD;
+    padding: 5px 10px;
+}
+
+.global-header-buttons .print {
+    background-color: #198754;
+    padding: 5px 10px;
+}
+
+.global-header-buttons .logout {
+    background-color: transparent !important; /* Bouton Logout en transparent */
+    color: white; /* Texte en blanc pour rester visible */
+    padding: 5px 10px;
+    border: none; /* Bordure déjà enlevée */
+}
+
+.language-selector {
+    background-color: #E9ECEF;
+    border: none;
+    padding: 5px;
+}
+
+@media print {
+    .no-print {
+        display: none !important; /* Masquer les boutons dans le PDF */
+    }
+    body {
+        background-color: white;
+        margin: 0;
+    }
+    .container {
+        margin: 0;
+        padding: 0;
+        max-width: 794px;
+    }
+    .invoice-container {
+        border: none;
+        box-shadow: none;
+        width: 100%;
+        max-width: 794px;
+        padding: 25px; /* Augmenté dans le PDF */
+        color: #000000; /* Texte en noir dans le PDF */
+    }
+    .header {
+        padding: 5px;
+        color: white; /* Texte en blanc dans l'en-tête du PDF */
+    }
+    .flex-container {
+        padding: 15px; /* Augmenté dans le PDF */
+        margin-bottom: 20px; /* Augmenté dans le PDF */
+    }
+    /* Appliquer les mêmes tailles de police dans le PDF */
+    .flex-item h5 {
+        font-size: 18px; /* Titre plus grand */
+        font-weight: bold;
+    }
+    .flex-item p {
+        font-size: 14px; /* Informations plus petites */
+        margin: 5px 0 0;
+    }
+    .table {
+        margin-top: 20px; /* Augmenté dans le PDF */
+        margin-bottom: 20px; /* Augmenté dans le PDF */
+    }
+    .total-row {
+        background-color: #ADD8E6; /* Bleu clair dans le PDF */
+    }
+    .global-header {
+        display: none; /* Masquer complètement le header global lors de l'impression */
+    }
+    .global-header-buttons .global-header-btn {
+        display: none;
+    }
+}

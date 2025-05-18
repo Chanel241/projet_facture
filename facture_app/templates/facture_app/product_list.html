@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'facture_app/css/product_list.css' %}">
     <title>{% trans "NovaFac - Liste des produits" %}</title>
 </head>
-<body class="min-vh-100 d-flex flex-column">
+<body>
     {% get_available_languages as LANGUAGES %}
     {% get_language_info_list for LANGUAGES as languages %}
     <header>
@@ -50,7 +50,6 @@
             </div>
         </nav>
     </header>
-    <!-- Bouton "Ajouter un produit" aligné à droite, descendu et agrandi -->
     <div class="container-fluid my-4 mb-3">
         <div class="d-flex justify-content-end">
             <form action="{% url 'invoicing:add-product' %}" method="get">
@@ -60,8 +59,8 @@
             </form>
         </div>
     </div>
-    <main class="flex-grow-1">
-        <div class="container-fluid my-4">
+    <main>
+        <div class="container-fluid">
             <div class="table-container mx-auto">
                 <div class="card shadow-sm">
                     <div class="card-header text-center bg-pink-light">
@@ -104,9 +103,9 @@
             </div>
         </div>
     </main>
-    <footer class="text-center text-dark py-4 mt-auto">
+    <footer class="text-center text-dark py-4">
         <div class="container-fluid">
-            {% trans "NovaFac" %} © 2025 {% trans "Copyright" %}:
+            {% trans "NovaFac" %} © {% now "Y" %} {% trans "Copyright" %}:
             <a href="https://chanelroyal.com">{% trans "Chanel" %}</a>
         </div>
     </footer>

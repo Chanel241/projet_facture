@@ -13,19 +13,21 @@ from django.urls import reverse_lazy
 from .utils import pagination, get_invoice
 from .forms import CustomerForm, InvoiceForm, PharmacyProductForm
 from celery import shared_task
-import datetime
 from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 import logging
-import subprocess
-import os
 import time
+import os
+from weasyprint import HTML
 from django.conf import settings
 from django.utils import translation
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
+from django.core.mail import EmailMessage
+from django.shortcuts import get_object_or_404
+from celery.result import AsyncResult
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +37,7 @@ class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
         logger.info(f"StaffRequiredMixin: user={self.request.user.username or 'Anonymous'}, is_staff={is_staff}")
         return is_staff
 
-class HomeView(LoginRequiredMixin, View):  # Changé de StaffRequiredMixin à LoginRequiredMixin
+class HomeView(LoginRequiredMixin, View):
     template_name = 'facture_app/home.html'
 
     def get(self, request, *args, **kwargs):
@@ -45,7 +47,7 @@ class HomeView(LoginRequiredMixin, View):  # Changé de StaffRequiredMixin à Lo
         context = {'invoices': items}
         return render(request, self.template_name, context)
 
-class LoginView(LoginView):  # Non utilisé, mais conservé pour compatibilité
+class LoginView(LoginView):
     template_name = 'facture_app/login.html'
     form_class = AuthenticationForm
 
@@ -59,7 +61,7 @@ class AdminLoginView(LoginView):
     redirect_authenticated_user = True
 
     def get_success_url(self):
-        url = reverse_lazy('invoicing:invoices-list')  # Redirige tous les utilisateurs vers /fr/
+        url = reverse_lazy('invoicing:invoices-list')
         logger.info(f"AdminLoginView: Redirection de {self.request.user.username} vers {url}")
         return url
 
@@ -116,7 +118,7 @@ class AddAdminView(StaffRequiredMixin, View):
         if saved:
             return redirect('invoicing:invoices-list')
         return render(request, self.template_name, {'form1': form1, 'form2': form2})
-    
+
 class AddCustomerView(LoginRequiredMixin, View):
     template_name = 'facture_app/add_customer.html'
 
@@ -212,7 +214,7 @@ class AddPharmacyProductView(LoginRequiredMixin, View):
                 for error in errors:
                     messages.error(request, f"Erreur dans {field}: {error}")
         return render(request, self.template_name, {'form': form})
-    
+
 class ModifyPharmacyProductView(LoginRequiredMixin, View):
     template_name = 'facture_app/add_product.html'
 
@@ -266,10 +268,10 @@ class DeletePharmacyProductView(LoginRequiredMixin, View):
             logger.error(f"Produit ID={product_id} non trouvé")
             messages.error(request, _("Produit non trouvé."))
         except Exception as e:
-            logger.error(f"Erreur lors de la suppression du produit ID={product_id}: {str(e)}")
+            logger.error(f"Erreur lors de la suppression du produit ID={product_id}: {e}")
             messages.error(request, _("Une erreur s'est produite lors de la suppression du produit."))
         return redirect('invoicing:product-list')
-    
+
 class ProductListView(LoginRequiredMixin, View):
     template_name = 'facture_app/product_list.html'
 
@@ -287,8 +289,9 @@ class InvoiceVisualizationView(LoginRequiredMixin, View):
             logger.error(f"Facture ID={kwargs.get('pk')} non trouvée")
             messages.error(request, _("Facture non trouvée."))
             return redirect('invoicing:invoices-list')
+        context['date'] = timezone.now()
         return render(request, self.template_name, context)
-    
+
 class ModifyInvoiceView(LoginRequiredMixin, View):
     template_name = 'facture_app/add_invoice.html'
 
@@ -322,7 +325,6 @@ class ModifyInvoiceView(LoginRequiredMixin, View):
             quantities = request.POST.getlist('qty')
             errors = []
 
-            # Vérifier si la requête vise uniquement à modifier le statut "paid"
             if 'paid' in request.POST and not products and not quantities:
                 paid_value = request.POST.get('paid') == 'True'
                 if invoice.paid != paid_value:
@@ -334,7 +336,6 @@ class ModifyInvoiceView(LoginRequiredMixin, View):
                     messages.success(request, _("Statut de paiement mis à jour avec succès."))
                 return redirect('invoicing:invoices-list')
 
-            # Sinon, traiter la modification complète de la facture
             if form.is_valid():
                 for i in range(len(products)):
                     try:
@@ -394,7 +395,7 @@ class ModifyInvoiceView(LoginRequiredMixin, View):
             'obj': invoice,
             'invoice_id': invoice.id,
         })
-    
+
 class DeleteInvoiceView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         try:
@@ -415,62 +416,57 @@ def generate_invoice_pdf_task(pk):
         if not context:
             logger.error(f"Facture ID={pk} non trouvée")
             return None
-        context['date'] = datetime.datetime.now()
+        context['date'] = timezone.now()
         context['is_pdf'] = True
         if not context.get('obj') or not context.get('obj').customer:
             logger.error(f"Données invalides pour facture ID={pk}")
             return None
 
-        template = 'facture_app/invoice_template.tex'
-        latex_content = render_to_string(template, context)
-        logger.info(f"LaTeX généré pour facture ID={pk}: {latex_content[:500]}...")
+        # Charger le contenu du fichier CSS directement
+        css_path = os.path.join(settings.BASE_DIR, 'facture_app', 'static', 'facture_app', 'css', 'invoice_base.css')
+        if not os.path.exists(css_path):
+            logger.error(f"Fichier CSS non trouvé à {css_path}")
+            raise Exception(f"Fichier CSS non trouvé à {css_path}")
 
+        with open(css_path, 'r') as css_file:
+            css_content = css_file.read()
+
+        # Rendre le HTML avec les styles intégrés
+        html_content = render_to_string('facture_app/invoice.html', context)
+        # Ajouter les styles CSS directement dans le HTML
+        styled_html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>{css_content}</style>
+        </head>
+        <body>
+            {html_content}
+        </body>
+        </html>
+        """
+
+        html = HTML(string=styled_html)
         temp_dir = os.path.join(settings.MEDIA_ROOT, 'temp')
         os.makedirs(temp_dir, exist_ok=True)
         timestamp = int(time.time())
-        tex_file_path = os.path.join(temp_dir, f'invoice_{pk}_{timestamp}.tex')
         pdf_file_path = os.path.join(temp_dir, f'invoice_{pk}_{timestamp}.pdf')
 
-        for file_name in os.listdir(temp_dir):
-            if file_name.startswith(f'invoice_{pk}_'):
-                file_path = os.path.join(temp_dir, file_name)
-                try:
-                    os.remove(file_path)
-                    logger.info(f"Fichier temporaire supprimé: {file_path}")
-                except OSError as e:
-                    logger.error(f"Erreur suppression fichier {file_path}: {e}")
-
-        with open(tex_file_path, 'w', encoding='utf-8') as f:
-            f.write(latex_content)
-        logger.info(f"Fichier LaTeX écrit à: {tex_file_path}")
-
-        result = subprocess.run(
-            ['latexmk', '-pdf', '-interaction=nonstopmode', '-f', tex_file_path],
-            cwd=temp_dir,
-            capture_output=True,
-            text=True
-        )
-        logger.info(f"Commande latexmk pour facture ID={pk}: {result.stdout}")
-        if result.returncode != 0:
-            logger.error(f"Erreur latexmk pour facture ID={pk}: {result.stderr}")
-            raise Exception(f"Erreur latexmk: {result.stderr}")
-
-        if not os.path.exists(pdf_file_path):
-            logger.error(f"PDF non généré pour facture ID={pk}")
-            raise Exception("Échec génération PDF")
+        try:
+            html.write_pdf(pdf_file_path)
+            logger.info(f"PDF généré pour facture ID={pk} à {pdf_file_path}")
+        except Exception as e:
+            logger.error(f"Erreur weasyprint pour facture ID={pk}: {str(e)}")
+            raise Exception(f"Erreur weasyprint: {str(e)}")
 
         with open(pdf_file_path, 'rb') as f:
             pdf_content = f.read()
-        logger.info(f"PDF généré pour facture ID={pk}")
 
-        for file_name in os.listdir(temp_dir):
-            if file_name.startswith(f'invoice_{pk}_{timestamp}'):
-                file_path = os.path.join(temp_dir, file_name)
-                try:
-                    os.remove(file_path)
-                    logger.info(f"Fichier temporaire nettoyé: {file_path}")
-                except OSError as e:
-                    logger.error(f"Erreur nettoyage fichier {file_path}: {e}")
+        try:
+            os.remove(pdf_file_path)
+            logger.info(f"Fichier temporaire nettoyé: {pdf_file_path}")
+        except OSError as e:
+            logger.error(f"Erreur nettoyage fichier {pdf_file_path}: {e}")
 
         return pdf_content
     except Exception as e:
@@ -483,7 +479,7 @@ def get_invoice_pdf(request, *args, **kwargs):
     result = generate_invoice_pdf_task.delay(pk)
     logger.info(f"Tâche envoyée ID: {result.id}")
     try:
-        pdf = result.get(timeout=300)
+        pdf = result.get(timeout=60)  # Réduit de 300 à 60 pour éviter les timeouts
         logger.info(f"Tâche terminée pour facture ID={pk}")
         if not pdf:
             logger.error(f"Facture ID={pk} non trouvée ou génération PDF échouée")
@@ -494,6 +490,50 @@ def get_invoice_pdf(request, *args, **kwargs):
     except Exception as e:
         logger.error(f"Erreur génération PDF pour facture ID={pk}: {str(e)}")
         return HttpResponse(f"Erreur génération PDF: {str(e)}", status=500)
+
+def send_invoice_email(request):
+    if request.method == 'POST':
+        invoice_id = request.POST.get('id_send')
+        invoice = get_object_or_404(Invoice, id=invoice_id)
+
+        logger.info(f"Envoi tâche generate_invoice_pdf_task pour facture ID={invoice_id}")
+        result = generate_invoice_pdf_task.delay(invoice_id)
+        pdf_content = result.get(timeout=60)  # Réduit de 300 à 60 pour éviter les timeouts
+
+        if not pdf_content:
+            logger.error(f"Échec de la génération du PDF pour facture ID={invoice_id}")
+            messages.error(request, _("Échec de la génération du PDF."))
+            return redirect('invoicing:view-invoice', pk=invoice_id)
+
+        subject = f"Facture #{invoice.id} de NovaFac"
+        from_email = settings.DEFAULT_FROM_EMAIL
+        to_email = invoice.customer.email if invoice.customer and invoice.customer.email else None
+
+        if not to_email:
+            logger.error(f"Aucun email trouvé pour le client de la facture ID={invoice_id}")
+            messages.error(request, _("Aucun email associé au client."))
+            return redirect('invoicing:view-invoice', pk=invoice_id)
+
+        html_content = render_to_string('facture_app/email_invoice.html', {
+            'invoice': invoice,
+            'articles': invoice.articles.all(),
+        })
+
+        email = EmailMessage(subject, html_content, from_email, [to_email])
+        email.content_subtype = "html"
+        email.attach(f"facture_{invoice.id}.pdf", pdf_content, 'application/pdf')
+
+        try:
+            email.send()
+            logger.info(f"Email envoyé avec succès pour facture ID={invoice_id} à {to_email}")
+            messages.success(request, _("Facture envoyée par email avec succès."))
+        except Exception as e:
+            logger.error(f"Erreur lors de l'envoi de l'email pour facture ID={invoice_id}: {str(e)}")
+            messages.error(request, _("Échec de l'envoi de l'email."))
+
+        return redirect('invoicing:view-invoice', pk=invoice_id)
+
+    return HttpResponse("Méthode non autorisée", status=405)
 
 def custom_404(request, exception):
     return render(request, 'facture_app/404.html', status=404)

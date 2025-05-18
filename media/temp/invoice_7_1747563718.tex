@@ -1,0 +1,122 @@
+% Defining the document class and basic setup
+\documentclass[a4paper,12pt]{article}
+
+% Importing necessary packages for layout and formatting
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{helvet} % Helvetica to match CSS font-family
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+
+% Setting page geometry to match .container (max-width: 960px)
+\geometry{top=28.8pt, bottom=28.8pt, left=28.8pt, right=28.8pt} % 2rem ≈ 28.8pt at 1rem = 14.4pt (assuming 16px browser default)
+
+% Defining colors to match invoice_base.css
+\definecolor{background}{HTML}{1E3A8A} % Body background
+\definecolor{containerbg}{HTML}{F5F5F5} % Invoice container background
+\definecolor{headerbg}{HTML}{420FFA} % Header background
+\definecolor{tableheader}{HTML}{E9ECEF} % Table header background
+\definecolor{totalrow}{HTML}{E6F0FA} % Total row background
+\definecolor{tablebg}{HTML}{FFFFFF} % Table even row background
+\definecolor{bordercolor}{HTML}{000000} % Border color
+
+% Setting the background color for the entire page
+\pagecolor{background}
+
+% Customizing table column types for better alignment
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% Adjusting table border thickness and spacing to match CSS
+\setlength{\arrayrulewidth}{0.75pt} % 1px ≈ 0.75pt
+\setlength{\tabcolsep}{6pt} % Matches CSS padding: 8px (8px ≈ 6pt)
+\renewcommand{\arraystretch}{1.5} % Matches CSS table row height
+
+% Starting the document
+\begin{document}
+
+% Removing default page numbering
+\pagestyle{empty}
+
+% Creating the main container
+\begin{center}
+\fboxrule=0pt % No border to match HTML print mode (border: none)
+\fbox{%
+    \begin{minipage}{650pt} % 960px ≈ 720pt, adjusted to 650pt to account for margins
+    \color{black}
+    \pagecolor[HTML]{F5F5F5} % Invoice container background
+
+    % Creating the header section
+    \colorbox{headerbg}{%
+        \begin{minipage}{\dimexpr\textwidth-2\fboxsep\relax}
+        \vspace{11.25pt} % Matches CSS padding: 15px (15px ≈ 11.25pt)
+        \raggedright
+        \sffamily
+        \textbf{\fontsize{16.8pt}{20pt}\selectfont NovaFac} % 1.75rem ≈ 16.8pt
+        \vspace{3.6pt} % Matches CSS margin: 5px (5px ≈ 3.6pt)
+        \fontsize{9.6pt}{12pt}\selectfont Facture \#7 % 1rem ≈ 9.6pt
+        \vspace{11.25pt}
+        \end{minipage}
+    }%
+
+    % Adding vertical space after the header
+    \vspace{15pt} % Matches CSS padding: 20px (20px ≈ 15pt)
+
+    % Creating the billing and company info section
+    \begin{minipage}{300pt} % Adjusted to match flex-item (approximately half of 650pt)
+        \raggedright
+        \sffamily
+        \textbf{\fontsize{12pt}{14pt}\selectfont Facturé à} % Matches CSS h5 (approx 12pt)
+        \vspace{3pt}
+        carene \\
+        saint-anne \\
+        biloghecarene@gmail.com \\
+    \end{minipage}%
+    \hfill
+    \begin{minipage}{300pt}
+        \raggedleft
+        \sffamily
+        \textbf{\fontsize{12pt}{14pt}\selectfont Informations sur l'entreprise}
+        \vspace{3pt}
+        Mon entreprise \\
+        Gabon, Libreville \\
+        contact@novafac.com \\
+    \end{minipage}
+
+    % Adding vertical space before the table
+    \vspace{15pt} % Matches CSS margin-top: 20px
+
+    % Creating the table for invoice items
+    \begin{center}
+    \newcounter{rownum}
+    \begin{tabular}{|C{260pt}|C{80pt}|C{110pt}|C{80pt}|} % Proportional to HTML table (50%, 15%, 20%, 15% of 650pt)
+        \hline
+        \rowcolor{tableheader}
+        \sffamily \textbf{Description} & \sffamily \textbf{Quantité} & \sffamily \textbf{Prix unitaire} & \sffamily \textbf{Montant total} \\
+        \hline
+        
+        \stepcounter{rownum}
+        \ifodd\rownum\rowcolor{containerbg}\else\rowcolor[HTML]{FFFFFF}\fi
+        COMBIART & 1,00 & 7000,00 FCFA & 7000,00 FCFA \\
+        \hline
+        
+        \rowcolor{totalrow}
+        \multicolumn{3}{|c|}{\sffamily \textbf{Total général}} & \sffamily \textbf7000,00 FCFA \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    % Adding generation date
+    \vspace{15pt} % Matches CSS margin-top: 20px
+    \raggedleft
+    \sffamily \textit{\fontsize{9.6pt}{12pt}\selectfont Généré le : 18 Mai 2025 10:21}
+
+    \end{minipage}%
+}
+\end{center}
+
+% Ending the document
+\end{document}

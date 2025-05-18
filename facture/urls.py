@@ -18,6 +18,7 @@ urlpatterns += i18n_patterns(
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # Ajouté pour servir les fichiers média en mode DEBUG
 
 # Custom error handlers
 handler404 = 'facture_app.views.custom_404'

@@ -144,7 +144,7 @@
                             <td>{{ invoice.get_invoice_type_display }}</td>
                             <td>
                                 <a href="{% url 'invoicing:view-invoice' pk=invoice.id %}" class="btn btn-sm btn-success">{% trans "View" %}</a>
-                                <a href="{% url 'invoicing:generate-invoice-pdf' pk=invoice.id %}" class="btn btn-sm btn-warning">{% trans "PDF" %}</a>
+                                <a href="{% url 'invoicing:get-invoice-pdf' pk=invoice.id %}" class="btn btn-sm btn-warning">{% trans "PDF" %}</a>
                                 <form method="post" action="{% url 'invoicing:delete-invoice' %}" style="display:inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="id_supprimer" value="{{ invoice.id }}">

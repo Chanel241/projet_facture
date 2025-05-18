@@ -1,7 +1,5 @@
-% Document class and basic setup
 \documentclass[a4paper,12pt]{article}
 
-% Essential packages only
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{helvet}
@@ -10,27 +8,24 @@
 \usepackage{colortbl}
 \usepackage{xcolor}
 \usepackage{array}
+\usepackage{booktabs}
 
-% Page geometry to match HTML .container (max-width: 960px)
-\geometry{top=28.8pt, bottom=28.8pt, left=28.8pt, right=28.8pt}
+\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
 
-% Colors matching invoice_base.css
 \definecolor{background}{HTML}{1E3A8A}
 \definecolor{containerbg}{HTML}{F5F5F5}
 \definecolor{headerbg}{HTML}{420FFA}
 \definecolor{tableheader}{HTML}{E9ECEF}
 \definecolor{totalrow}{HTML}{E6F0FA}
 \definecolor{tablebg}{HTML}{FFFFFF}
+\definecolor{bordercolor}{HTML}{000000}
 
-% Page background
 \pagecolor{background}
 
-% Custom column type
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 
-% Table settings
-\setlength{\arrayrulewidth}{0.75pt}
-\setlength{\tabcolsep}{6pt}
+\setlength{\arrayrulewidth}{0.75pt} % 1px ≈ 0.75pt
+\setlength{\tabcolsep}{6pt} % Correspond à padding: 8px
 \renewcommand{\arraystretch}{1.5}
 
 \begin{document}
@@ -38,43 +33,41 @@
 \pagestyle{empty}
 
 \begin{center}
-\fboxrule=0pt
+\fboxrule=0pt % Pas de bordure pour imiter le mode impression HTML
 \fbox{%
-    \begin{minipage}{650pt}
+    \begin{minipage}{0.9\textwidth}
     \color{black}
     \pagecolor[HTML]{F5F5F5}
 
-    % Header
     \colorbox{headerbg}{%
         \begin{minipage}{\dimexpr\textwidth-2\fboxsep\relax}
         \vspace{11.25pt}
         \raggedright
         \sffamily
         \textbf{\fontsize{16.8pt}{20pt}\selectfont NovaFac} \\
-        \vspace{3.6pt}
-        \fontsize{9.6pt}{12pt}\selectfont Facture \#{{ obj.id }} \\
+        \vspace{4pt}
+        \fontsize{9.6pt}{12pt}\selectfont Facture \#7 \\
         \vspace{11.25pt}
         \end{minipage}
     }%
 
     \vspace{15pt}
 
-    % Billing and company info
-    \begin{minipage}{300pt}
+    \begin{minipage}{0.45\textwidth}
         \raggedright
         \sffamily
         \textbf{\fontsize{12pt}{14pt}\selectfont Facturé à} \\
-        \vspace{3pt}
-        {{ obj.customer.name|default:"Non spécifié" }} \\
-        {{ obj.customer.address|default:"Non spécifié" }} \\
-        {{ obj.customer.email|default:"Non spécifié" }} \\
+        \vspace{4pt}
+        carene \\
+        saint-anne \\
+        biloghecarene@gmail.com \\
     \end{minipage}%
     \hfill
-    \begin{minipage}{300pt}
+    \begin{minipage}{0.45\textwidth}
         \raggedleft
         \sffamily
         \textbf{\fontsize{12pt}{14pt}\selectfont Informations sur l'entreprise} \\
-        \vspace{3pt}
+        \vspace{4pt}
         Mon entreprise \\
         Gabon, Libreville \\
         contact@novafac.com \\
@@ -82,32 +75,28 @@
 
     \vspace{15pt}
 
-    % Table
     \begin{center}
     \newcounter{rownum}
-    \begin{tabular}{|C{260pt}|C{80pt}|C{110pt}|C{80pt}|}
+    \begin{tabular}{|C{4.8cm}|C{1.44cm}|C{1.92cm}|C{1.44cm}|}
         \hline
         \rowcolor{tableheader}
         \sffamily \textbf{Description} & \sffamily \textbf{Quantité} & \sffamily \textbf{Prix unitaire} & \sffamily \textbf{Montant total} \\
         \hline
-        {% for item in articles %}
+        
         \stepcounter{rownum}
-        \ifodd\rownum\rowcolor{containerbg}\else\rowcolor[HTML]{FFFFFF}\fi
-        {{ item.product.name|default:"Non spécifié" }} & {{ item.quantity|floatformat:2 }} & {{ item.product.price|floatformat:2 }} FCFA & {{ item.get_total|floatformat:2 }} FCFA \\
+        \ifodd\rownum\rowcolor{tablebg}\else\rowcolor[HTML]{FFFFFF}\fi
+        COMBIART & 1,00 & 7000,00 FCFA & 7000,00 FCFA \\
         \hline
-        {% empty %}
-        \multicolumn{4}{|c|}{Aucun article trouvé.} \\
-        \hline
-        {% endfor %}
+        
         \rowcolor{totalrow}
-        \multicolumn{3}{|c|}{\sffamily \textbf{Total général}} & \sffamily \textbf{{ obj.total|floatformat:2 }} FCFA \\
+        \multicolumn{3}{|c|}{\sffamily \textbf{Total général}} & \sffamily \textbf7000,00 FCFA \\
         \hline
     \end{tabular}
     \end{center}
 
     \vspace{15pt}
     \raggedleft
-    \sffamily \textit{\fontsize{9.6pt}{12pt}\selectfont Généré le : {{ date|date:"d F Y H:i" }}}
+    \sffamily \textit{Généré le : 18 Mai 2025 10:15}
 
     \end{minipage}%
 }

@@ -1,5 +1,5 @@
 body {
-    background-color: #4dc4aa;
+    background-color: #243E6D;
     font-family: Arial, sans-serif;
     margin: 0;
     display: flex;
@@ -8,7 +8,7 @@ body {
 }
 
 .custom-header {
-    background-color: #dadcdf;
+    background-color: #F4F5F7;
     color: #fff;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -61,7 +61,7 @@ main {
     max-width: 800px;
     margin: 20px auto;
     background-color: #e8ecee;
-    color: #df4e86;
+    color: #f5f2f3;
 }
 
 .card-header {

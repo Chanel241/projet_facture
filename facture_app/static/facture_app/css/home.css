@@ -8,7 +8,7 @@ body {
 }
 
 .custom-header {
-    background-color: #dadcdf;
+    background-color: #F4F5F7;
     color: #fff;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -54,7 +54,7 @@ body {
 
 main {
     flex-grow: 1;
-    background-color: #4dc4aa;
+    background-color: #243E6D;
     color: #fff;
     padding: 20px 0;
 }
@@ -99,13 +99,13 @@ main h2 {
 }
 
 footer {
-    background-color: #dadcdf;
+    background-color: #F4F5F7;
     color: #0a0a0a;
     padding: 10px 0;
 }
 
 footer a {
-    color: #b4acac;
+    color: #1f1cd8;
     text-decoration: underline;
 }
 

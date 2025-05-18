@@ -52,7 +52,7 @@
         \sffamily
         \textbf{\fontsize{16.8pt}{20pt}\selectfont NovaFac} \\
         \vspace{3.6pt}
-        \fontsize{9.6pt}{12pt}\selectfont Facture \#{{ obj.id }} \\
+        \fontsize{9.6pt}{12pt}\selectfont Facture \#7 \\
         \vspace{11.25pt}
         \end{minipage}
     }%
@@ -65,9 +65,9 @@
         \sffamily
         \textbf{\fontsize{12pt}{14pt}\selectfont Facturé à} \\
         \vspace{3pt}
-        {{ obj.customer.name|default:"Non spécifié" }} \\
-        {{ obj.customer.address|default:"Non spécifié" }} \\
-        {{ obj.customer.email|default:"Non spécifié" }} \\
+        carene \\
+        saint-anne \\
+        biloghecarene@gmail.com \\
     \end{minipage}%
     \hfill
     \begin{minipage}{300pt}
@@ -90,24 +90,21 @@
         \rowcolor{tableheader}
         \sffamily \textbf{Description} & \sffamily \textbf{Quantité} & \sffamily \textbf{Prix unitaire} & \sffamily \textbf{Montant total} \\
         \hline
-        {% for item in articles %}
+        
         \stepcounter{rownum}
         \ifodd\rownum\rowcolor{containerbg}\else\rowcolor[HTML]{FFFFFF}\fi
-        {{ item.product.name|default:"Non spécifié" }} & {{ item.quantity|floatformat:2 }} & {{ item.product.price|floatformat:2 }} FCFA & {{ item.get_total|floatformat:2 }} FCFA \\
+        COMBIART & 1,00 & 7000,00 FCFA & 7000,00 FCFA \\
         \hline
-        {% empty %}
-        \multicolumn{4}{|c|}{Aucun article trouvé.} \\
-        \hline
-        {% endfor %}
+        
         \rowcolor{totalrow}
-        \multicolumn{3}{|c|}{\sffamily \textbf{Total général}} & \sffamily \textbf{{ obj.total|floatformat:2 }} FCFA \\
+        \multicolumn{3}{|c|}{\sffamily \textbf{Total général}} & \sffamily \textbf7000,00 FCFA \\
         \hline
     \end{tabular}
     \end{center}
 
     \vspace{15pt}
     \raggedleft
-    \sffamily \textit{\fontsize{9.6pt}{12pt}\selectfont Généré le : {{ date|date:"d F Y H:i" }}}
+    \sffamily \textit{\fontsize{9.6pt}{12pt}\selectfont Généré le : 18 Mai 2025 10:27}
 
     \end{minipage}%
 }

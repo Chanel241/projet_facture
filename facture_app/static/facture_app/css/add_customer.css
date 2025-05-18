@@ -1,10 +1,10 @@
 body {
-    background-color: #4dc4aa;
+    background-color: #243E6D;
     font-family: Arial, sans-serif;
     margin: 0;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 .custom-header {
@@ -18,13 +18,12 @@ body {
 .custom-footer {
     background-color: #dadcdf;
     padding: 0;
-    line-height: 1;
-    height: 40px;
+    height: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2px;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
 }
 
 .custom-footer .custom-container {
@@ -81,10 +80,10 @@ body {
     width: 100%;
     max-width: 800px;
     margin: 20px auto;
-    min-height: 400px;
-    margin-bottom: 20px;
     background-color: #e8ecee;
     color: #f7f3f4;
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
 }
 
 .card-header {

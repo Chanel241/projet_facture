@@ -14,7 +14,7 @@ STATICFILES_DIRS = [BASE_DIR / 'facture_app' / 'static']
 TEMP_DIR = MEDIA_ROOT / 'temp'
 if not TEMP_DIR.exists():
     TEMP_DIR.mkdir(parents=True, exist_ok=True)
-    os.chmod(TEMP_DIR, 0o755)  # Définir les permissions en lecture/écriture pour l'utilisateur
+    os.chmod(TEMP_DIR, 0o755)
 
 # Configuration des traductions
 LOCALE_PATHS = [
@@ -23,7 +23,7 @@ LOCALE_PATHS = [
 
 # Security settings
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=True, cast=bool)  # Changé à True pour le développement
+DEBUG = config('DEBUG', default=True, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
 
 # Installed applications
@@ -80,7 +80,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-LANGUAGE_CODE = 'fr'  # Changé à 'fr' pour correspondre aux URLs
+LANGUAGE_CODE = 'fr'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -128,6 +128,7 @@ CELERY_TIMEZONE = 'UTC'
 CELERY_TASK_SOFT_TIME_LIMIT = 120
 CELERY_TASK_TIME_LIMIT = 180
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_TASK_MODULES = ('facture_app.tasks',)
 
 # Logging configuration
 LOGGING = {
@@ -167,9 +168,9 @@ LOGGING = {
 }
 
 # Authentication
-LOGIN_URL = '/fr/admin-login/'  # Corrigé
-LOGIN_REDIRECT_URL = '/fr/'  # Corrigé
-LOGOUT_REDIRECT_URL = '/fr/admin-login/'  # Corrigé
+LOGIN_URL = '/fr/admin-login/'
+LOGIN_REDIRECT_URL = '/fr/'
+LOGOUT_REDIRECT_URL = '/fr/admin-login/'
 
 # Security settings
 SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=not DEBUG, cast=bool)
@@ -180,3 +181,12 @@ X_FRAME_OPTIONS = 'DENY'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configuration email
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'chanelbirimbi@gmail.com'
+EMAIL_HOST_PASSWORD = 'hdtccxsooiycgdiu'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = 'chanelbirimbi@gmail.com'

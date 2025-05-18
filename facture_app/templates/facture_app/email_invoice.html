@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Facture #{{ invoice.id }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        h1 {
+            color: #1E3A8A;
+        }
+        p {
+            margin: 10px 0;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Facture #{{ invoice.id }}</h1>
+        <p><strong>Client :</strong> {{ invoice.customer.name }}</p>
+        <p><strong>Email :</strong> {{ invoice.customer.email }}</p>
+        <p><strong>Total :</strong> {{ invoice.total|floatformat:2 }} FCFA</p>
+        <p>Veuillez trouver la facture en pièce jointe.</p>
+        <div class="footer">
+            <p>Ceci est un email automatique envoyé par NovaFac.</p>
+            <p>Contactez-nous à contact@novafac.com pour toute question.</p>
+        </div>
+    </div>
+</body>
+</html>

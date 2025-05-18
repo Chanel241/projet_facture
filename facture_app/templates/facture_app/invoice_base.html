@@ -6,148 +6,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Invoice" %} #{{ obj.id }}</title>
-    <style>
-        @page {
-            margin: 20pt;
-        }
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: "Helvetica", "Arial", sans-serif;
-            background-color: #df4e86;
-            color: #0a0a0a;
-            font-size: 12pt;
-        }
-        .container {
-            width: 100%;
-            max-width: 600pt;
-            margin: 0 auto;
-            background-color: #f0e9eb;
-            padding: 20pt;
-            border: 1pt solid #ddd;
-        }
-        .header {
-            background-color: #eb89af;
-            padding: 10pt;
-            text-align: center;
-            margin-bottom: 10pt;
-        }
-        h3 {
-            margin: 0;
-            font-size: 18pt;
-            font-weight: bold;
-            color: #3b5eb8;
-        }
-        h5 {
-            font-size: 14pt;
-            margin: 0 0 5pt 0;
-        }
-        p {
-            margin: 5pt 0;
-            font-size: 12pt;
-        }
-        .section {
-            margin: 10pt 0;
-        }
-        .flex-container {
-            display: block; /* Simplifié pour compatibilité PDF */
-        }
-        .flex-item {
-            margin-bottom: 10pt;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-            margin-top: 10pt;
-        }
-        th, td {
-            border: 1pt solid #dee2e6;
-            padding: 8pt;
-            text-align: center;
-            font-size: 12pt;
-        }
-        th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-        }
-        .total-row {
-            background-color: #d4edda;
-            font-weight: bold;
-        }
-        .total-row td {
-            text-align: right;
-        }
-    </style>
+    {% block extrahead %}
+    {% if not is_pdf %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'facture_app/css/invoice_base.css' %}">
+    {% endif %}
+    {% endblock extrahead %}
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h3>NovaFac</h3>
-            <p>{% trans "Invoice" %} #{{ obj.id }}</p>
-        </div>
-        <div class="section">
-            <div class="flex-container">
-                <div class="flex-item">
-                    <h5>{% trans "Billed to" %}</h5>
-                    <p>{{ obj.customer.name }}</p>
-                    <p>{{ obj.customer.address|default:_("Not specified") }}</p> {# Using _() for default value #}
-                    <p>{{ obj.customer.email|default:_("Not specified") }}</p>  {# Using _() for default value #}
-                </div>
-                <div class="flex-item">
-                    <h5>{% trans "Company Information" %}</h5>
-                    <p>{% trans "My Company" %}</p> {# Assuming "Ma Société" should be translatable #}
-                    <p>{% trans "Gabon, Libreville" %}</p> {# Assuming this should be translatable #}
-                    <p>contact@novafac.com</p> {# Email addresses are usually not translated #}
-                </div>
-            </div>
-        </div>
-        <div class="section">
-            <table>
-                <thead>
-                    <tr>
-                        <th>{% trans "Description" %}</th>
-                        <th>{% trans "Quantity" %}</th>
-                        <th>{% trans "Unit Price" %}</th>
-                        <th>{% trans "Total Amount" %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in articles %}
-                    <tr>
-                        <td>{{ item.product.name }}</td>
-                        <td>{{ item.quantity|floatformat:2 }}</td>
-                        <td>{{ item.product.price|floatformat:2 }} FCFA</td>
-                        <td>{{ item.get_total|floatformat:2 }} FCFA</td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="4">{% trans "No items found." %}</td>
-                    </tr>
+    <!-- Masquer le header global dans le PDF -->
+    {% if not is_pdf %}
+    <div class="global-header">
+        <a href="{% url 'invoicing:invoices-list' %}" class="global-logo">NovaFac</a>
+        <div class="global-header-buttons">
+            <form action="{% url 'set_language' %}" method="post" style="margin: 0;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.path }}">
+                <select name="language" class="language-selector" onchange="this.form.submit()">
+                    <option value="" disabled selected>{% trans "Languages" %}</option>
+                    {% for lang in LANGUAGES %}
+                        <option value="{{ lang.0 }}">{{ lang.1 }}</option>
                     {% endfor %}
-                    <tr class="total-row">
-                        <td colspan="3"><strong>{% trans "Grand Total" %}</strong></td>
-                        <td><strong>{{ obj.total|floatformat:2 }} FCFA</strong></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        {% if not is_pdf %}
-        <div class="section text-end">
-            <a href="{% url 'invoicing:get-invoice-pdf' obj.id %}" class="btn btn-primary">{% trans "Download PDF" %}</a>
-            <form method="post" action="{% url 'invoicing:modify-invoice' pk=obj.id %}" style="display:inline;">
-                {% csrf_token %}
-                <input type="hidden" name="id_modified" value="{{ obj.id }}">
-                <input type="hidden" name="modified" value="True">
-                <button type="submit" class="btn btn-secondary">{% trans "Modify" %}</button>
+                </select>
             </form>
-            <form method="post" action="{% url 'invoicing:delete-invoice' %}" style="display:inline;">
-                {% csrf_token %}
-                <input type="hidden" name="id_supprimer" value="{{ obj.id }}">
-                <button type="submit" class="btn btn-danger" onclick="return confirm('{% trans "Are you sure you want to delete this invoice?" %}')">{% trans "Delete" %}</button>
-            </form>
+            <a href="{% url 'invoicing:get-invoice-pdf' obj.id %}" class="global-header-btn download">{% trans "Download PDF" %}</a>
+            <button onclick="window.print()" class="global-header-btn print">{% trans "Print" %}</button>
+            <a href="{% url 'invoicing:logout' %}" class="global-header-btn logout">{% trans "Logout" %}</a>
         </div>
-        {% endif %}
     </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock content %}
+
+    {% if not is_pdf %}
+    <script>
+        document.querySelector('.global-logo').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = '{% url "invoicing:invoices-list" %}';
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageSelector = document.querySelector('.language-selector');
+            if (languageSelector && !languageSelector.value) {
+                languageSelector.value = '';
+            }
+        });
+    </script>
+    {% endif %}
 </body>
 </html>

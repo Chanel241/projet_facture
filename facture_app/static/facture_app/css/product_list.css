@@ -1,10 +1,16 @@
 body {
-    background-color: #4dc4aa;
+    background-color: #243E6D;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .table-container {
     max-width: 80%;
     border: 2px solid #000000;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
 .table {
@@ -13,7 +19,7 @@ body {
 }
 
 .table thead {
-    background-color: #95e4dd !important;
+    background-color: #080808 !important;
     color: #333;
 }
 
@@ -26,25 +32,25 @@ body {
 }
 
 .table td, .table th {
-    border: 1pt solid #dee2e6;
-    padding: 8pt;
+    border: 1px solid #070707;
+    padding: 0.5rem;
     vertical-align: middle;
 }
 
 .action-btn {
-    padding: 6pt 12pt;
-    font-size: 14pt;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
     line-height: 1;
 }
 
 .btn-primary.action-btn {
-    background-color: #007bff;
+    background-color: #3c31cf;
     border-color: #0a0a0a;
     color: #ffffff;
 }
 
 .btn-primary.action-btn:hover {
-    background-color: #0056b3;
+    background-color: #6b96c4;
     border-color: #070707;
 }
 
@@ -60,51 +66,64 @@ body {
 }
 
 .btn-success.action-btn {
-    background-color: #171add;
+    background-color: #455ff3;
     border-color: #0d0e0d;
     color: #ffffff;
 }
 
 .btn-success.action-btn:hover {
-    background-color: #218838;
-    border-color: #218838;
+    background-color: #a5b2db;
+    border-color: #030303;
     color: #ffffff;
 }
 
 .card {
-    background-color: #e2dfdf;
-    border: 1pt solid #dee2e6;
+    background-color: #F4F5F7;
+    border: 1px solid #dee2e6;
+    height: 100%;
 }
 
 .card-header.bg-pink-light {
-    background-color: #9ec3e6;
-    border-bottom: 1pt solid #dee2e6;
+    background-color: #5855f7;
+    border-bottom: 1px solid #dee2e6;
 }
 
 h3 {
-    color: #333;
+    color: #f7f4f4;
     text-transform: uppercase;
 }
 
 .btn-black {
-    background-color: transparent; 
-    border: none; 
-    color: #000000; 
+    background-color: transparent;
+    border: none;
+    color: #000000;
 }
 
 .btn-black:hover {
-    background-color: #f0f0f0; 
+    background-color: #4985f3;
     color: #333333;
 }
 
 .nav-link.dropdown-toggle.text-black {
-    color: #000000 !important; 
+    color: #000000 !important;
 }
 
 header {
-    background-color: #dadcdf; 
+    background-color: #F4F5F7;
+}
+
+main {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 footer {
-    background-color: #dadcdf;
+    background-color: #F4F5F7;
+    padding: 0.25rem 0;
+    max-height: 30px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
 }
